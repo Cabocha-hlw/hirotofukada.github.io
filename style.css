@@ -18,9 +18,9 @@ html {
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: var(--bg);
+  background: #f5f5f3;
   color: var(--text);
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 a {
@@ -62,13 +62,14 @@ nav {
 }
 
 .section {
-  padding: 4rem 0;
+  padding: 4.5rem 0;
   border-bottom: 1px solid var(--line);
 }
 
 .section h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-size: 1.6rem;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
 }
 
 .section h3 {
@@ -83,4 +84,139 @@ ul {
 .site-footer {
   padding: 2rem 0 4rem;
   color: var(--muted);
+}
+
+.work-category {
+  padding: 1.75rem 0 0;
+}
+
+.work-category + .work-category {
+  margin-top: 1.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+
+.work-category h3 {
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.work-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.work-item {
+  padding: 1rem 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.work-item:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.work-citation em {
+  font-style: italic;
+}
+
+.work-citation {
+  line-height: 1.8;
+}
+
+.work-description {
+  margin: 0.3rem 0 0;
+}
+
+.work-title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.work-meta {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.work-links {
+  margin: 0.6rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
+.work-links a {
+  font-size: 0.95rem;
+}
+
+.experience-group {
+  padding: 1.75rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.experience-group:first-of-type {
+  margin-top: 1rem;
+}
+
+.experience-group h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.experience-meta {
+  margin: 0 0 1.25rem;
+  color: var(--muted);
+}
+
+.role-item {
+  padding: 1rem 0 0.25rem;
+}
+
+.role-item + .role-item {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  margin-top: 0.75rem;
+  padding-top: 1rem;
+}
+
+.role-item h4 {
+  margin: 0 0 0.3rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.role-period {
+  margin: 0 0 0.45rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.role-item p {
+  margin: 0.3rem 0;
+}
+
+.experience-highlights {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.experience-highlights h4 {
+  margin: 0 0 0.6rem;
+  font-size: 1rem;
+}
+
+.experience-highlights ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.experience-highlights li {
+  margin-bottom: 0.45rem;
 }
