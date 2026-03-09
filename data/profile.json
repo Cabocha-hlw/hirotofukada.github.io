@@ -5,15 +5,14 @@
   "contacts": [
     {
       "label": "LinkedIn",
-      "url": "https://www.linkedin.com/"
+      "url": "www.linkedin.com/in/hiroto-fukada-0b8854261"
     },
     {
       "label": "Email",
-      "url": "mailto:your-email@example.com"
+      "url": "mailto:hirof.0x407@gmail.com"
     },
     {
-      "label": "GitHub",
-      "url": "https://github.com/your-username"
+      "label": "GitHub"
     }
   ]
 }
