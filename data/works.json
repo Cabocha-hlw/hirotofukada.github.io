@@ -1,0 +1,119 @@
+[
+  {
+    "type": "research",
+    "authors": ["深田大登", "水野貴之"],
+    "selfAuthors": ["深田大登"],
+    "year": 2026,
+    "month": 3,
+    "title": "Supply Chain OSINT Agentによる公的統計の死角を補完する中台産業の相互依存性分析",
+    "venue": "第5回計算社会科学会大会",
+    "status": "ポスター発表",
+    "links": []
+  },
+  {
+    "type": "research",
+    "authors": ["深田大登", "水野貴之"],
+    "selfAuthors": ["深田大登"],
+    "year": 2026,
+    "month": 3,
+    "title": "Supply Chain OSINT Agentによる公的統計の死角を補完する中台産業ネットワークと相互依存性分析",
+    "venue": "第21回ネットワーク生態学シンポジウム",
+    "status": "優秀ポスター賞",
+    "links": []
+  },
+  {
+    "type": "research",
+    "authors": ["深田大登"],
+    "selfAuthors": ["深田大登"],
+    "year": 2021,
+    "title": "テレビCMの視聴覚特徴量がもたらす消費者の態度変容について",
+    "venue": "株式会社野村総合研究所マーケティング分析コンテスト 2021",
+    "status": "Special Prize",
+    "links": []
+  },
+  {
+    "type": "research",
+    "authors": ["青木大河", "深田大登", "北出嵩人", "朴平国"],
+    "selfAuthors": ["深田大登"],
+    "year": 2021,
+    "title": "定額動画配信サービスにおけるランキングのパーソナライズ化",
+    "venue": "経営科学系研究部会連合協議会主催 令和2年度データ解析コンペティション関西予選",
+    "status": "優秀賞",
+    "links": []
+  },
+  {
+    "type": "upcoming",
+    "authors": ["Fukada, H.", "Mizuno, T."],
+    "selfAuthors": ["Fukada, H."],
+    "year": 2026,
+    "month": 6,
+    "title": "Resilience of China’s Domestic Inter-Firm Transaction Network via Bow-Tie Architecture and LLM-Optimized OSINT",
+    "venue": "NetSci 2026",
+    "status": "Accepted for poster presentation",
+    "links": []
+  },
+  {
+    "type": "upcoming",
+    "authors": ["Fukada, H.", "Mizuno, T."],
+    "selfAuthors": ["Fukada, H."],
+    "year": 2026,
+    "month": 6,
+    "title": "Complementing Benchmark Supply-Chain Data with OSINT: Toward Reconstructing Real-World Supply-Chain Networks",
+    "venue": "NetSci 2026 Satellite Workshop on Economic and Financial Networks",
+    "status": "Scheduled for presentation",
+    "links": []
+  },
+  {
+    "type": "upcoming",
+    "authors": ["深田大登", "水野貴之"],
+    "selfAuthors": ["深田大登"],
+    "year": 2026,
+    "month": 6,
+    "title": "Supply Chain OSINT Agent: LLMとプロンプト最適化によるサプライチェーン知識抽出パイプライン",
+    "venue": "2026年度人工知能学会全国大会（第40回）",
+    "status": "発表予定",
+    "links": []
+  },
+  {
+    "type": "upcoming",
+    "authors": ["深田大登"],
+    "selfAuthors": ["深田大登"],
+    "year": 2027,
+    "month": 3,
+    "title": "TBD",
+    "venue": "第22回ネットワーク生態学シンポジウム",
+    "status": "招待講演予定",
+    "links": []
+  },
+  {
+    "type": "professional",
+    "title": "Company-wide Solution & Technology Prize (2025 H1)",
+    "meta": "Data Analyst, Septeni Japan",
+    "description": "Recognized for outstanding contributions to the development and implementation of analytical solutions that significantly improved business outcomes, demonstrating excellence in data-driven strategy and innovation.",
+    "links": []
+  },
+  {
+    "type": "professional",
+    "title": "データクリーンルーム（DCR）とマーケティングミックスモデリング（MMM）で実現する次世代メディアマーケティング ～プライバシー保護と予算最適化の両立～",
+    "meta": "Data Analyst, Septeni Japan",
+    "description": "Developed and implemented a next-generation media marketing solution that integrates Data Clean Room (DCR) and Marketing Mix Modeling (MMM) to achieve both privacy protection and budget optimization.",
+    "links": [
+      {
+        "label": "Press Release",
+        "url": "https://focus.septeni.co.jp/interview-column/250521"
+      }
+    ]
+  },
+  {
+    "type": "professional",
+    "title": "セプテーニ、DMLを用いた新たな因果推論のスキームを、広告主のマーケティングにおける意思決定を横断的に支援するソリューション「XYhai」に導入、提供開始",
+    "meta": "Data Analyst, Septeni Japan",
+    "description": "Implemented XYhai, a solution that incorporates a causal inference scheme using Double Machine Learning (DML) to support cross-cutting decision-making in marketing strategies.",
+    "links": [
+      {
+        "label": "Press Release",
+        "url": "https://www.septeni-holdings.co.jp/news/release/2024/12013886.html"
+      }
+    ]
+  }
+]

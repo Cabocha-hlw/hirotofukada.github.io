@@ -1,0 +1,59 @@
+[
+  {
+    "organization": "National Institute of Informatics (NII), Japan",
+    "period": "Nov 2025 – Present",
+    "roles": [
+      {
+        "title": "Research Assistant",
+        "period": "",
+        "description": "Conducting research on LLMs, network science, and their applications to supply-chain analysis, with a focus on connecting methodological research to real-world economic and industrial systems."
+      }
+    ],
+    "highlights": []
+  },
+  {
+    "organization": "Septeni Japan, INC., Japan",
+    "period": "Feb 2023 – Present",
+    "roles": [
+      {
+        "title": "Lead of Data Analytics Unit",
+        "period": "Jul 2024 – Present",
+        "description": "Leading analytics initiatives for marketing and business decision making, with a focus on data-driven strategy, team development, and analytical solution design."
+      },
+      {
+        "title": "Data Analyst",
+        "period": "Feb 2023 – Present",
+        "description": "Worked on the planning and implementation of analytical solutions using statistical modeling, machine learning, and causal inference for marketing applications."
+      }
+    ],
+    "highlights": [
+      "Multiple MVP awards (2023–2025)",
+      "Company-wide Project Prize (2024 H1)",
+      "Company-wide Solution & Technology Prize (2025 H1)"
+    ]
+  },
+  {
+    "organization": "MACROMILL, INC., Japan",
+    "period": "Apr 2022 – Jan 2023",
+    "roles": [
+      {
+        "title": "Researcher",
+        "period": "",
+        "description": "Conducted research on consumer behavior and market trends using survey data and statistical analysis to provide insights for marketing strategies and product development."
+      }
+    ],
+    "highlights": []
+  },
+  {
+    "organization": "ZENKIGEN, INC., Japan",
+    "period": "Aug 2021 – Mar 2022",
+    "roles": [
+      {
+        "title": "Data Scientist (Internship)",
+        "period": "",
+        "description": "Worked on applied data science projects related to interview and communication data, supporting the development of practical analytical approaches in real business settings."
+      }
+    ],
+    "highlights": []
+  }
+]

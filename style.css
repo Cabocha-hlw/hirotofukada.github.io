@@ -119,12 +119,12 @@ ul {
   padding-top: 0;
 }
 
-.work-citation em {
-  font-style: italic;
+.work-citation strong {
+  font-weight: 600;
 }
 
-.work-citation {
-  line-height: 1.8;
+.work-citation em {
+  font-style: italic;
 }
 
 .work-description {

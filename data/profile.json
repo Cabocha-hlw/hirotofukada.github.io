@@ -1,0 +1,19 @@
+{
+  "name": "Hiroto Fukada",
+  "tagline": "Data Scientist / Product Manager / PhD Student",
+  "about": "I work across industry and academia as a Data Scientist, Product Manager, and Research Assistant. My work spans the design of data products and analytical solutions in practice, as well as research on LLMs, network science, and supply-chain systems. My core strength lies in structuring ambiguous real-world problems into rigorous analytical frameworks, and turning them into actionable strategies, decision-support systems, and research outputs.",
+  "contacts": [
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/"
+    },
+    {
+      "label": "Email",
+      "url": "mailto:your-email@example.com"
+    },
+    {
+      "label": "GitHub",
+      "url": "https://github.com/your-username"
+    }
+  ]
+}
