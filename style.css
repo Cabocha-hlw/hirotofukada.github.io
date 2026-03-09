@@ -201,6 +201,31 @@ ul {
   margin: 0.3rem 0;
 }
 
+.education-item {
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.education-item:first-of-type {
+  margin-top: 1rem;
+}
+
+.education-item h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.education-meta {
+  margin: 0 0 0.75rem;
+  color: var(--muted);
+}
+
+.education-item p {
+  margin: 0.3rem 0;
+}
+
 .experience-highlights {
   margin-top: 1.25rem;
   padding-top: 1rem;
