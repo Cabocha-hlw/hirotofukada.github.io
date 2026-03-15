@@ -47,9 +47,10 @@
     "selfAuthors": ["Fukada, H."],
     "year": 2026,
     "month": 6,
-    "title": "Resilience of China’s Domestic Inter-Firm Transaction Network via Bow-Tie Architecture and LLM-Optimized OSINT",
+    "title": "Resilience of China's Domestic Inter-Firm Transaction Network via Bow-Tie Architecture and LLM-Optimized OSINT",
     "venue": "NetSci 2026",
     "status": "Accepted for poster presentation",
+    "status_ja": "ポスター発表 採択",
     "links": []
   },
   {
@@ -61,6 +62,7 @@
     "title": "Complementing Benchmark Supply-Chain Data with OSINT: Toward Reconstructing Real-World Supply-Chain Networks",
     "venue": "NetSci 2026 Satellite Workshop on Economic and Financial Networks",
     "status": "Scheduled for presentation",
+    "status_ja": "発表予定",
     "links": []
   },
   {
@@ -88,15 +90,20 @@
   {
     "type": "professional",
     "title": "Company-wide Solution & Technology Prize (2025 H1)",
+    "title_ja": "全社ソリューション＆テクノロジー賞（2025年上半期）",
     "meta": "Data Analyst, Septeni Japan",
+    "meta_ja": "データアナリスト、株式会社セプテーニ",
     "description": "Recognized for outstanding contributions to the development and implementation of analytical solutions that significantly improved business outcomes, demonstrating excellence in data-driven strategy and innovation.",
+    "description_ja": "分析ソリューションの開発・実装における顕著な貢献が認められ受賞。データドリブンな戦略とイノベーションにおける卓越性を示した。",
     "links": []
   },
   {
     "type": "professional",
     "title": "データクリーンルーム（DCR）とマーケティングミックスモデリング（MMM）で実現する次世代メディアマーケティング ～プライバシー保護と予算最適化の両立～",
     "meta": "Data Analyst, Septeni Japan",
+    "meta_ja": "データアナリスト、株式会社セプテーニ",
     "description": "Developed and implemented a next-generation media marketing solution that integrates Data Clean Room (DCR) and Marketing Mix Modeling (MMM) to achieve both privacy protection and budget optimization.",
+    "description_ja": "データクリーンルーム（DCR）とマーケティングミックスモデリング（MMM）を統合し、プライバシー保護と予算最適化を両立する次世代メディアマーケティングソリューションを開発・実装。",
     "links": [
       {
         "label": "Press Release",
@@ -108,7 +115,9 @@
     "type": "professional",
     "title": "セプテーニ、DMLを用いた新たな因果推論のスキームを、広告主のマーケティングにおける意思決定を横断的に支援するソリューション「XYhai」に導入、提供開始",
     "meta": "Data Analyst, Septeni Japan",
+    "meta_ja": "データアナリスト、株式会社セプテーニ",
     "description": "Implemented XYhai, a solution that incorporates a causal inference scheme using Double Machine Learning (DML) to support cross-cutting decision-making in marketing strategies.",
+    "description_ja": "二重機械学習（DML）を用いた因果推論スキームを組み込み、マーケティング戦略における横断的な意思決定を支援するソリューション「XYhai」を導入・提供開始。",
     "links": [
       {
         "label": "Press Release",

@@ -1,14 +1,20 @@
 [
   {
     "institution": "The Graduate University for Advanced Studies (SOKENDAI)",
+    "institution_ja": "総合研究大学院大学（SOKENDAI）",
     "program": "PhD Program in Informatics",
+    "program_ja": "情報学専攻 博士後期課程",
     "period": "Oct 2025 – Present",
-    "description": "PhD student working on supply-chain analysis, LLM applications, network science, and computational social science."
+    "description": "PhD student working on supply-chain analysis, LLM applications, network science, and computational social science.",
+    "description_ja": "サプライチェーン分析、LLM応用、ネットワーク科学、計算社会科学を研究テーマとする博士課程学生。"
   },
   {
     "institution": "Doshisha University",
+    "institution_ja": "同志社大学",
     "program": "B.A. in Culture and Information Science",
+    "program_ja": "文化情報学部 文化情報学科",
     "period": "Apr 2018 – Mar 2022",
-    "description": "Studied statistics, data analysis, and information science, with a focus on quantitative approaches to social and business problems."
+    "description": "Studied statistics, data analysis, and information science, with a focus on quantitative approaches to social and business problems.",
+    "description_ja": "統計学、データ分析、情報科学を学び、社会・ビジネス問題への定量的アプローチを探求。"
   }
 ]

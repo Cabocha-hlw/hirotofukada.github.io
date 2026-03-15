@@ -1,7 +1,9 @@
 {
   "name": "Hiroto Fukada",
   "tagline": "Data Scientist / Product Manager / PhD Student",
+  "tagline_ja": "データサイエンティスト / プロダクトマネージャー / 博士課程学生",
   "about": "I work across industry and academia as a Data Scientist, Product Manager, and Research Assistant. My work spans the design of data products and analytical solutions in practice, as well as research on LLMs, network science, and supply-chain systems. My core strength lies in structuring ambiguous real-world problems into rigorous analytical frameworks, and turning them into actionable strategies, decision-support systems, and research outputs.",
+  "about_ja": "データサイエンティスト、プロダクトマネージャー、リサーチアシスタントとして産業と学術の双方で活動しています。データプロダクトや分析ソリューションの設計から、LLM・ネットワーク科学・サプライチェーンシステムの研究まで幅広く取り組んでいます。曖昧な現実の問題を厳密な分析フレームワークへと構造化し、実行可能な戦略・意思決定支援システム・研究成果へと転換することが強みです。",
   "contacts": [
     {
       "label": "LinkedIn",

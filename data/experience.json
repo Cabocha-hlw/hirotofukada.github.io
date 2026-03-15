@@ -1,59 +1,81 @@
 [
   {
     "organization": "National Institute of Informatics (NII), Japan",
+    "organization_ja": "国立情報学研究所（NII）",
     "period": "Nov 2025 – Present",
     "roles": [
       {
         "title": "Research Assistant",
+        "title_ja": "リサーチアシスタント",
         "period": "",
-        "description": "Conducting research on LLMs, network science, and their applications to supply-chain analysis, with a focus on connecting methodological research to real-world economic and industrial systems."
+        "description": "Conducting research on LLMs, network science, and their applications to supply-chain analysis, with a focus on connecting methodological research to real-world economic and industrial systems.",
+        "description_ja": "LLM、ネットワーク科学、およびサプライチェーン分析への応用に関する研究を実施。方法論的研究を現実の経済・産業システムへ結びつけることに注力している。"
       }
     ],
-    "highlights": []
+    "highlights": [],
+    "highlights_ja": []
   },
   {
     "organization": "Septeni Japan, Inc., Japan",
+    "organization_ja": "株式会社セプテーニ",
     "period": "Feb 2023 – Present",
     "roles": [
       {
-        "title": "Lead of Data Analytics Unit",
+        "title": "Product Manager",
+        "title_ja": "プロダクトマネージャー",
         "period": "Jul 2024 – Present",
-        "description": "Leading analytics initiatives for marketing and business decision making, with a focus on data-driven strategy, team development, and analytical solution design."
+        "description": "Leading the planning and development of statistical analysis and machine learning products for marketing applications. Responsible for project management, requirements definition, and stakeholder management to maximize business value.",
+        "description_ja": "マーケティング向けの統計解析、機械学習プロダクトの企画・開発を推進。プロジェクトマネジメント、要件定義、ステークホルダーマネジメントを担当し、ビジネス価値の最大化を目指している。"
       },
       {
         "title": "Data Analyst",
+        "title_ja": "データアナリスト",
         "period": "Feb 2023 – Present",
-        "description": "Worked on the planning and implementation of analytical solutions using statistical modeling, machine learning, and causal inference for marketing applications."
+        "description": "Utilized statistical modeling, machine learning, and causal inference to drive analysis of advertising effectiveness and optimization of marketing budgets.",
+        "description_ja": "統計モデリング、機械学習、因果推論を活用して広告施策の効果分析やマーケティング予算の最適化を推進。"
       }
     ],
     "highlights": [
       "Multiple MVP awards (2023–2025)",
       "Company-wide Project Prize (2024 H1)",
       "Company-wide Solution & Technology Prize (2025 H1)"
+    ],
+    "highlights_ja": [
+      "MVP賞 複数回受賞（2023〜2025年）",
+      "全社プロジェクト賞（2024年上半期）",
+      "全社ソリューション＆テクノロジー賞（2025年上半期）"
     ]
   },
   {
     "organization": "MACROMILL, Inc., Japan",
+    "organization_ja": "株式会社マクロミル",
     "period": "Apr 2022 – Jan 2023",
     "roles": [
       {
         "title": "Researcher",
+        "title_ja": "リサーチャー",
         "period": "",
-        "description": "Conducted research on consumer behavior and market trends using survey data and statistical analysis to provide insights for marketing strategies and product development."
+        "description": "Conducted research on consumer behavior and market trends using survey data and statistical analysis to provide insights for marketing strategies and product development.",
+        "description_ja": "サーベイデータと統計分析を用いた消費者行動・市場トレンドの研究を実施。マーケティング戦略と製品開発に向けたインサイトを提供。"
       }
     ],
-    "highlights": []
+    "highlights": [],
+    "highlights_ja": []
   },
   {
     "organization": "ZENKIGEN, Inc., Japan",
+    "organization_ja": "株式会社ゼンキゲン",
     "period": "Aug 2021 – Mar 2022",
     "roles": [
       {
         "title": "Data Scientist (Internship)",
+        "title_ja": "データサイエンティスト（インターン）",
         "period": "",
-        "description": "Worked on applied data science projects related to interview and communication data, supporting the development of practical analytical approaches in real business settings."
+        "description": "Worked on applied data science projects related to interview and communication data, supporting the development of practical analytical approaches in real business settings.",
+        "description_ja": "面接・コミュニケーションデータに関する応用データサイエンスプロジェクトに従事。実ビジネス環境における実践的な分析手法の開発を支援。"
       }
     ],
-    "highlights": []
+    "highlights": [],
+    "highlights_ja": []
   }
 ]

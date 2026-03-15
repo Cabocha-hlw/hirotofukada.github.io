@@ -1,51 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html-root">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hiroto Fukada</title>
   <meta name="description" content="Portfolio of Hiroto Fukada" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="site-header">
     <div class="container">
-      <h1 id="profile-name">Hiroto Fukada</h1>
-      <p id="profile-tagline" class="tagline"></p>
-      <nav>
-        <a href="#about">About</a>
-        <a href="#work">Selected Work</a>
-        <a href="#experience">Experience</a>
-        <a href="#education">Education</a>
-        <a href="#contact">Contact</a>
-      </nav>
+      <div class="header-inner">
+        <span class="header-name">Hiroto Fukada</span>
+        <nav>
+          <a href="#about" data-i18n="nav.about">About</a>
+          <a href="#work" data-i18n="nav.work">Work</a>
+          <a href="#experience" data-i18n="nav.experience">Experience</a>
+          <a href="#education" data-i18n="nav.education">Education</a>
+          <a href="#contact" data-i18n="nav.contact">Contact</a>
+        </nav>
+        <div class="lang-toggle">
+          <button class="lang-btn active" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ja">JA</button>
+        </div>
+      </div>
     </div>
   </header>
+
+  <div class="hero">
+    <div class="container">
+      <h1 id="profile-name">Hiroto Fukada</h1>
+      <p id="profile-tagline" class="tagline"></p>
+    </div>
+  </div>
 
   <main>
     <section id="about" class="section">
       <div class="container">
-        <h2>About</h2>
+        <span class="section-eyebrow" data-i18n="eyebrow.about">About</span>
+        <h2 data-i18n="section.about">Overview</h2>
         <p id="profile-about"></p>
       </div>
     </section>
 
     <section id="work" class="section">
       <div class="container">
-        <h2>Selected Work</h2>
+        <span class="section-eyebrow" data-i18n="eyebrow.portfolio">Portfolio</span>
+        <h2 data-i18n="section.work">Selected Work</h2>
 
         <div class="work-category">
-          <h3>Research Outputs</h3>
+          <h3 data-i18n="workCategory.research">Research Outputs</h3>
           <ul id="research-outputs" class="work-list"></ul>
         </div>
 
         <div class="work-category">
-          <h3>Upcoming Presentations</h3>
+          <h3 data-i18n="workCategory.upcoming">Upcoming Presentations</h3>
           <ul id="upcoming-presentations" class="work-list"></ul>
         </div>
 
         <div class="work-category">
-          <h3>Professional Works</h3>
+          <h3 data-i18n="workCategory.professional">Professional Works</h3>
           <ul id="professional-works" class="work-list"></ul>
         </div>
       </div>
@@ -53,21 +69,24 @@
 
     <section id="experience" class="section">
       <div class="container">
-        <h2>Experience</h2>
+        <span class="section-eyebrow" data-i18n="eyebrow.career">Career</span>
+        <h2 data-i18n="section.experience">Experience</h2>
         <div id="experience-list"></div>
       </div>
     </section>
 
     <section id="education" class="section">
       <div class="container">
-        <h2>Education</h2>
+        <span class="section-eyebrow" data-i18n="eyebrow.academic">Academic</span>
+        <h2 data-i18n="section.education">Education</h2>
         <div id="education-list"></div>
       </div>
     </section>
 
     <section id="contact" class="section">
       <div class="container">
-        <h2>Contact</h2>
+        <span class="section-eyebrow" data-i18n="eyebrow.contact">Get in Touch</span>
+        <h2 data-i18n="section.contact">Contact</h2>
         <ul id="contact-list"></ul>
       </div>
     </section>
