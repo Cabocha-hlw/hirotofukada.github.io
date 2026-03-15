@@ -6,8 +6,10 @@
     "year": 2026,
     "month": 3,
     "title": "Supply Chain OSINT Agentによる公的統計の死角を補完する中台産業の相互依存性分析",
-    "venue": "第5回計算社会科学会大会",
-    "status": "ポスター発表",
+    "venue": "CSSJ 2026",
+    "venue_ja": "第5回計算社会科学会大会",
+    "status": "Poster Presentation",
+    "status_ja": "ポスター発表",
     "links": []
   },
   {
@@ -17,8 +19,10 @@
     "year": 2026,
     "month": 3,
     "title": "Supply Chain OSINT Agentによる公的統計の死角を補完する中台産業ネットワークと相互依存性分析",
-    "venue": "第21回ネットワーク生態学シンポジウム",
-    "status": "優秀ポスター賞",
+    "venue": "NetEco 2026",
+    "venue_ja": "第21回ネットワーク生態学シンポジウム",
+    "status": "Best Poster Award",
+    "status_ja": "優秀ポスター賞",
     "links": []
   },
   {
@@ -27,8 +31,10 @@
     "selfAuthors": ["深田大登"],
     "year": 2021,
     "title": "テレビCMの視聴覚特徴量がもたらす消費者の態度変容について",
-    "venue": "株式会社野村総合研究所マーケティング分析コンテスト 2021",
+    "venue": "NRI Marketing Analysis Contest 2021",
+    "venue_ja": "株式会社野村総合研究所マーケティング分析コンテスト 2021",
     "status": "Special Prize",
+    "status_ja": "特別賞",
     "links": []
   },
   {
@@ -37,8 +43,10 @@
     "selfAuthors": ["深田大登"],
     "year": 2021,
     "title": "定額動画配信サービスにおけるランキングのパーソナライズ化",
-    "venue": "経営科学系研究部会連合協議会主催 令和2年度データ解析コンペティション関西予選",
-    "status": "優秀賞",
+    "venue": "令和2年度データ解析コンペティション関西予選",
+    "venue_ja": "令和2年度データ解析コンペティション関西予選",
+    "status": "Excellence Award",
+    "status_ja": "優秀賞",
     "links": []
   },
   {
@@ -72,8 +80,10 @@
     "year": 2026,
     "month": 6,
     "title": "Supply Chain OSINT Agent: LLMとプロンプト最適化によるサプライチェーン知識抽出パイプライン",
-    "venue": "2026年度人工知能学会全国大会（第40回）",
-    "status": "発表予定",
+    "venue": "JSAI 2026",
+    "venue_ja": "2026年度人工知能学会全国大会（第40回）",
+    "status": "Scheduled for presentation",
+    "status_ja": "発表予定",
     "links": []
   },
   {
@@ -83,8 +93,10 @@
     "year": 2027,
     "month": 3,
     "title": "TBD",
-    "venue": "第22回ネットワーク生態学シンポジウム",
-    "status": "招待講演予定",
+    "venue": "NetEco 2027",
+    "venue_ja": "第22回ネットワーク生態学シンポジウム",
+    "status": "Invited talk (scheduled)",
+    "status_ja": "招待講演予定",
     "links": []
   },
   {

@@ -109,6 +109,10 @@ function sortWorksByDateDesc(items) {
   return [...items].sort((a, b) => getSortValue(b) - getSortValue(a));
 }
 
+function sortWorksByDateAsc(items) {
+  return [...items].sort((a, b) => getSortValue(a) - getSortValue(b));
+}
+
 function renderLinks(links = []) {
   const valid = links.filter((l) => l.url && l.url.trim() !== "");
   if (valid.length === 0) return "";
@@ -131,7 +135,7 @@ function renderResearchItem(item) {
       <p class="work-citation">
         ${formatAuthors(item.authors, item.selfAuthors)}. (${escapeHTML(String(item.year))}).
         "${escapeHTML(item.title)}."
-        <em>${escapeHTML(item.venue)}</em>. ${escapeHTML(t(item, "status"))}.
+        <em>${escapeHTML(t(item, "venue"))}</em>. ${escapeHTML(t(item, "status"))}.
       </p>
       ${renderLinks(item.links)}
     </li>
@@ -175,8 +179,9 @@ function renderExperienceItem(group) {
       `
       : "";
 
+  const isActive = group.period.includes("Present");
   return `
-    <article class="experience-group">
+    <article class="experience-group${isActive ? " is-active" : ""}">
       <h3>${escapeHTML(t(group, "organization"))}</h3>
       <p class="experience-meta">${escapeHTML(group.period)}</p>
       ${rolesHTML}
@@ -186,8 +191,9 @@ function renderExperienceItem(group) {
 }
 
 function renderEducationItem(item) {
+  const isActive = item.period.includes("Present");
   return `
-    <article class="education-item">
+    <article class="education-item${isActive ? " is-active" : ""}">
       <h3>${escapeHTML(t(item, "institution"))}</h3>
       <p class="education-meta">${escapeHTML(t(item, "program"))} / ${escapeHTML(item.period)}</p>
       <p>${escapeHTML(t(item, "description"))}</p>
@@ -237,7 +243,7 @@ function renderAll(data) {
     .map(renderResearchItem)
     .join("");
 
-  document.getElementById("upcoming-presentations").innerHTML = sortWorksByDateDesc(
+  document.getElementById("upcoming-presentations").innerHTML = sortWorksByDateAsc(
     works.filter((item) => item.type === "upcoming")
   )
     .map(renderResearchItem)
@@ -307,6 +313,23 @@ const observer = new IntersectionObserver(
   { threshold: 0.08 }
 );
 document.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
+
+// ── Scrollspy ──────────────────────────────────────────────────
+const navLinks = document.querySelectorAll('nav a[href^="#"]');
+const spyObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach((a) => {
+          a.classList.toggle("active", a.getAttribute("href") === `#${id}`);
+        });
+      }
+    });
+  },
+  { rootMargin: "-40% 0px -55% 0px" }
+);
+document.querySelectorAll("section[id]").forEach((s) => spyObserver.observe(s));
 
 // ── Event listeners ────────────────────────────────────────────
 document.querySelectorAll(".lang-btn").forEach((btn) => {
