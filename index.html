@@ -10,6 +10,9 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+  <div class="progress-bar" id="progress-bar"></div>
+
   <header class="site-header">
     <div class="container">
       <div class="header-inner">
@@ -39,55 +42,82 @@
   <main>
     <section id="about" class="section">
       <div class="container">
-        <span class="section-eyebrow" data-i18n="eyebrow.about">About</span>
-        <h2 data-i18n="section.about">Overview</h2>
-        <p id="profile-about"></p>
+        <div class="section-inner fade-up">
+          <div class="section-heading">
+            <span class="section-eyebrow" data-i18n="eyebrow.about">About</span>
+            <h2 data-i18n="section.about">Overview</h2>
+          </div>
+          <div class="section-content">
+            <p id="profile-about"></p>
+          </div>
+        </div>
       </div>
     </section>
 
     <section id="work" class="section">
       <div class="container">
-        <span class="section-eyebrow" data-i18n="eyebrow.portfolio">Portfolio</span>
-        <h2 data-i18n="section.work">Selected Work</h2>
-
-        <div class="work-category">
-          <h3 data-i18n="workCategory.research">Research Outputs</h3>
-          <ul id="research-outputs" class="work-list"></ul>
-        </div>
-
-        <div class="work-category">
-          <h3 data-i18n="workCategory.upcoming">Upcoming Presentations</h3>
-          <ul id="upcoming-presentations" class="work-list"></ul>
-        </div>
-
-        <div class="work-category">
-          <h3 data-i18n="workCategory.professional">Professional Works</h3>
-          <ul id="professional-works" class="work-list"></ul>
+        <div class="section-inner fade-up">
+          <div class="section-heading">
+            <span class="section-eyebrow" data-i18n="eyebrow.portfolio">Portfolio</span>
+            <h2 data-i18n="section.work">Selected Work</h2>
+          </div>
+          <div class="section-content">
+            <div class="work-category">
+              <h3 data-i18n="workCategory.research">Research Outputs</h3>
+              <ul id="research-outputs" class="work-list"></ul>
+            </div>
+            <div class="work-category">
+              <h3 data-i18n="workCategory.upcoming">Upcoming Presentations</h3>
+              <ul id="upcoming-presentations" class="work-list"></ul>
+            </div>
+            <div class="work-category">
+              <h3 data-i18n="workCategory.professional">Professional Works</h3>
+              <ul id="professional-works" class="work-list"></ul>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <section id="experience" class="section">
       <div class="container">
-        <span class="section-eyebrow" data-i18n="eyebrow.career">Career</span>
-        <h2 data-i18n="section.experience">Experience</h2>
-        <div id="experience-list"></div>
+        <div class="section-inner fade-up">
+          <div class="section-heading">
+            <span class="section-eyebrow" data-i18n="eyebrow.career">Career</span>
+            <h2 data-i18n="section.experience">Experience</h2>
+          </div>
+          <div class="section-content">
+            <div id="experience-list"></div>
+          </div>
+        </div>
       </div>
     </section>
 
     <section id="education" class="section">
       <div class="container">
-        <span class="section-eyebrow" data-i18n="eyebrow.academic">Academic</span>
-        <h2 data-i18n="section.education">Education</h2>
-        <div id="education-list"></div>
+        <div class="section-inner fade-up">
+          <div class="section-heading">
+            <span class="section-eyebrow" data-i18n="eyebrow.academic">Academic</span>
+            <h2 data-i18n="section.education">Education</h2>
+          </div>
+          <div class="section-content">
+            <div id="education-list"></div>
+          </div>
+        </div>
       </div>
     </section>
 
     <section id="contact" class="section">
       <div class="container">
-        <span class="section-eyebrow" data-i18n="eyebrow.contact">Get in Touch</span>
-        <h2 data-i18n="section.contact">Contact</h2>
-        <ul id="contact-list"></ul>
+        <div class="section-inner fade-up">
+          <div class="section-heading">
+            <span class="section-eyebrow" data-i18n="eyebrow.contact">Get in Touch</span>
+            <h2 data-i18n="section.contact">Contact</h2>
+          </div>
+          <div class="section-content">
+            <ul id="contact-list"></ul>
+          </div>
+        </div>
       </div>
     </section>
   </main>

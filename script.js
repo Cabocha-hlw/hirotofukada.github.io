@@ -285,6 +285,29 @@ async function init() {
   }
 }
 
+// ── Scroll progress bar ────────────────────────────────────────
+const progressBar = document.getElementById("progress-bar");
+function updateProgress() {
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = total > 0 ? `${(scrolled / total) * 100}%` : "0%";
+}
+window.addEventListener("scroll", updateProgress, { passive: true });
+
+// ── Intersection Observer fade-in ──────────────────────────────
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.08 }
+);
+document.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
+
 // ── Event listeners ────────────────────────────────────────────
 document.querySelectorAll(".lang-btn").forEach((btn) => {
   btn.addEventListener("click", () => setLang(btn.dataset.lang));
