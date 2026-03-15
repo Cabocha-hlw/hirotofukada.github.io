@@ -154,48 +154,109 @@ nav a:hover { background: var(--surface-2); color: var(--text); opacity: 1; }
 
 .hero {
   position: relative;
-  padding: 6rem 0 4.5rem;
+  padding: 5.5rem 0 4rem;
   border-bottom: 1px solid var(--line);
   overflow: hidden;
 }
 
-/* Decorative gradient orbs */
-.hero::before,
-.hero::after {
+/* Soft color wash behind the network */
+.hero::before {
   content: '';
   position: absolute;
+  width: 600px;
+  height: 600px;
   border-radius: 50%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+  top: -180px;
+  right: -60px;
   pointer-events: none;
-  filter: blur(80px);
+  filter: blur(60px);
 }
-.hero::before {
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
-  top: -120px;
-  right: -80px;
+
+/* ── Network background SVG ──────────────────────────────────── */
+
+.hero-network {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 62%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  z-index: 0;
 }
-.hero::after {
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.09) 0%, transparent 70%);
-  bottom: -60px;
-  left: 30%;
+
+.network-svg {
+  width: 100%;
+  height: auto;
+  color: var(--accent);
+  animation: fadeIn 1.2s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.network-edges line {
+  stroke: currentColor;
+  stroke-opacity: 0.18;
+  stroke-width: 1;
+}
+
+.network-halos circle {
+  fill: currentColor;
+  fill-opacity: 0.05;
+}
+
+.network-nodes circle {
+  fill: currentColor;
+  fill-opacity: 0.28;
+}
+
+.network-hub {
+  fill-opacity: 0.5;
+  animation: networkPulse 4s ease-in-out infinite;
+}
+
+.network-center {
+  fill-opacity: 0.6;
+  animation: networkPulse 3.5s ease-in-out infinite;
+}
+
+@keyframes networkPulse {
+  0%, 100% { fill-opacity: 0.45; }
+  50%       { fill-opacity: 0.75; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Hero inner layout ───────────────────────────────────────── */
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+}
+
+.hero-text {
+  flex: 1;
+  min-width: 0;
 }
 
 .hero h1 {
   margin: 0;
   font-family: 'Instrument Serif', Georgia, serif;
-  font-size: clamp(3rem, 7vw, 5rem);
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
   font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 1.05;
-  background: linear-gradient(135deg, var(--text) 30%, var(--accent) 100%);
+  background: linear-gradient(135deg, var(--text) 20%, var(--accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-
-  /* Entrance animation */
   animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -204,6 +265,42 @@ nav a:hover { background: var(--surface-2); color: var(--text); opacity: 1; }
   color: var(--text-2);
   font-size: 1rem;
   animation: fadeUp 0.7s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Profile photo ───────────────────────────────────────────── */
+
+.hero-photo-wrap {
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  animation: fadeUp 0.7s 0.15s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-photo {
+  display: block;
+  width: 172px;
+  height: 172px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 12%;
+  /* ring: gap + border */
+  box-shadow:
+    0 0 0 3px var(--bg),
+    0 0 0 4.5px var(--line),
+    0 12px 40px rgba(0, 0, 0, 0.14);
+}
+
+@media (max-width: 680px) {
+  .hero-inner {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 1.75rem;
+  }
+  .hero-photo {
+    width: 120px;
+    height: 120px;
+  }
+  .hero-network { width: 100%; opacity: 0.5; }
 }
 
 /* ── Entrance animations ──────────────────────────────────────── */
