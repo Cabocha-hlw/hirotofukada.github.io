@@ -63,18 +63,6 @@
   },
   {
     "type": "upcoming",
-    "authors": ["Fukada, H.", "Mizuno, T."],
-    "selfAuthors": ["Fukada, H."],
-    "year": 2026,
-    "month": 6,
-    "title": "Complementing Benchmark Supply-Chain Data with OSINT: Toward Reconstructing Real-World Supply-Chain Networks",
-    "venue": "NetSci 2026 Satellite Workshop on Economic and Financial Networks",
-    "status": "Scheduled for presentation",
-    "status_ja": "発表予定",
-    "links": []
-  },
-  {
-    "type": "upcoming",
     "authors": ["深田大登", "水野貴之"],
     "selfAuthors": ["深田大登"],
     "year": 2026,
