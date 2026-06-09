@@ -57,8 +57,9 @@
     "month": 6,
     "title": "Resilience of China's Domestic Inter-Firm Transaction Network via Bow-Tie Architecture and LLM-Optimized OSINT",
     "venue": "NetSci 2026",
-    "status": "Accepted for poster presentation",
-    "status_ja": "ポスター発表 採択",
+    "status": "Poster presentation",
+    "status_ja": "ポスター発表",
+    "added": "2026-06-09",
     "links": []
   },
   {
@@ -70,6 +71,7 @@
     "title": "Snippet-Driven Supply Chain Discovery with LLMs: Scaling Visibility in China",
     "venue": "arXiv preprint arXiv:2605.27845",
     "status": "Preprint",
+    "added": "2026-06-09",
     "links": [
       {
         "label": "arXiv",
@@ -86,8 +88,9 @@
     "title": "Supply Chain OSINT Agent: LLMとプロンプト最適化によるサプライチェーン知識抽出パイプライン",
     "venue": "JSAI 2026",
     "venue_ja": "2026年度人工知能学会全国大会（第40回）",
-    "status": "Scheduled for presentation",
-    "status_ja": "発表予定",
+    "status": "Oral presentation",
+    "status_ja": "口頭発表",
+    "added": "2026-06-09",
     "links": []
   },
   {

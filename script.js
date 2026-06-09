@@ -129,11 +129,19 @@ function renderLinks(links = []) {
 }
 
 // ── Render functions ──────────────────────────────────────────
+function isNew(item) {
+  if (!item.added) return false;
+  const now = new Date();
+  const cutoff = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+  return new Date(item.added) >= cutoff;
+}
+
 function renderResearchItem(item) {
+  const newBadge = isNew(item) ? `<span class="badge-new">[New!]</span> ` : "";
   return `
     <li class="work-item">
       <p class="work-citation">
-        ${formatAuthors(item.authors, item.selfAuthors)}. (${escapeHTML(String(item.year))}).
+        ${newBadge}${formatAuthors(item.authors, item.selfAuthors)}. (${escapeHTML(String(item.year))}).
         "${escapeHTML(item.title)}."
         <em>${escapeHTML(t(item, "venue"))}</em>. ${escapeHTML(t(item, "status"))}.
       </p>
@@ -233,6 +241,10 @@ function renderAll(data) {
   const { profile, works, experience, education } = data;
 
   document.getElementById("profile-name").textContent = profile.name;
+  const calloutEl = document.getElementById("profile-callout");
+  const calloutText = t(profile, "callout");
+  calloutEl.textContent = calloutText;
+  calloutEl.style.display = calloutText ? "" : "none";
   document.getElementById("profile-tagline").textContent = t(profile, "tagline");
   document.getElementById("profile-about").textContent = t(profile, "about");
   document.getElementById("contact-list").innerHTML = renderContacts(profile.contacts);

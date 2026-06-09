@@ -275,6 +275,14 @@ nav a.active { color: var(--text); background: var(--surface-2); }
   animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+.hero-callout {
+  margin: 0.5rem 0 0;
+  color: var(--accent);
+  font-size: 0.95rem;
+  font-style: italic;
+  animation: fadeUp 0.7s 0.08s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 .tagline {
   margin: 1rem 0 0;
   color: var(--text-2);
@@ -434,6 +442,14 @@ ul { padding-left: 1.2rem; }
 
 .work-citation strong { font-weight: 600; }
 .work-citation em { font-style: italic; }
+
+.badge-new {
+  color: #e53e3e;
+  font-weight: 700;
+  font-size: 0.8em;
+  vertical-align: middle;
+  letter-spacing: 0.01em;
+}
 
 .work-description {
   margin: 0.4rem 0 0;
