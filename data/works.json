@@ -50,7 +50,7 @@
     "links": []
   },
   {
-    "type": "upcoming",
+    "type": "research",
     "authors": ["Fukada, H.", "Mizuno, T."],
     "selfAuthors": ["Fukada, H."],
     "year": 2026,
@@ -62,7 +62,23 @@
     "links": []
   },
   {
-    "type": "upcoming",
+    "type": "research",
+    "authors": ["Fukada, H.", "Mizuno, T."],
+    "selfAuthors": ["Fukada, H."],
+    "year": 2026,
+    "month": 5,
+    "title": "Snippet-Driven Supply Chain Discovery with LLMs: Scaling Visibility in China",
+    "venue": "arXiv preprint arXiv:2605.27845",
+    "status": "Preprint",
+    "links": [
+      {
+        "label": "arXiv",
+        "url": "https://arxiv.org/abs/2605.27845"
+      }
+    ]
+  },
+  {
+    "type": "research",
     "authors": ["深田大登", "水野貴之"],
     "selfAuthors": ["深田大登"],
     "year": 2026,
