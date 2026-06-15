@@ -246,6 +246,12 @@ function renderAll(data) {
   calloutEl.textContent = calloutText;
   calloutEl.style.display = calloutText ? "" : "none";
   document.getElementById("profile-tagline").textContent = t(profile, "tagline");
+  const topicsEl = document.getElementById("profile-topics");
+  if (profile.topics && profile.topics.length > 0) {
+    topicsEl.innerHTML = profile.topics
+      .map((tag) => `<span class="topic-tag">#${escapeHTML(tag)}</span>`)
+      .join("");
+  }
   document.getElementById("profile-about").textContent = t(profile, "about");
   document.getElementById("contact-list").innerHTML = renderContacts(profile.contacts);
 
