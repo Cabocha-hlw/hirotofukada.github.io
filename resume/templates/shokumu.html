@@ -48,31 +48,11 @@
     {{/if}}
     {{#if env_line}}<p class="kv env"><span class="lbl">環境</span>{{env_line}}</p>{{/if}}
     {{#if project_rows}}
-    <p class="block-lbl">プロジェクト例（太字は「主要プロジェクト」に詳細を記載）</p>
+    <p class="block-lbl">プロジェクト例</p>
     <ul class="pj-list">
       {{#each project_rows}}<li class="{{cls}}">{{title}}</li>
       {{/each}}
     </ul>
-    {{/if}}
-    {{#if featured_projects}}
-    <p class="block-lbl">主要プロジェクト</p>
-    {{#each featured_projects}}
-    <div class="pj-card">
-      <h4>{{title}}</h4>
-      <p class="pj-period">{{period_label}}{{#if scale_line}}　／　{{scale_line}}{{/if}}</p>
-      <p class="prose">{{overview}}</p>
-      {{#if phases}}<p class="kv"><span class="lbl">担当フェーズ</span>{{phases}}</p>{{/if}}
-      {{#if details}}
-      <p class="block-lbl">業務内容</p>
-      <ul>{{#each details}}<li>{{.}}</li>{{/each}}</ul>
-      {{/if}}
-      {{#if outcomes}}
-      <p class="block-lbl">実績・取り組み</p>
-      <ul>{{#each outcomes}}<li>{{.}}</li>{{/each}}</ul>
-      {{/if}}
-      {{#if env_line}}<p class="kv"><span class="lbl">環境</span>{{env_line}}</p>{{/if}}
-    </div>
-    {{/each}}
     {{/if}}
     {{#if media}}
     <p class="block-lbl">メディア掲載</p>

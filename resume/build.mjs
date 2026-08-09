@@ -116,16 +116,6 @@ function buildView(m, worksJson, today) {
       title: p.title,
       cls: p.featured ? 'featured' : '',
     })),
-    featured_projects: (c.projects ?? []).filter((p) => p.featured).map((p) => ({
-      period_label: periodLabel(p.period),
-      title: p.title,
-      overview: (p.overview ?? '').trim(),
-      phases: p.phases ?? '',
-      details: p.details ?? [],
-      outcomes: p.outcomes ?? [],
-      env_line: envLines(p.environment).map((e) => `${e.label}：${e.value}`).join('　／　'),
-      scale_line: p.scale ? [p.scale.members, p.scale.role && `役割：${p.scale.role}`].filter(Boolean).join('　／　') : '',
-    })),
     media: c.media ?? [],
   }));
 

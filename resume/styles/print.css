@@ -1,4 +1,8 @@
-/* A4 印刷用共通スタイル（DESIGN.md §8: 白黒基調・罫線と太字のみ・1カラム） */
+/* A4 印刷用共通スタイル（DESIGN.md §8: 白黒基調・罫線と太字のみ・1カラム）
+   可読性方針:
+   - 本文は黒、補足情報（会社概況・環境・URL・期間サブ表記）はグレーで階層分離
+   - 見出しは「太い下罫線(h2) > 細い下罫線(h3) > 左罫線(h4)」で強弱をつける
+   - 行間・ブロック余白は A4 4枚に収まる範囲で最大化 */
 
 @page { size: A4; margin: 18mm 18mm 16mm; }
 
@@ -6,8 +10,8 @@
 
 body {
   font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
-  font-size: 9.5pt;
-  line-height: 1.36;
+  font-size: 10pt;
+  line-height: 1.5;
   color: #000;
   font-feature-settings: "palt";
 }
@@ -24,35 +28,42 @@ h1 {
   text-indent: 0.6em;
   margin-bottom: 2pt;
 }
-.doc-meta { text-align: right; font-size: 9pt; line-height: 1.5; margin-bottom: 8pt; }
+.doc-meta { text-align: right; font-size: 9pt; line-height: 1.5; margin-bottom: 10pt; }
 
-section { margin-bottom: 5pt; }
+section { margin-bottom: 10pt; }
 
 h2 {
-  font-size: 11.5pt;
-  border-bottom: 1.6pt solid #000;
-  padding-bottom: 1.5pt;
-  margin-bottom: 4pt;
+  font-size: 12.5pt;
+  letter-spacing: 0.04em;
+  border-bottom: 1.5pt solid #000;
+  padding-bottom: 2pt;
+  margin-bottom: 6pt;
   break-after: avoid;
 }
 
 h3 {
+  font-size: 11pt;
+  border-bottom: 0.7pt solid #000;
+  padding-bottom: 1.5pt;
+  margin: 10pt 0 4pt;
+  break-after: avoid;
+}
+.h3-sub { font-weight: normal; font-size: 9pt; color: #555; margin-left: 0.5em; }
+
+h4 {
   font-size: 10pt;
-  border-bottom: 0.6pt solid #000;
-  padding-bottom: 1pt;
+  border-left: 2.5pt solid #000;
+  padding-left: 5pt;
   margin: 6pt 0 2pt;
   break-after: avoid;
 }
-.h3-sub { font-weight: normal; font-size: 8.5pt; }
-
-h4 { font-size: 9.5pt; margin: 4pt 0 1pt; break-after: avoid; }
-.h4-sub { font-weight: normal; font-size: 8.5pt; }
+.h4-sub { font-weight: normal; font-size: 9pt; color: #555; }
 
 p { margin-bottom: 2pt; }
 .prose { white-space: pre-line; text-align: justify; }
-.facts { font-size: 8.5pt; margin-bottom: 4pt; }
+.facts { font-size: 9pt; color: #444; line-height: 1.55; margin-bottom: 6pt; }
 
-.kv { margin-bottom: 1pt; }
+.kv { margin-bottom: 1.5pt; }
 .lbl {
   font-weight: 600;
   margin-right: 0.75em;
@@ -60,51 +71,43 @@ p { margin-bottom: 2pt; }
 .lbl::before { content: "【"; }
 .lbl::after { content: "】"; }
 
-.block-lbl { font-weight: 600; margin: 4pt 0 1pt; break-after: avoid; }
+.block-lbl { font-weight: 600; margin: 5pt 0 1.5pt; break-after: avoid; }
 .block-lbl::before { content: "【"; }
 .block-lbl::after { content: "】"; }
 
-ul { padding-left: 12pt; margin-bottom: 2pt; }
-li { margin-bottom: 0; }
+ul { padding-left: 14pt; margin-bottom: 4pt; }
+li { margin-bottom: 1pt; }
+li::marker { color: #555; }
 ul.tight { margin-bottom: 0; }
 
-.env { font-size: 8.5pt; }
-.url { font-size: 8pt; }
+.env { font-size: 9pt; color: #444; }
+.url { font-size: 8.5pt; color: #444; word-break: break-all; }
 
 /* 表 */
-table { width: 100%; border-collapse: collapse; margin-bottom: 4pt; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 6pt; }
 .grid th, .grid td {
   border: 0.5pt solid #000;
-  padding: 2pt 4pt;
+  padding: 2.5pt 6pt;
   text-align: left;
   vertical-align: top;
 }
 .grid thead th { font-weight: 600; border-bottom-width: 1pt; text-align: center; }
 .grid td:first-child { white-space: nowrap; }
-.w-period { width: 11.5em; white-space: nowrap; }
-.w-role { width: 15em; }
+.w-period { width: 10.5em; white-space: nowrap; }
+.w-role { width: 17.5em; }
 .w-status { width: 5em; }
 .w-skillcat { width: 10.5em; }
 .pj-list li.featured { font-weight: 600; }
 .skills th { font-weight: 600; }
+.skills td { line-height: 1.5; }
 
-.works { font-size: 9pt; }
-.works td { border: none; padding: 0 4pt 1pt 0; vertical-align: top; }
-.w-wdate { width: 6em; white-space: nowrap; }
-
-/* プロジェクトカード */
-.pj-card {
-  border: 0.8pt solid #000;
-  padding: 4pt 6pt;
-  margin-bottom: 5pt;
-}
-.pj-card h4 { border-bottom: 0.5pt solid #000; margin: 0 0 2pt; padding-bottom: 1pt; }
-.pj-period { font-size: 8.5pt; margin-bottom: 3pt; }
+.works { font-size: 9.5pt; }
+.works td { border: none; padding: 0 6pt 2pt 0; vertical-align: top; }
+.w-wdate { width: 6em; white-space: nowrap; color: #444; }
 
 .closing { text-align: right; margin-top: 6pt; }
 
 /* 改ページ制御 */
 tr, .role { break-inside: avoid; }
-.pj-card { break-inside: auto; }
 .company { break-inside: auto; }
 h2, h3, h4, .block-lbl { break-after: avoid; }
