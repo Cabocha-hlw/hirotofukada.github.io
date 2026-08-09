@@ -1,0 +1,13 @@
+{
+  "name": "resume-build",
+  "private": true,
+  "type": "module",
+  "description": "Resume build pipeline (data -> HTML -> PDF). See docs/resume_design/DESIGN.md",
+  "scripts": {
+    "build": "node build.mjs",
+    "check": "node build.mjs --check"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}

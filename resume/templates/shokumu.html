@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>職務経歴書</title>
+<style>{{{css}}}</style>
+</head>
+<body>
+
+<header>
+  <h1>職務経歴書</h1>
+  <p class="doc-meta">{{today}}現在<br>{{meta.name}}</p>
+</header>
+
+<section>
+  <h2>職務要約</h2>
+  <p class="prose">{{summary}}</p>
+</section>
+
+<section>
+  <h2>職務経歴（概要）</h2>
+  <table class="grid career">
+    <thead><tr><th class="w-period">期間</th><th>組織</th><th class="w-role">職種</th></tr></thead>
+    <tbody>
+      {{#each career_rows}}<tr><td>{{period}}</td><td>{{org}}</td><td>{{role}}</td></tr>
+      {{/each}}
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>職務経歴詳細</h2>
+  {{#each companies}}
+  <div class="company">
+    <h3>{{name}}<span class="h3-sub">　勤務期間：{{period_label}}</span></h3>
+    {{#if facts_line}}<p class="facts">{{facts_line}}</p>{{/if}}
+    {{#each roles}}
+    <div class="role">
+      <h4>{{title}}<span class="h4-sub">（{{period_label}}）</span></h4>
+      {{#if team}}<p class="kv"><span class="lbl">所属・体制</span>{{team}}</p>{{/if}}
+      {{#if mission}}<p class="kv"><span class="lbl">担当業務</span>{{mission}}</p>{{/if}}
+      {{#if details}}<ul>{{#each details}}<li>{{.}}</li>{{/each}}</ul>{{/if}}
+    </div>
+    {{/each}}
+    {{#if achievements}}
+    <p class="block-lbl">実績・取り組み</p>
+    <ul>{{#each achievements}}<li>{{.}}</li>{{/each}}</ul>
+    {{/if}}
+    {{#if env_line}}<p class="kv env"><span class="lbl">環境</span>{{env_line}}</p>{{/if}}
+    {{#if project_rows}}
+    <p class="block-lbl">プロジェクト例（太字は「主要プロジェクト」に詳細を記載）</p>
+    <ul class="pj-list">
+      {{#each project_rows}}<li class="{{cls}}">{{title}}</li>
+      {{/each}}
+    </ul>
+    {{/if}}
+    {{#if featured_projects}}
+    <p class="block-lbl">主要プロジェクト</p>
+    {{#each featured_projects}}
+    <div class="pj-card">
+      <h4>{{title}}</h4>
+      <p class="pj-period">{{period_label}}{{#if scale_line}}　／　{{scale_line}}{{/if}}</p>
+      <p class="prose">{{overview}}</p>
+      {{#if phases}}<p class="kv"><span class="lbl">担当フェーズ</span>{{phases}}</p>{{/if}}
+      {{#if details}}
+      <p class="block-lbl">業務内容</p>
+      <ul>{{#each details}}<li>{{.}}</li>{{/each}}</ul>
+      {{/if}}
+      {{#if outcomes}}
+      <p class="block-lbl">実績・取り組み</p>
+      <ul>{{#each outcomes}}<li>{{.}}</li>{{/each}}</ul>
+      {{/if}}
+      {{#if env_line}}<p class="kv"><span class="lbl">環境</span>{{env_line}}</p>{{/if}}
+    </div>
+    {{/each}}
+    {{/if}}
+    {{#if media}}
+    <p class="block-lbl">メディア掲載</p>
+    <ul>{{#each media}}<li>{{label}}（<span class="url">{{url}}</span>）</li>{{/each}}</ul>
+    {{/if}}
+  </div>
+  {{/each}}
+</section>
+
+<section>
+  <h2>研究業績・受賞</h2>
+  <table class="works">
+    <tbody>
+      {{#each works_rows}}<tr><td class="w-wdate">{{date}}</td><td>{{text}}</td></tr>
+      {{/each}}
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>学歴</h2>
+  <table class="grid">
+    <tbody>
+      {{#each education_rows}}<tr><td class="w-period">{{period}}</td><td>{{school}}　{{program}}</td><td class="w-status">{{status}}</td></tr>
+      {{/each}}
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>活かせる経験・知識・スキル</h2>
+  <table class="grid skills">
+    <tbody>
+      {{#each skills}}<tr><th class="w-skillcat">{{category}}</th><td>{{items_line}}</td></tr>
+      {{/each}}
+    </tbody>
+  </table>
+</section>
+
+{{#if certifications}}
+<section>
+  <h2>資格</h2>
+  <ul>{{#each certifications}}<li>{{.}}</li>{{/each}}</ul>
+</section>
+{{/if}}
+
+<section>
+  <h2>自己PR</h2>
+  <p class="prose">{{self_pr}}</p>
+</section>
+
+<footer><p class="closing">以上</p></footer>
+
+</body>
+</html>
