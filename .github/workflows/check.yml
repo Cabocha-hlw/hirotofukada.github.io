@@ -1,0 +1,20 @@
+# Verifies that the committed index.html / ja/index.html / sitemap.xml are in sync
+# with data/*.json + site/build.mjs and pass the acceptance checks
+# (docs/site_enhancement/DESIGN.md §8). Does not deploy; GitHub Pages still serves
+# the main branch directly.
+name: site-check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node site/build.mjs --check

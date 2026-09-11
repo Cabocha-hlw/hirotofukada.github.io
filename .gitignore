@@ -13,3 +13,4 @@ node_modules/
 #   例外:     DESIGN.md（設計書）のみコミット対象
 # ============================================================
 docs/resume_design/*
+!docs/resume_design/DESIGN.md

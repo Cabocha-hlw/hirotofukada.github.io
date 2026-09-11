@@ -2,6 +2,10 @@
   {
     "institution": "The Graduate University for Advanced Studies (SOKENDAI)",
     "institution_ja": "総合研究大学院大学（SOKENDAI）",
+    "formalName": "The Graduate University for Advanced Studies, SOKENDAI",
+    "formalName_ja": "総合研究大学院大学",
+    "shortName": "SOKENDAI",
+    "url": "https://www.soken.ac.jp/",
     "program": "PhD Program in Informatics",
     "program_ja": "情報学コース 博士後期課程",
     "period": "Oct 2025 – Present",
@@ -11,6 +15,10 @@
   {
     "institution": "Doshisha University",
     "institution_ja": "同志社大学",
+    "formalName": "Doshisha University",
+    "formalName_ja": "同志社大学",
+    "shortName": "Doshisha University",
+    "url": "https://www.doshisha.ac.jp/",
     "program": "B.A. in Culture and Information Science",
     "program_ja": "文化情報学部 文化情報学科",
     "period": "Apr 2018 – Mar 2022",

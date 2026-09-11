@@ -1,365 +1,66 @@
-// ── i18n ──────────────────────────────────────────────────────
-const UI = {
-  en: {
-    nav: {
-      about: "About",
-      work: "Work",
-      experience: "Experience",
-      education: "Education",
-      contact: "Contact",
-    },
-    eyebrow: {
-      about: "About",
-      portfolio: "Portfolio",
-      career: "Career",
-      academic: "Academic",
-      contact: "Get in Touch",
-    },
-    section: {
-      about: "Overview",
-      work: "Selected Work",
-      experience: "Experience",
-      education: "Education",
-      contact: "Contact",
-    },
-    workCategory: {
-      paper: "Papers",
-      research: "Research Outputs",
-      upcoming: "Upcoming Presentations",
-      professional: "Professional Works",
-    },
-    highlights: "Selected Highlights",
-  },
-  ja: {
-    nav: {
-      about: "プロフィール",
-      work: "実績",
-      experience: "経歴",
-      education: "学歴",
-      contact: "連絡先",
-    },
-    eyebrow: {
-      about: "プロフィール",
-      portfolio: "ポートフォリオ",
-      career: "キャリア",
-      academic: "学歴",
-      contact: "お問い合わせ",
-    },
-    section: {
-      about: "概要",
-      work: "主な実績",
-      experience: "職歴",
-      education: "学歴",
-      contact: "連絡先",
-    },
-    workCategory: {
-      paper: "論文",
-      research: "研究成果",
-      upcoming: "今後の発表",
-      professional: "職務実績",
-    },
-    highlights: "主な実績",
-  },
-};
+// Progressive enhancement only. All content is pre-rendered into the HTML by
+// site/build.mjs, so nothing here is required for reading or indexing the page.
+(function () {
+  'use strict';
 
-let currentLang = localStorage.getItem("lang") || "en";
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/** Get the localized value of a field, falling back to the base key. */
-function t(obj, key) {
-  if (currentLang === "ja" && obj[`${key}_ja`] !== undefined) {
-    return obj[`${key}_ja`];
+  // ── Scroll progress bar ────────────────────────────────────
+  const progressBar = document.getElementById('progress-bar');
+  if (progressBar) {
+    const updateProgress = () => {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = total > 0 ? `${(window.scrollY / total) * 100}%` : '0%';
+    };
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
   }
-  return obj[key] ?? "";
-}
 
-/** Resolve a dot-path like "nav.about" against UI[currentLang]. */
-function ui(path) {
-  return path.split(".").reduce((o, k) => o?.[k], UI[currentLang]) ?? path;
-}
-
-// ── Utilities ──────────────────────────────────────────────────
-async function loadJSON(path) {
-  const response = await fetch(path);
-  if (!response.ok) throw new Error(`Failed to load ${path}: ${response.status}`);
-  return response.json();
-}
-
-function escapeHTML(str) {
-  return String(str)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
-
-function formatAuthors(authors, selfAuthors = []) {
-  return authors
-    .map((author) =>
-      selfAuthors.includes(author)
-        ? `<strong>${escapeHTML(author)}</strong>`
-        : escapeHTML(author)
-    )
-    .join(", ");
-}
-
-function getSortValue(item) {
-  return (item.year ?? 0) * 100 + (item.month ?? 0);
-}
-
-function sortWorksByDateDesc(items) {
-  return [...items].sort((a, b) => getSortValue(b) - getSortValue(a));
-}
-
-function sortWorksByDateAsc(items) {
-  return [...items].sort((a, b) => getSortValue(a) - getSortValue(b));
-}
-
-function renderLinks(links = []) {
-  const valid = links.filter((l) => l.url && l.url.trim() !== "");
-  if (valid.length === 0) return "";
-  return `
-    <p class="work-links">
-      ${valid
-        .map(
-          (l) =>
-            `<a href="${escapeHTML(l.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(l.label)}</a>`
-        )
-        .join("")}
-    </p>
-  `;
-}
-
-// ── Render functions ──────────────────────────────────────────
-function isNew(item) {
-  if (!item.added) return false;
-  const now = new Date();
-  const cutoff = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
-  return new Date(item.added) >= cutoff;
-}
-
-function renderResearchItem(item) {
-  const newBadge = isNew(item) ? `<span class="badge-new">[New!]</span> ` : "";
-  return `
-    <li class="work-item">
-      <p class="work-citation">
-        ${newBadge}${formatAuthors(item.authors, item.selfAuthors)}. (${escapeHTML(String(item.year))}).
-        "${escapeHTML(item.title)}."
-        <em>${escapeHTML(t(item, "venue"))}</em>. ${escapeHTML(t(item, "status"))}.
-      </p>
-      ${renderLinks(item.links)}
-    </li>
-  `;
-}
-
-function renderProfessionalItem(item) {
-  return `
-    <li class="work-item">
-      <p class="work-title">${escapeHTML(t(item, "title"))}</p>
-      <p class="work-meta">${escapeHTML(t(item, "meta"))}</p>
-      <p class="work-description">${escapeHTML(t(item, "description"))}</p>
-      ${renderLinks(item.links)}
-    </li>
-  `;
-}
-
-function renderExperienceItem(group) {
-  const rolesHTML = group.roles
-    .map(
-      (role) => `
-        <div class="role-item">
-          <h4>${escapeHTML(t(role, "title"))}</h4>
-          ${role.period ? `<p class="role-period">${escapeHTML(role.period)}</p>` : ""}
-          <p>${escapeHTML(t(role, "description"))}</p>
-        </div>
-      `
-    )
-    .join("");
-
-  const highlights = t(group, "highlights") || [];
-  const highlightsHTML =
-    highlights.length > 0
-      ? `
-        <div class="experience-highlights">
-          <h4>${escapeHTML(ui("highlights"))}</h4>
-          <ul>
-            ${highlights.map((h) => `<li>${escapeHTML(h)}</li>`).join("")}
-          </ul>
-        </div>
-      `
-      : "";
-
-  const isActive = group.period.includes("Present");
-  return `
-    <article class="experience-group${isActive ? " is-active" : ""}">
-      <h3>${escapeHTML(t(group, "organization"))}</h3>
-      <p class="experience-meta">${escapeHTML(group.period)}</p>
-      ${rolesHTML}
-      ${highlightsHTML}
-    </article>
-  `;
-}
-
-function renderEducationItem(item) {
-  const isActive = item.period.includes("Present");
-  return `
-    <article class="education-item${isActive ? " is-active" : ""}">
-      <h3>${escapeHTML(t(item, "institution"))}</h3>
-      <p class="education-meta">${escapeHTML(t(item, "program"))} / ${escapeHTML(item.period)}</p>
-      <p>${escapeHTML(t(item, "description"))}</p>
-    </article>
-  `;
-}
-
-function renderContacts(contacts) {
-  return contacts
-    .map(
-      (c) => `
-        <li>
-          <a href="${escapeHTML(c.url)}" target="_blank" rel="noopener noreferrer">
-            ${escapeHTML(c.label)}
-          </a>
-        </li>
-      `
-    )
-    .join("");
-}
-
-// ── i18n DOM update ───────────────────────────────────────────
-function applyUIStrings() {
-  document.getElementById("html-root").lang = currentLang;
-  document.querySelectorAll("[data-i18n]").forEach((el) => {
-    el.textContent = ui(el.dataset.i18n);
-  });
-  document.querySelectorAll(".lang-btn").forEach((btn) => {
-    btn.classList.toggle("active", btn.dataset.lang === currentLang);
-  });
-}
-
-// ── Data cache & re-render ─────────────────────────────────────
-let _cache = null;
-
-function renderAll(data) {
-  const { profile, works, experience, education } = data;
-
-  document.getElementById("profile-name").textContent = profile.name;
-  const calloutEl = document.getElementById("profile-callout");
-  const calloutText = t(profile, "callout");
-  calloutEl.textContent = calloutText;
-  calloutEl.style.display = calloutText ? "" : "none";
-  document.getElementById("profile-tagline").textContent = t(profile, "tagline");
-  const topicsEl = document.getElementById("profile-topics");
-  if (profile.topics && profile.topics.length > 0) {
-    topicsEl.innerHTML = profile.topics
-      .map((tag) => `<span class="topic-tag">#${escapeHTML(tag)}</span>`)
-      .join("");
-  }
-  document.getElementById("profile-about").textContent = t(profile, "about");
-  document.getElementById("contact-list").innerHTML = renderContacts(profile.contacts);
-
-  document.getElementById("papers").innerHTML = sortWorksByDateDesc(
-    works.filter((item) => item.type === "paper")
-  )
-    .map(renderResearchItem)
-    .join("");
-
-  document.getElementById("research-outputs").innerHTML = sortWorksByDateDesc(
-    works.filter((item) => item.type === "research")
-  )
-    .map(renderResearchItem)
-    .join("");
-
-  document.getElementById("upcoming-presentations").innerHTML = sortWorksByDateAsc(
-    works.filter((item) => item.type === "upcoming")
-  )
-    .map(renderResearchItem)
-    .join("");
-
-  document.getElementById("professional-works").innerHTML = sortWorksByDateDesc(
-    works.filter((item) => item.type === "professional")
-  )
-    .map(renderProfessionalItem)
-    .join("");
-
-  document.getElementById("experience-list").innerHTML = sortWorksByDateDesc(experience)
-    .map(renderExperienceItem)
-    .join("");
-
-  document.getElementById("education-list").innerHTML = sortWorksByDateDesc(education)
-    .map(renderEducationItem)
-    .join("");
-}
-
-// ── Language switch ────────────────────────────────────────────
-function setLang(lang) {
-  currentLang = lang;
-  localStorage.setItem("lang", lang);
-  applyUIStrings();
-  if (_cache) renderAll(_cache);
-}
-
-// ── Init ───────────────────────────────────────────────────────
-async function init() {
-  try {
-    const [profile, works, experience, education] = await Promise.all([
-      loadJSON("data/profile.json"),
-      loadJSON("data/works.json"),
-      loadJSON("data/experience.json"),
-      loadJSON("data/education.json"),
-    ]);
-
-    _cache = { profile, works, experience, education };
-
-    applyUIStrings();
-    renderAll(_cache);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// ── Scroll progress bar ────────────────────────────────────────
-const progressBar = document.getElementById("progress-bar");
-function updateProgress() {
-  const scrolled = window.scrollY;
-  const total = document.documentElement.scrollHeight - window.innerHeight;
-  progressBar.style.width = total > 0 ? `${(scrolled / total) * 100}%` : "0%";
-}
-window.addEventListener("scroll", updateProgress, { passive: true });
-
-// ── Intersection Observer fade-in ──────────────────────────────
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.08 }
-);
-document.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
-
-// ── Scrollspy ──────────────────────────────────────────────────
-const navLinks = document.querySelectorAll('nav a[href^="#"]');
-const spyObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id;
-        navLinks.forEach((a) => {
-          a.classList.toggle("active", a.getAttribute("href") === `#${id}`);
+  // ── Fade-in on scroll (content is visible without JS; see .js .fade-up in CSS) ──
+  const fadeEls = document.querySelectorAll('.fade-up');
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    fadeEls.forEach((el) => el.classList.add('visible'));
+  } else {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
         });
-      }
-    });
-  },
-  { rootMargin: "-40% 0px -55% 0px" }
-);
-document.querySelectorAll("section[id]").forEach((s) => spyObserver.observe(s));
+      },
+      { threshold: 0.08 }
+    );
+    fadeEls.forEach((el) => observer.observe(el));
+  }
 
-// ── Event listeners ────────────────────────────────────────────
-document.querySelectorAll(".lang-btn").forEach((btn) => {
-  btn.addEventListener("click", () => setLang(btn.dataset.lang));
-});
+  // ── Scrollspy ──────────────────────────────────────────────
+  const navLinks = document.querySelectorAll('nav a[href^="#"]');
+  if (navLinks.length && 'IntersectionObserver' in window) {
+    const spy = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const id = entry.target.id;
+          navLinks.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === `#${id}`));
+        });
+      },
+      { rootMargin: '-40% 0px -55% 0px' }
+    );
+    document.querySelectorAll('main section[id]').forEach((s) => spy.observe(s));
+  }
 
-init();
+  // ── "New" badge for items added within the last 30 days ────
+  const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
+  document.querySelectorAll('[data-added]').forEach((el) => {
+    const added = new Date(el.getAttribute('data-added'));
+    if (Number.isNaN(added.getTime()) || added.getTime() < cutoff) return;
+    const title = el.querySelector('.work-title');
+    if (!title) return;
+    const badge = document.createElement('span');
+    badge.className = 'badge-new';
+    badge.textContent = 'New';
+    title.prepend(badge);
+  });
+})();

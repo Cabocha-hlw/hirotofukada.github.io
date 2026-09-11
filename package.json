@@ -1,0 +1,10 @@
+{
+  "name": "hirotofukada-github-io",
+  "private": true,
+  "type": "module",
+  "description": "Personal portfolio site (static, pre-rendered from data/*.json). See docs/site_enhancement/DESIGN.md",
+  "scripts": {
+    "build": "node site/build.mjs",
+    "check": "node site/build.mjs --check"
+  }
+}

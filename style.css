@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&family=Noto+Sans+JP:wght@400;500;600;700&display=swap');
+/* Web fonts (Inter / Instrument Serif) are loaded from <head> via <link> so the
+   request starts in parallel with this stylesheet. Japanese text uses system
+   fonts to avoid shipping a CJK web font (performance requirement §7). */
 
 /* ── Tokens ───────────────────────────────────────────────────── */
 
@@ -27,7 +29,8 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  font-family: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN',
+               'Yu Gothic', 'Meiryo', 'Noto Sans JP', sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.7;
@@ -82,6 +85,20 @@ a:hover { opacity: 0.75; }
   color: var(--text);
   margin-right: 0.5rem;
 }
+.header-name:hover { opacity: 1; color: var(--accent); }
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 300;
+  padding: 0.5rem 0.9rem;
+  background: var(--text);
+  color: #fff;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+.skip-link:focus { top: 0.75rem; opacity: 1; }
 
 /* ── Lang toggle ──────────────────────────────────────────────── */
 
@@ -145,13 +162,21 @@ nav a.active { color: var(--text); background: var(--surface-2); }
   50%       { box-shadow: 0 0 0 2px var(--bg), 0 0 0 7px rgba(34, 197, 94, 0.1); }
 }
 
-.fade-up {
+/* Fade-in is opt-in: only when JS has tagged <html class="js">. Without JS (or for
+   crawlers that don't run it) every section is fully visible from the first paint. */
+.js .fade-up {
   opacity: 0;
   transform: translateY(18px);
   transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.fade-up.visible { opacity: 1; transform: none; }
+.js .fade-up.visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .js .fade-up { opacity: 1; transform: none; }
+  html { scroll-behavior: auto; }
+}
 
 /* ── Hero ─────────────────────────────────────────────────────── */
 
@@ -254,30 +279,77 @@ nav a.active { color: var(--text); background: var(--surface-2); }
   animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.hero-callout {
-  margin: 0.5rem 0 0;
-  color: var(--accent);
-  font-size: 0.95rem;
-  font-style: italic;
+/* Identity block: primary name (H1 text) + secondary-script name on its own line */
+.hero h1 .name-primary { display: block; }
+.hero h1 .name-secondary {
+  display: block;
+  margin-top: 0.55rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Yu Gothic', sans-serif;
+  font-size: clamp(1.05rem, 2.2vw, 1.45rem);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+}
+html[lang="ja"] .hero h1 .name-primary {
+  font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.hero-roles {
+  margin: 1.25rem 0 0;
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
   animation: fadeUp 0.7s 0.08s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.tagline {
-  margin: 1rem 0 0;
+.hero-identity {
+  margin: 0.75rem 0 0;
+  max-width: 48ch;
   color: var(--text-2);
   font-size: 1rem;
+  line-height: 1.7;
   animation: fadeUp 0.7s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-affil {
+  margin: 0.85rem 0 0;
+  color: var(--text-2);
+  font-size: 0.875rem;
+  animation: fadeUp 0.7s 0.12s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.hero-affil-label {
+  display: inline-block;
+  margin-right: 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.hero-callout {
+  margin: 1rem 0 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+  font-style: italic;
+  animation: fadeUp 0.7s 0.18s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .hero-topics {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 1.25rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
   animation: fadeUp 0.7s 0.15s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .topic-tag {
+  display: inline-block;
   font-size: 0.8rem;
   font-weight: 500;
   color: var(--accent);
@@ -285,7 +357,9 @@ nav a.active { color: var(--text); background: var(--surface-2); }
   padding: 0.25rem 0.65rem;
   border-radius: 999px;
   letter-spacing: 0.01em;
+  transition: background 0.15s, opacity 0.15s;
 }
+.topic-tag:hover { background: rgba(99, 102, 241, 0.15); opacity: 1; }
 
 /* ── Profile photo ───────────────────────────────────────────── */
 
@@ -310,9 +384,13 @@ nav a.active { color: var(--text); background: var(--surface-2); }
 }
 
 @media (max-width: 680px) {
+  .hero { padding: 3.5rem 0 3rem; }
   .hero-inner { flex-direction: column-reverse; align-items: flex-start; gap: 1.75rem; }
   .hero-photo { width: 120px; height: 120px; }
   .hero-network { width: 100%; opacity: 0.45; }
+  .site-header { padding: 0.6rem 0; }
+  .header-inner { gap: 0.25rem; }
+  nav a { font-size: 0.78rem; padding: 0.25rem 0.5rem; }
 }
 
 /* ── Sections ─────────────────────────────────────────────────── */
@@ -374,11 +452,49 @@ ul { padding-left: 1.2rem; }
 
 /* ── About ────────────────────────────────────────────────────── */
 
-#profile-about {
+.prose p {
   font-size: 1.0625rem;
   line-height: 1.85;
   color: var(--text);
+  margin: 0 0 1.1rem;
+}
+.prose p:last-child { margin-bottom: 0; }
+
+/* ── Expertise ───────────────────────────────────────────────── */
+
+.expertise-list {
+  list-style: none;
   margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.expertise-item {
+  padding: 1.1rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.expertise-item h3 {
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.expertise-item p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+@media (max-width: 680px) {
+  .expertise-list { grid-template-columns: 1fr; }
 }
 
 /* ── Work items ───────────────────────────────────────────────── */
@@ -441,11 +557,51 @@ ul { padding-left: 1.2rem; }
 .work-citation em { font-style: italic; }
 
 .badge-new {
-  color: #e53e3e;
+  display: inline-block;
+  margin-right: 0.45rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 4px;
+  color: #b91c1c;
+  background: rgba(239, 68, 68, 0.1);
   font-weight: 700;
-  font-size: 0.8em;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   vertical-align: middle;
-  letter-spacing: 0.01em;
+}
+
+.research-item .work-citation {
+  margin: 0.35rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* FR-06: Problem / Role / Domain / Methods / Outcome as a definition list */
+.project-facts {
+  margin: 0.85rem 0 0;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.45rem 1rem;
+}
+.project-facts .fact { display: contents; }
+.project-facts dt {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-top: 0.15rem;
+}
+.project-facts dd {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+@media (max-width: 680px) {
+  .project-facts { grid-template-columns: 1fr; gap: 0.15rem 0; }
+  .project-facts dd { margin-bottom: 0.5rem; }
 }
 
 .work-description {
@@ -549,9 +705,8 @@ ul { padding-left: 1.2rem; }
   gap: 0.5rem;
 }
 
-/* "Now" badge for active groups */
-.experience-group.is-active h3::after {
-  content: 'Now';
+/* "Now" badge for active groups (rendered in HTML so it is localised) */
+.badge-now {
   font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -560,7 +715,7 @@ ul { padding-left: 1.2rem; }
   background: rgba(34, 197, 94, 0.1);
   padding: 0.1rem 0.45rem;
   border-radius: 4px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', 'Hiragino Sans', sans-serif;
 }
 
 .experience-meta {
@@ -657,19 +812,6 @@ ul { padding-left: 1.2rem; }
   gap: 0.5rem;
 }
 
-.education-item.is-active h3::after {
-  content: 'Now';
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--green);
-  background: rgba(34, 197, 94, 0.1);
-  padding: 0.1rem 0.45rem;
-  border-radius: 4px;
-  font-family: 'Inter', sans-serif;
-}
-
 .education-meta {
   margin: 0 0 0.5rem;
   color: var(--muted);
@@ -683,9 +825,9 @@ ul { padding-left: 1.2rem; }
   line-height: 1.6;
 }
 
-/* ── Contact ──────────────────────────────────────────────────── */
+/* ── Profiles & Contact ───────────────────────────────────────── */
 
-#contact-list {
+.profile-list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -694,7 +836,13 @@ ul { padding-left: 1.2rem; }
   flex-wrap: wrap;
 }
 
-#contact-list li a {
+.contact-note {
+  margin: 1.25rem 0 0;
+  font-size: 0.875rem;
+  color: var(--text-2);
+}
+
+.profile-list li a {
   display: inline-flex;
   align-items: center;
   padding: 0.55rem 1.25rem;
@@ -708,7 +856,7 @@ ul { padding-left: 1.2rem; }
   border-bottom: none;
 }
 
-#contact-list li a:hover {
+.profile-list li a:hover {
   border-color: var(--accent);
   background: var(--accent-bg);
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);

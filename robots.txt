@@ -1,0 +1,8 @@
+# NOTE: This site is served under a sub-path of cabocha-hlw.github.io, so crawlers
+# actually read https://cabocha-hlw.github.io/robots.txt (the host root), not this
+# file. This file documents intent and points to the sitemap; the sitemap itself is
+# submitted directly in Google Search Console. See docs/site_enhancement/DESIGN.md.
+User-agent: *
+Allow: /
+
+Sitemap: https://cabocha-hlw.github.io/hirotofukada.github.io/sitemap.xml
