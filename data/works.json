@@ -63,15 +63,16 @@
     "links": []
   },
   {
-    "type": "research",
+    "type": "paper",
     "authors": ["Fukada, H.", "Mizuno, T."],
     "selfAuthors": ["Fukada, H."],
     "year": 2026,
-    "month": 5,
+    "month": 9,
     "title": "Snippet-Driven Supply Chain Discovery with LLMs: Scaling Visibility in China",
-    "venue": "arXiv preprint arXiv:2605.27845",
-    "status": "Preprint",
-    "added": "2026-06-09",
+    "venue": "IEEE CIFEr 2026",
+    "status": "Accepted (to appear)",
+    "status_ja": "採択・掲載予定",
+    "added": "2026-09-11",
     "links": [
       {
         "label": "arXiv",

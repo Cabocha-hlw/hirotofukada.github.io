@@ -23,6 +23,7 @@ const UI = {
       contact: "Contact",
     },
     workCategory: {
+      paper: "Papers",
       research: "Research Outputs",
       upcoming: "Upcoming Presentations",
       professional: "Professional Works",
@@ -52,6 +53,7 @@ const UI = {
       contact: "連絡先",
     },
     workCategory: {
+      paper: "論文",
       research: "研究成果",
       upcoming: "今後の発表",
       professional: "職務実績",
@@ -254,6 +256,12 @@ function renderAll(data) {
   }
   document.getElementById("profile-about").textContent = t(profile, "about");
   document.getElementById("contact-list").innerHTML = renderContacts(profile.contacts);
+
+  document.getElementById("papers").innerHTML = sortWorksByDateDesc(
+    works.filter((item) => item.type === "paper")
+  )
+    .map(renderResearchItem)
+    .join("");
 
   document.getElementById("research-outputs").innerHTML = sortWorksByDateDesc(
     works.filter((item) => item.type === "research")

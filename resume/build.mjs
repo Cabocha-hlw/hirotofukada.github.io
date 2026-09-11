@@ -121,7 +121,7 @@ function buildView(m, worksJson, today) {
 
   const worksExclude = m.works_exclude ?? [];
   const works_rows = worksJson
-    .filter((w) => w.type === 'research')
+    .filter((w) => w.type === 'paper' || w.type === 'research')
     .filter((w) => !worksExclude.some((x) => [w.venue, w.venue_ja].some((v) => v && v.includes(x))))
     .sort((a, b) => (b.year - a.year) || ((b.month ?? 0) - (a.month ?? 0)))
     .map((w) => ({
