@@ -133,7 +133,7 @@ ProfilePage (@id …/#profilepage, url, name, description, inLanguage, dateModif
 | `expertise[]{id,name,name_ja,featured,description,description_ja}` | FR-07。`knowsAbout` と hero チップの源 |
 | `photo{src,webp,width,height,alt,alt_ja}` | `<picture>`（WebP 400px + JPEG フォールバック）、OG 画像 |
 | `profiles[]{id,network,url,sameAs,identifier?}` | FR-04。`sameAs=true` のものだけ JSON-LD `sameAs` と `rel="me"` に載せる |
-| `contactNote` / `contactNote_ja` | 連絡導線（LinkedIn 経由）。メールは置かない |
+| `contactNote` / `contactNote_ja` | 連絡導線（LinkedIn 経由）。メールは置かない。空文字ならその言語では非表示（現状 `_ja` は空） |
 | `callout` / `callout_ja` | 任意の一言。`_ja` が空文字なら JA では非表示 |
 
 ### 5.2 `data/works.json`（後方互換で拡張）
@@ -187,7 +187,7 @@ ProfilePage (@id …/#profilepage, url, name, description, inLanguage, dateModif
 | FR-01 | Identity Block | hero（§4） | `--check`: H1 単一・`Hiroto Fukada` 含む・`深田大登` 本文存在 | ✅ |
 | FR-02 | Biography 100–200 words | `profile.bio`（182 語・3 段落）+ JA | `--check`: 語数 | ✅ |
 | FR-03 | JSON-LD ProfilePage/Person | `buildJsonLd()` | `--check`: パース・必須キー・sameAs（LinkedIn/ORCID/GitHub） | ✅（Rich Results Test はデプロイ後に §9） |
-| FR-04 | 外部 Identity リンク | Profiles セクション、`Hiroto Fukada on LinkedIn` 形式、`rel="me"` | `--check`: 全 profiles の href 存在 | ✅ |
+| FR-04 | 外部 Identity リンク | Profiles セクション、リンク文言は `network` 名のみ（`LinkedIn` / `ORCID` …）、`rel="me"` | `--check`: 全 profiles の href 存在 | ✅ |
 | FR-05 | Research Outputs 構造化 | 題目 H4 / 著者 / 年 / venue / 種別 / 学会ページ・arXiv リンク | `--check`: 全 works 題目がテキストに存在 | ✅ |
 | FR-06 | Professional Work の Problem/Role/Domain/Methods/Outcome | `works.type=professional` の `<dl>` | 目視 | ✅ |
 | FR-07 | Expertise セクション | 7 領域・各 1〜2 文 | 目視 | ✅ |

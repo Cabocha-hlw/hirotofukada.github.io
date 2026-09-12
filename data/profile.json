@@ -22,9 +22,9 @@
     "googleSiteVerification": ""
   },
   "bio": [
-    "Hiroto Fukada (深田大登) is a Data Scientist, Product Manager, and researcher working across industry and academia in Japan. At Septeni Japan, Fukada leads the planning and development of statistical analysis and machine-learning products for digital marketing, and has worked as a Data Analyst on advertising effectiveness measurement and marketing budget optimization using causal inference, including Double Machine Learning (DML), heterogeneous treatment effect estimation, and Marketing Mix Modeling (MMM).",
-    "In parallel, Fukada is a PhD student in Informatics at SOKENDAI (The Graduate University for Advanced Studies) and a Research Assistant at the National Institute of Informatics (NII). Fukada's research focuses on improving the visibility of global supply chains and assessing their risks by combining large language models (LLMs), open-source intelligence (OSINT), and network science, with a particular focus on inter-firm transaction networks in China. Recent results have been presented at NetSci 2026, JSAI 2026, and the Network Ecology Symposium, and a paper has been accepted at IEEE CIFEr 2026.",
-    "Fukada's core strength lies in structuring ambiguous real-world problems into rigorous analytical frameworks and turning them into actionable strategies, decision-support systems, and research outputs."
+    "I am Hiroto Fukada (深田大登), a Data Scientist, Product Manager, and researcher working across industry and academia in Japan. At Septeni Japan, I lead the planning and development of statistical analysis and machine-learning products for digital marketing, and I have worked as a Data Analyst on advertising effectiveness measurement and marketing budget optimization using causal inference, including Double Machine Learning (DML), heterogeneous treatment effect estimation, and Marketing Mix Modeling (MMM).",
+    "In parallel, I am a PhD student in Informatics at SOKENDAI (The Graduate University for Advanced Studies) and a Research Assistant at the National Institute of Informatics (NII). My research focuses on improving the visibility of global supply chains and assessing their risks by combining large language models (LLMs), open-source intelligence (OSINT), and network science, with a particular focus on inter-firm transaction networks in China. Recent results have been presented at NetSci 2026, JSAI 2026, and the Network Ecology Symposium, and a paper has been accepted at IEEE CIFEr 2026.",
+    "My core strength lies in structuring ambiguous real-world problems into rigorous analytical frameworks and turning them into actionable strategies, decision-support systems, and research outputs."
   ],
   "bio_ja": [
     "深田大登（Hiroto Fukada）は、産業と学術の双方で活動するデータサイエンティスト、プロダクトマネージャー。Septeni Japan株式会社では、マーケティング向けの統計解析・機械学習プロダクトの企画・開発をプロダクトマネージャーとして推進するとともに、データアナリストとして二重機械学習（DML）、異質処置効果（HTE）推定、マーケティングミックスモデリング（MMM）などの因果推論手法を用いた広告効果分析・マーケティング予算最適化に従事してきた。",
@@ -125,5 +125,5 @@
     }
   ],
   "contactNote": "For research collaboration, speaking, or professional inquiries, please get in touch via LinkedIn.",
-  "contactNote_ja": "共同研究・講演・仕事の相談は LinkedIn から受け付けている。"
+  "contactNote_ja": ""
 }

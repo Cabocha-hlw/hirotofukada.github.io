@@ -49,7 +49,7 @@ const UI = {
       experience: 'Experience', education: 'Education', profiles: 'Profiles',
     },
     eyebrow: {
-      about: 'About', expertise: 'Areas of Interest', work: 'Portfolio', research: 'Publications & Talks',
+      about: 'Introduction', expertise: 'Areas of Interest', work: 'Portfolio', research: 'Publications & Talks',
       experience: 'Career', education: 'Academic', profiles: 'Get in Touch',
     },
     section: {
@@ -70,7 +70,6 @@ const UI = {
     now: 'Now',
     venuePage: 'Conference page',
     topicsLabel: 'Areas of expertise',
-    profileLink: (name, network) => `${name} on ${network}`,
     footerTag: 'Open to collaboration',
   },
   ja: {
@@ -82,7 +81,7 @@ const UI = {
     },
     eyebrow: {
       about: 'プロフィール', expertise: '関心領域', work: 'ポートフォリオ', research: '発表・受賞',
-      experience: 'キャリア', education: '学歴', profiles: 'お問い合わせ',
+      experience: 'キャリア', education: '学術', profiles: 'お問い合わせ',
     },
     section: {
       about: '概要', expertise: '専門領域', work: '主な実績', research: '研究業績',
@@ -99,7 +98,6 @@ const UI = {
     now: '現在',
     venuePage: '学会ページ',
     topicsLabel: '専門領域',
-    profileLink: (_name, network) => `${profile.name_ja}の${network}`,
     footerTag: '共同研究・協業歓迎',
   },
 };
@@ -462,12 +460,11 @@ ${items.map((item) => {
 }
 
 function renderProfiles(lang) {
-  const L = UI[lang.code];
   const lc = lang.code;
+  const note = t(profile, 'contactNote', lc);
   return `            <ul class="profile-list" id="contact-list">
-${profile.profiles.map((p) => `              <li><a href="${esc(p.url)}" rel="${p.sameAs ? 'me ' : ''}noopener noreferrer" target="_blank">${esc(L.profileLink(profile.name, p.network))}</a></li>`).join('\n')}
-            </ul>
-            <p class="contact-note">${esc(t(profile, 'contactNote', lc))}</p>`;
+${profile.profiles.map((p) => `              <li><a href="${esc(p.url)}" rel="${p.sameAs ? 'me ' : ''}noopener noreferrer" target="_blank">${esc(p.network)}</a></li>`).join('\n')}
+            </ul>${note ? `\n            <p class="contact-note">${esc(note)}</p>` : ''}`;
 }
 
 function renderLinks(links = [], lc, indent = 0) {
