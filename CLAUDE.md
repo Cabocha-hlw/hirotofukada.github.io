@@ -30,6 +30,10 @@ node resume/build.mjs --check    # resume ↔ site data consistency (needs priva
 
 - Public repository: never put a personal email, phone, address, or non-public employer
   details into `data/` or HTML. `npm run check` fails on `mailto:`.
+- **Japanese content in `data/*.json` (every `*_ja` field) is written in 常体 —
+  plain / だ・である style, assertive and declarative. Never ですます調.** This is the
+  site's published voice, not just chat style, and it matches the resume's `master.yaml`.
+  Noun-ending (体言止め) is fine for short descriptions.
 - Name / role / expertise wording is the entity "source of truth" for LinkedIn and ORCID
   as well (DESIGN.md §6). Change it here first, then mirror it to the other profiles.
 - Adding a research output: append to `data/works.json` (fields in DESIGN.md §5), then
