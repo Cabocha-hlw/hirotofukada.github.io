@@ -23,12 +23,12 @@
   },
   "bio": [
     "I am Hiroto Fukada (深田大登), a Data Scientist, Product Manager, and researcher working across industry and academia in Japan. At Septeni Japan, I lead the planning and development of statistical analysis and machine-learning products for digital marketing, and I have worked as a Data Analyst on advertising effectiveness measurement and marketing budget optimization using causal inference, including Double Machine Learning (DML), heterogeneous treatment effect estimation, and Marketing Mix Modeling (MMM).",
-    "In parallel, I am a PhD student in Informatics at SOKENDAI (The Graduate University for Advanced Studies) and a Research Assistant at the National Institute of Informatics (NII). My research focuses on improving the visibility of global supply chains and assessing their risks by combining large language models (LLMs), open-source intelligence (OSINT), and network science, with a particular focus on inter-firm transaction networks in China. Recent results have been presented at NetSci 2026, JSAI 2026, and the Network Ecology Symposium, and a paper has been accepted at IEEE CIFEr 2026.",
+    "In parallel, I am a PhD student in Informatics at SOKENDAI (The Graduate University for Advanced Studies) and a Research Assistant at the National Institute of Informatics (NII). My research focuses on improving the visibility of global supply chains and assessing their risks by combining large language models (LLMs), network science, and information retrieval, with a particular focus on inter-firm transaction networks in China. Recent results have been presented at NetSci 2026, JSAI 2026, and the Network Ecology Symposium, and a paper has been accepted at IEEE CIFEr 2026.",
     "My core strength lies in structuring ambiguous real-world problems into rigorous analytical frameworks and turning them into actionable strategies, decision-support systems, and research outputs."
   ],
   "bio_ja": [
     "深田大登（Hiroto Fukada）は、産業と学術の双方で活動するデータサイエンティスト、プロダクトマネージャー。Septeni Japan株式会社では、マーケティング向けの統計解析・機械学習プロダクトの企画・開発をプロダクトマネージャーとして推進するとともに、データアナリストとして二重機械学習（DML）、異質処置効果（HTE）推定、マーケティングミックスモデリング（MMM）などの因果推論手法を用いた広告効果分析・マーケティング予算最適化に従事してきた。",
-    "並行して、総合研究大学院大学（SOKENDAI）情報学コース 博士課程に在籍し、国立情報学研究所（NII）のリサーチアシスタントを務める。研究では、大規模言語モデル（LLM）・OSINT（Open Source Intelligence）・ネットワーク科学を組み合わせてグローバルサプライチェーンの可視化とリスク評価に取り組んでいる。成果は NetSci 2026、人工知能学会全国大会（JSAI 2026）、ネットワーク生態学シンポジウムなどで発表し、IEEE CIFEr 2026 に論文が採択されている。",
+    "並行して、総合研究大学院大学（SOKENDAI）情報学コース 博士課程に在籍し、国立情報学研究所（NII）のリサーチアシスタントを務める。研究では、大規模言語モデル（LLM）・ネットワーク科学・情報検索技術を組み合わせてグローバルサプライチェーンの可視化とリスク評価に取り組んでいる。成果は NetSci 2026、人工知能学会全国大会（JSAI 2026）、ネットワーク生態学シンポジウムなどで発表し、IEEE CIFEr 2026 に論文が採択されている。",
     "強みは、曖昧な現実の問題を厳密な分析フレームワークへと構造化し、実行可能な戦略・意思決定支援システム・研究成果へと転換することにある。"
   ],
   "expertise": [
@@ -61,8 +61,8 @@
       "name": "Supply Chain Analysis",
       "name_ja": "サプライチェーン分析",
       "featured": true,
-      "description": "Improving the visibility of global supply chains and assessing their risks, with a focus on China and Taiwan, by complementing the blind spots of official statistics with OSINT.",
-      "description_ja": "公的統計の死角をOSINTで補完し、中国・台湾を中心としたグローバルサプライチェーンの可視化とリスク評価を行う。"
+      "description": "Improving the visibility of global supply chains and assessing their risks, with a focus on China and Taiwan, by complementing the blind spots of official statistics with information retrieval over open web sources.",
+      "description_ja": "公的統計の死角を公開情報の検索・抽出で補完し、中国・台湾を中心としたグローバルサプライチェーンの可視化とリスク評価を行う。"
     },
     {
       "id": "marketing-science",
