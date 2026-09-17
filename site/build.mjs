@@ -97,6 +97,9 @@ const UI = {
     awardsEyebrow: 'Recognition',
     awardsLead: 'Awards and prizes received for research and professional work, with the awarding body and the work they recognise.',
     publicationEyebrow: 'Publication',
+    workEyebrow: 'Professional work',
+    projectFactsHeading: 'Project at a glance',
+    allWork: 'All selected work',
     summaryHeading: 'Summary',
     whyHeading: 'Why it matters',
     resultsHeading: 'Results',
@@ -163,6 +166,9 @@ const UI = {
     awardsEyebrow: '表彰',
     awardsLead: '研究・実務で受けた受賞の一覧。授与組織と対象業績を記載する。',
     publicationEyebrow: '研究業績',
+    workEyebrow: '実務案件',
+    projectFactsHeading: '案件の概要',
+    allWork: '実績一覧',
     summaryHeading: '概要',
     whyHeading: 'なぜ重要か',
     resultsHeading: '結果',
@@ -230,6 +236,8 @@ function hasDetail(w) {
 }
 
 const publicationDetails = sortDesc(works.filter((w) => ['paper', 'research', 'upcoming'].includes(w.type) && hasDetail(w)));
+// 実務案件は「公開済みの一次ソースを持つもの」だけが個別ページを持つ（DESIGN_PHASE2.md §4.4）
+const workDetails = sortDesc(works.filter((w) => w.type === 'professional' && hasDetail(w)));
 
 /** 受賞一覧に載せる業績（社内表彰 + 受賞を伴う発表） */
 function awardWorks() {
@@ -257,8 +265,20 @@ const PAGE_DEFS = [
     lastmod: w.added,
     data: w,
   })),
+  ...workDetails.map((w) => ({
+    key: `work:${w.id}`,
+    kind: 'work-detail',
+    seg: `work/${w.slug}/`,
+    seo: w.detail.seo,
+    data: w,
+  })),
   { key: 'awards', kind: 'awards', seg: 'awards/', seo: HUB_SEO.awards },
 ];
+
+/** 個別ページの H1・パンくずに使う見出し（detail.heading があればそれ、無ければ題目） */
+function detailHeading(w, lc) {
+  return (w.detail && t(w.detail, 'heading', lc)) || t(w, 'title', lc);
+}
 
 /** 業績の個別ページ（無ければ null） */
 function detailPageOf(work, lang) {
@@ -475,6 +495,7 @@ function renderMain(page) {
     case 'publications-hub': return renderPublicationsHubMain(page);
     case 'publication': return renderPublicationMain(page);
     case 'awards': return renderAwardsMain(page);
+    case 'work-detail': return renderWorkDetailMain(page);
     default: throw new Error(`renderMain: 未知のページ種別 "${page.def.kind}"`);
   }
 }
@@ -507,9 +528,11 @@ function trailOf(page) {
     case 'publications-hub':
       return [home, { name: L.publications, page: null }];
     case 'publication':
-      return [home, { name: L.publications, page: pageOf('publications', lang) }, { name: t(page.def.data, 'title', lang.code), page: null }];
+      return [home, { name: L.publications, page: pageOf('publications', lang) }, { name: detailHeading(page.def.data, lang.code), page: null }];
     case 'awards':
       return [home, { name: L.awards, page: null }];
+    case 'work-detail':
+      return [home, { name: L.section.work, page: pageOf('home', lang), hash: '#work' }, { name: detailHeading(page.def.data, lang.code), page: null }];
     default:
       return [];
   }
@@ -518,7 +541,7 @@ function trailOf(page) {
 function renderBreadcrumb(page) {
   const L = UI[page.lang.code];
   const items = trailOf(page).map((crumb) => (crumb.page
-    ? `          <li><a href="${relHref(page.dir, crumb.page.dir)}">${esc(crumb.name)}</a></li>`
+    ? `          <li><a href="${relHref(page.dir, crumb.page.dir)}${crumb.hash ?? ''}">${esc(crumb.name)}</a></li>`
     : `          <li aria-current="page">${esc(crumb.name)}</li>`)).join('\n');
   return `    <nav class="breadcrumb" aria-label="${esc(L.breadcrumbLabel)}">
       <div class="container">
@@ -716,7 +739,7 @@ ${paras.map((para) => `              <p>${esc(para)}</p>`).join('\n')}
         <div class="page-inner fade-up">
           <header class="page-header">
             <span class="section-eyebrow">${esc(L.publicationEyebrow)}</span>
-            <h1>${esc(t(w, 'title', lc))}</h1>
+            <h1>${esc(detailHeading(w, lc))}</h1>
             <p class="page-lead work-citation">${formatAuthors(w.authors, w.selfAuthors)} (${esc(w.year)}). <em>${esc(t(w, 'venue', lc))}</em>.</p>
           </header>
           <div class="page-body prose">
@@ -732,6 +755,84 @@ ${facts.map(([k, v]) => `              <div class="fact"><dt>${esc(k)}</dt><dd>$
             <h2>${esc(L.sourcesHeading)}</h2>
             <ul class="source-list">
 ${sourceList}
+            </ul>
+          </section>
+          <section class="page-block">
+            <h2>${esc(L.relatedPages)}</h2>
+            <ul class="source-list">
+${related}
+            </ul>
+          </section>
+          <p class="page-back"><a href="${homeRel}">${esc(L.backToProfile)}</a></p>
+        </div>
+      </div>
+    </article>
+`;
+}
+
+function renderWorkDetailMain(page) {
+  const { lang } = page;
+  const lc = lang.code;
+  const L = UI[lc];
+  const w = page.def.data;
+  const homeRel = relHref(page.dir, homeDir(lang));
+
+  const blocks = [
+    [L.summaryHeading, t(w.detail, 'summary', lc)],
+    [L.whyHeading, t(w.detail, 'why', lc)],
+    [L.resultsHeading, t(w.detail, 'results', lc)],
+  ].map(([heading, paras]) => `            <section class="page-block">
+              <h2>${esc(heading)}</h2>
+${paras.map((para) => `              <p>${esc(para)}</p>`).join('\n')}
+            </section>`).join('\n');
+
+  const methods = t(w, 'methods', lc);
+  const facts = [
+    ['problem', t(w, 'problem', lc)],
+    ['role', t(w, 'role', lc)],
+    ['domain', t(w, 'domain', lc)],
+    ['methods', Array.isArray(methods) ? methods.join(', ') : methods],
+    ['outcome', t(w, 'outcome', lc)],
+  ].filter(([, v]) => v);
+
+  const sources = [...(w.detail.sources ?? []), ...(w.links ?? [])]
+    .filter((src, i, arr) => arr.findIndex((x) => x.url === src.url) === i)
+    .map((src) => `                <li><a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(t(src, 'label', lc))}</a></li>`)
+    .join('\n');
+
+  const related = [
+    ...(w.topics ?? [])
+      .map((id) => topics.find((topic) => topic.id === id))
+      .filter(Boolean)
+      .map((topic) => ({ href: relHref(page.dir, pageOf(`topic:${topic.id}`, lang).dir), label: `${L.relatedTopic}: ${t(topic, 'title', lc)}` })),
+    { href: `${homeRel}#work`, label: L.allWork },
+  ].map((l) => `                <li><a href="${esc(l.href)}">${esc(l.label)}</a></li>`).join('\n');
+
+  const metaLine = [t(w, 'organization', lc), t(w, 'role', lc), formatYearMonth(w, lc)].filter(Boolean).join(' · ');
+
+  return `${renderBreadcrumb(page)}
+    <article class="page">
+      <div class="container">
+        <div class="page-inner fade-up">
+          <header class="page-header">
+            <span class="section-eyebrow">${esc(L.workEyebrow)}</span>
+            <h1>${esc(detailHeading(w, lc))}</h1>
+            <p class="page-lead">${esc(t(w, 'title', lc))}</p>
+            <p class="page-meta">${esc(metaLine)}</p>
+          </header>
+          <div class="page-body prose">
+${blocks}
+          </div>
+          <section class="page-block">
+            <h2>${esc(L.projectFactsHeading)}</h2>
+            <dl class="project-facts">
+${facts.map(([k, v]) => `              <div class="fact"><dt>${esc(L.facts[k])}</dt><dd>${esc(v)}</dd></div>`).join('\n')}
+            </dl>
+          </section>
+          <section class="page-block">
+            <h2>${esc(L.sourcesHeading)}</h2>
+            <ul class="source-list">
+${sources}
             </ul>
           </section>
           <section class="page-block">
@@ -937,6 +1038,19 @@ function renderProject(item, page) {
   const { lang } = page;
   const L = UI[lang.code];
   const lc = lang.code;
+  const detail = detailPageOf(item, lang);
+  const metaLine0 = [t(item, 'organization', lc), formatYearMonth(item, lc)].filter(Boolean).join(' · ');
+  // 個別ページがある案件は、トップでは題目 + 要約 + 詳細リンクに留める（詳細は個別ページ側）
+  if (detail) {
+    return `                <li>
+                  <article class="work-item project-item">
+                    <h4 class="work-title">${esc(t(item, 'title', lc))}</h4>
+                    <p class="work-meta">${esc(metaLine0)}</p>
+                    <p class="work-description">${esc(t(item, 'description', lc))}</p>
+                    <p class="work-more"><a href="${relHref(page.dir, detail.dir)}">${esc(L.details)}<span aria-hidden="true"> →</span></a></p>
+                  </article>
+                </li>`;
+  }
   const methods = t(item, 'methods', lc);
   const facts = [
     ['problem', t(item, 'problem', lc)],
@@ -1042,6 +1156,7 @@ function buildJsonLd(page, title, description) {
     case 'awards':
       return buildHubJsonLd(page, title, description);
     case 'publication': return buildPublicationJsonLd(page, title, description);
+    case 'work-detail': return buildWorkDetailJsonLd(page, title, description);
     case 'topic': return buildTopicJsonLd(page, title, description);
     default: throw new Error(`buildJsonLd: 未知のページ種別 "${page.def.kind}"`);
   }
@@ -1068,7 +1183,7 @@ function breadcrumbNode(page, trail) {
       '@type': 'ListItem',
       position: i + 1,
       name: crumb.name,
-      ...(crumb.page ? { item: crumb.page.url } : {}),
+      ...(crumb.page ? { item: `${crumb.page.url}${crumb.hash ?? ''}` } : {}),
     })),
   };
 }
@@ -1215,6 +1330,41 @@ function buildPublicationJsonLd(page, title, description) {
         author: { '@id': PERSON_ID },
         breadcrumb: { '@id': `${url}#breadcrumb` },
         mainEntity: article,
+      },
+      personRefNode(),
+      breadcrumbNode(page, trailOf(page)),
+    ],
+  };
+}
+
+function buildWorkDetailJsonLd(page, title, description) {
+  const { lang, url } = page;
+  const lc = lang.code;
+  const w = page.def.data;
+  const methods = w.methods ?? [];
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${url}#webpage`,
+        url,
+        name: title,
+        description,
+        inLanguage: lc,
+        dateModified: page.lastmod,
+        isPartOf: webSiteNode(),
+        author: { '@id': PERSON_ID },
+        breadcrumb: { '@id': `${url}#breadcrumb` },
+        mainEntity: {
+          '@type': 'CreativeWork',
+          name: t(w, 'title', lc),
+          description: t(w, 'outcome', lc) || t(w, 'description', lc),
+          creator: { '@id': PERSON_ID },
+          datePublished: String(w.year),
+          ...(methods.length ? { keywords: methods.join(', ') } : {}),
+          ...(w.organization ? { sourceOrganization: { '@type': 'Organization', name: w.organization } } : {}),
+        },
       },
       personRefNode(),
       breadcrumbNode(page, trailOf(page)),
@@ -1541,7 +1691,8 @@ function currentAffiliations() {
   return [...education.filter(isPresent), ...experience.filter(isPresent)];
 }
 
-const sortValue = (w) => (w.year ?? 0) * 100 + (w.month ?? 0);
+// 関数宣言（巻き上げ）にしておく。モジュール評価時の sortDesc 呼び出しより後に定義されるため
+function sortValue(w) { return (w.year ?? 0) * 100 + (w.month ?? 0); }
 function sortDesc(items) { return [...items].sort((a, b) => sortValue(b) - sortValue(a)); }
 function sortAsc(items) { return [...items].sort((a, b) => sortValue(a) - sortValue(b)); }
 

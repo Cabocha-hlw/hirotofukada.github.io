@@ -226,7 +226,50 @@
         "label_ja": "記事（Septeni FOCUS）",
         "url": "https://focus.septeni.co.jp/interview-column/250521"
       }
-    ]
+    ],
+    "slug": "dcr-mmm",
+    "detail": {
+      "heading": "Data Clean Rooms and Marketing Mix Modeling",
+      "heading_ja": "データクリーンルーム（DCR）と MMM による次世代メディアマーケティング",
+      "seo": {
+        "title": "Data Clean Rooms and Marketing Mix Modeling | Hiroto Fukada",
+        "title_ja": "データクリーンルームと MMM による次世代メディアマーケティング | 深田大登（Hiroto Fukada）",
+        "description": "How Hiroto Fukada combined Data Clean Rooms with Marketing Mix Modeling to measure cross-channel marketing while preserving user privacy.",
+        "description_ja": "深田大登が設計・実装した、データクリーンルーム（DCR）とマーケティングミックスモデリング（MMM）の統合によるプライバシー保護型の効果計測と予算最適化。"
+      },
+      "summary": [
+        "This work combines a Data Clean Room (DCR) - a cloud environment provided by platforms in which data can be analysed together without exposing individual records - with Marketing Mix Modeling (MMM) and causal inference, delivered through Septeni's XYhai solution. Hiroto Fukada designed and implemented the integrated architecture as a Data Analyst at Septeni Japan, and it was published as a solution article in May 2025.",
+        "The two halves answer different questions. MMM gives the strategic overview across online and offline media; the DCR supports detailed evaluation of individual tactics. Running them as one architecture means the same budget decision can be examined at both altitudes."
+      ],
+      "summary_ja": [
+        "プラットフォーマーが提供する安全なクラウド環境であり、個票を露出させずにデータを統合分析できるデータクリーンルーム（DCR）と、マーケティングミックスモデリング（MMM）・因果推論を組み合わせ、セプテーニのソリューション「XYhai」として提供する取り組みである。深田大登は Septeni Japan のデータアナリストとして統合アーキテクチャを設計・実装し、2025年5月にソリューション記事として公開された。",
+        "両者が答える問いは異なる。MMM はオンライン・オフラインを横断した戦略の俯瞰を与え、DCR は個別施策の詳細な評価を支える。ひとつのアーキテクチャとして動かすことで、同じ予算判断を二つの解像度から検証できる。"
+      ],
+      "why": [
+        "Third-party cookie restrictions have made user-level tracking progressively less reliable, while advertisers still need to know which media actually moved the outcome. The requirement is usually stated as a trade-off: effective marketing measurement on one side, privacy protection on the other.",
+        "Treating it as a trade-off is the mistake. Measurement that depends on identifying individuals is not only a privacy liability, it is also fragile - it degrades with every platform policy change. Aggregate, model-based measurement that never needs the individual record is the more durable answer, and it is the one that survives the next restriction."
+      ],
+      "why_ja": [
+        "サードパーティ Cookie の規制により、ユーザー単位のトラッキングは年々信頼できなくなっている。一方で広告主は、どのメディアが実際に成果を動かしたのかを知る必要がある。この要件はしばしば「効果的なマーケティング活動」と「プライバシーの保護」の二者択一として語られる。",
+        "しかし二者択一と捉えること自体が誤りである。個人の識別に依存した計測はプライバシー上の負債であるだけでなく、プラットフォームのポリシー変更のたびに劣化する脆い仕組みでもある。個票を必要としない集計・モデルベースの計測のほうが持続的であり、次の規制にも耐える。"
+      ],
+      "results": [
+        "The integrated DCR + MMM architecture analyses initiatives across online and offline channels inside a privacy-protected environment, and supports data-driven budget allocation from those results. Cross-media ROI can be evaluated without identifying individual users, and budget optimisation is unified across online and offline media.",
+        "The approach was published as a solution article in May 2025, which describes how clarifying the causal relationships between marketing initiatives is what makes integrated optimisation possible."
+      ],
+      "results_ja": [
+        "DCR と MMM を統合したアーキテクチャは、プライバシー保護環境の中でオンライン・オフライン横断の施策を分析し、その結果にもとづくデータドリブンな予算配分を支援する。個人を特定せずにメディア横断の ROI を評価でき、オンライン・オフラインを通じた予算最適化を一本化できる。",
+        "本取り組みは2025年5月にソリューション記事として公開した。マーケティング施策の因果関係を明らかにすることが、統合マーケティングの最適化を可能にするという構図を示している。"
+      ],
+      "sources": [
+        {
+          "label": "Solution article: next-generation media marketing with DCR and MMM (Septeni FOCUS, May 2025)",
+          "label_ja": "ソリューション記事：DCR と MMM で実現する次世代メディアマーケティング（Septeni FOCUS・2025年5月）",
+          "url": "https://focus.septeni.co.jp/interview-column/250521",
+          "primary": true
+        }
+      ]
+    }
   },
   {
     "type": "professional",
@@ -255,6 +298,49 @@
         "label_ja": "プレスリリース",
         "url": "https://www.septeni-holdings.co.jp/news/release/2024/12013886.html"
       }
-    ]
+    ],
+    "slug": "xyhai-dml",
+    "detail": {
+      "heading": "XYhai: Double Machine Learning for marketing decisions",
+      "heading_ja": "「XYhai」への DML 因果推論スキームの導入",
+      "seo": {
+        "title": "XYhai: Double Machine Learning for marketing decisions | Hiroto Fukada",
+        "title_ja": "XYhai：DML による因果推論をマーケティング意思決定へ | 深田大登（Hiroto Fukada）",
+        "description": "How Hiroto Fukada introduced a Double Machine Learning causal inference scheme into XYhai, Septeni's cross-channel marketing decision-support solution.",
+        "description_ja": "深田大登がデータアナリストとして携わった、二重機械学習（DML）による因果推論スキームのマーケティング意思決定支援ソリューション「XYhai」への導入。"
+      },
+      "summary": [
+        "XYhai is Septeni's solution for supporting advertisers' marketing decisions across touchpoints. In December 2024, Septeni announced that a causal inference scheme based on Double Machine Learning (DML), developed through joint research with Google, had been introduced into it. Hiroto Fukada worked on this as a Data Analyst at Septeni Japan.",
+        "The scheme reflects the causal structure between marketing interventions and maps user behaviour from ad exposure through to conversion. That makes it possible to estimate the incremental effect of individual tactics - television commercials, social advertising, and search advertising - instead of reading correlation as if it were effect."
+      ],
+      "summary_ja": [
+        "「XYhai」は、広告主のマーケティングにおける意思決定を横断的に支援するセプテーニのソリューションである。2024年12月、Google との共同研究から生まれた二重機械学習（DML）による因果推論スキームの導入が発表された。深田大登は Septeni Japan のデータアナリストとして本件に携わった。",
+        "このスキームは、マーケティング施策間の因果構造を反映し、広告接触からコンバージョンに至るユーザー行動を対応づける。これにより、テレビCM・SNS広告・検索広告といった個別施策の増分効果を、相関を効果と読み替えることなく推定できる。"
+      ],
+      "why": [
+        "Advertisers allocate budget across channels that interact with each other: a television campaign changes how many people search, and search advertising then collects the conversion. Conventional measurement gives credit to whichever touchpoint appears last, so it cannot separate the incremental contribution of one tactic from the effect of the others.",
+        "The cost of getting this wrong is concrete. Budget moves toward the channel that is best at claiming credit rather than the one that actually changes behaviour, and the error compounds every planning cycle. A causal framing is what makes the difference between attributing outcomes and explaining them."
+      ],
+      "why_ja": [
+        "広告主は、相互に影響し合うチャネルへ予算を配分している。テレビCMが検索行動を増やし、その検索広告がコンバージョンを回収する、といった構造である。従来の計測は最後に接触した接点に成果を寄せるため、ある施策の増分貢献を他施策の効果から切り分けられない。",
+        "誤ったまま運用するコストは具体的だ。実際に行動を変えたチャネルではなく、成果を主張するのが得意なチャネルへ予算が流れ、その誤差は計画のたびに累積する。成果を「割り当てる」のか「説明する」のかを分けるのが、因果の枠組みである。"
+      ],
+      "results": [
+        "The DML-based scheme was implemented in XYhai and announced publicly in December 2024. It supports situation-specific analysis of intervention effects across television, social, and search advertising, and turns the estimates into practical outputs: budget optimisation proposals and effect predictions aligned with observed user behaviour.",
+        "The limits are stated as part of the method rather than hidden. Spot campaigns with less than roughly one month of broadcast data are difficult to evaluate with this scheme, and area testing is used to improve data quality in those cases."
+      ],
+      "results_ja": [
+        "DML ベースのスキームは XYhai に実装され、2024年12月にプレスリリースとして公開された。テレビ・SNS・検索の各広告について状況別の施策効果を分析し、その推定値を予算最適化の提案や効果予測という実務的なアウトプットへ落とし込む。",
+        "適用限界も手法の一部として明示している。放映データが概ね1か月に満たないスポット出稿はこのスキームでの評価が難しく、その場合はエリアテストを併用してデータの質を高める。"
+      ],
+      "sources": [
+        {
+          "label": "Press release: Septeni introduces a DML-based causal inference scheme into XYhai (December 2024)",
+          "label_ja": "プレスリリース：セプテーニ、DML を用いた因果推論のスキームを XYhai に導入（2024年12月）",
+          "url": "https://www.septeni-holdings.co.jp/news/release/2024/12013886.html",
+          "primary": true
+        }
+      ]
+    }
   }
 ]

@@ -1,6 +1,6 @@
 # Phase 2 — コンテンツページ拡張（固有 URL を持つ研究・業績ページ）設計書
 
-- Status: v0.4（2026-09-17）Phase 2a / 2b / 2c 実装済み（12 URL）。実装ブランチ `feature/phase2-content-pages`
+- Status: v0.5（2026-09-17）Phase 2a / 2b / 2c / 2c' 実装済み（16 URL）。実装ブランチ `feature/phase2-content-pages`
 - 対象: `hirotofukada.github.io`（GitHub Pages・公開リポジトリ）
 - 前提: `docs/site_enhancement/DESIGN.md`（Phase 1 = Canonical Personal Hub 化）を読んでいること。
   本書は Phase 1 の §7 トレーサビリティ表で `P2 … 個別ページ ⬜` として積み残した項目を、
@@ -209,9 +209,12 @@ arXiv・IEEE Xplore（DOI 付与後）・学会ページへリンクする。
 個別ページを持つ（現状 `dcr-mmm` と `xyhai-dml` の 2 件）。構成は §4.3 に準じ、既存の
 Problem / Role / Domain / Methods / Outcome を H2 として展開したうえで `detail` の本文を加える。
 
-- **トップページ側は簡易記載に変更する。** 現在の `<dl class="project-facts">`（5 項目の全文）は
-  題目 + `description` の 1〜2 文 + 「詳細」リンクに置き換え、詳細は個別ページへ移す
-  （§6.3 の重複回避。Phase 1 FR-06 の要求は個別ページ側で満たす）。
+- **トップページ側は簡易記載にする。** `<dl class="project-facts">`（5 項目の全文）は
+  個別ページを持つ案件では題目 + `description` の 1〜2 文 + 「詳細」リンクに置き換え、
+  詳細は個別ページへ移す（§6.3 の重複回避。Phase 1 FR-06 の要求は個別ページ側で満たす）。
+  個別ページを持たない案件は従来どおりトップに `<dl>` を出す。
+- 個別ページの H1 とパンくずには `detail.heading`（+`_ja`）を使う。プレスリリースの原題は
+  見出しには長すぎるため、短縮した見出しを別に持ち、原題はリード行に出す。
 - 非公開の職務詳細は引き続き `data/` に入れない（Phase 1 §3-6）。
 
 ### 4.5 ハブページ `/research/` `/publications/`、一覧 `/awards/`
@@ -435,7 +438,7 @@ const PAGE_DEFS = [
 | CP-03 | 研究テーマページ（EN/JA） | `data/topics.json` §4.2 | ✅ 2b（`supply-chain-llm`） |
 | CP-04 | 業績個別ページ（EN/JA） | `works[].detail` §4.3 | ✅ 2c（CIFEr 2026） |
 | CP-05 | ハブ `/research/` `/publications/` と `/awards/` | §4.5 | ✅ 2c |
-| CP-05b | 実務案件ページ `/work/<slug>/` とトップの簡易記載化 | §4.4 | ⬜ |
+| CP-05b | 実務案件ページ `/work/<slug>/` とトップの簡易記載化 | §4.4 | ✅ 2c'（dcr-mmm / xyhai-dml） |
 | CP-06 | BreadcrumbList / WebPage / CollectionPage の JSON-LD | §5.3 | ✅ 2b |
 | CP-07 | `Person.subjectOf` によるプロフィールと成果の接続 | §5.3 | ⬜ |
 | CP-08 | sitemap の全 URL 化・ページ単位 `lastmod` | §5.4 | ✅ 2a（6 URL） |
