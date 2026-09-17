@@ -9,8 +9,12 @@ Pages source = `main` branch root). Design + requirement traceability:
 
 - `data/*.json` is the **single source of truth** (profile, works, experience, education).
 - `site/build.mjs` (zero dependencies, Node ≥ 20) pre-renders
-  `index.html` (EN), `ja/index.html` (JA) and `sitemap.xml`.
-- **`index.html`, `ja/index.html`, `sitemap.xml` are generated. Never edit them by hand.**
+  `index.html` (EN), `ja/index.html` (JA), `sitemap.xml` and `sitemap-gsc.xml`.
+- `sitemap-gsc.xml` is a byte-identical copy of `sitemap.xml` at a second URL, used to
+  diagnose Search Console's "Couldn't fetch" state (DESIGN.md §10-7). Both come from
+  `SITEMAP_FILES` in `site/build.mjs` — never copy the file by hand.
+- **`index.html`, `ja/index.html`, `sitemap.xml`, `sitemap-gsc.xml` are generated. Never
+  edit them by hand.**
   Change `data/` (content), `site/build.mjs` (structure / JSON-LD), or `style.css` (look),
   then rebuild and commit the regenerated files together with the source.
 - `script.js` is progressive enhancement only (progress bar, fade-in, scrollspy,

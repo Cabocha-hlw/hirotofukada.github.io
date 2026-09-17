@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 // ============================================================
 // サイトビルド（静的生成）
-//   data/*.json ──► index.html（EN） / ja/index.html（JA） / sitemap.xml
+//   data/*.json ──► index.html（EN） / ja/index.html（JA） / sitemap.xml + sitemap-gsc.xml
 // 仕様: docs/site_enhancement/DESIGN.md
 //
 //   node site/build.mjs            # 生成
 //   node site/build.mjs --check    # 受け入れチェック + 生成物が最新かの検証（書き込みなし）
 //
-// 生成物（index.html / ja/index.html / sitemap.xml）は手で編集しない。
+// 生成物（index.html / ja/index.html / sitemap.xml / sitemap-gsc.xml）は手で編集しない。
 // 内容の修正は data/*.json、見た目は style.css、構造はこのファイルに対して行い、
 // 再ビルドする。依存パッケージなし（Node 標準モジュールのみ）。
 // ============================================================
@@ -102,6 +102,11 @@ const UI = {
   },
 };
 
+// sitemap は同一内容を 2 つの URL に出す。sitemap-gsc.xml は Search Console 側の
+// 「取得できませんでした」が URL 固有の問題かプロパティ側の問題かを切り分けるための
+// 診断用コピー（docs/site_enhancement/DESIGN.md 参照）。中身は sitemap.xml と完全同一。
+const SITEMAP_FILES = ['sitemap.xml', 'sitemap-gsc.xml'];
+
 // ---------------------------------------------------------------- main
 // （ファイル末尾で main() を呼ぶ。ヘルパーの const 宣言より前に実行しないため）
 function main() {
@@ -129,8 +134,10 @@ function main() {
     fs.writeFileSync(out, p.html);
     console.log(`✓ ${p.file}  (${(Buffer.byteLength(p.html) / 1024).toFixed(1)} KB)`);
   }
-  fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap);
-  console.log('✓ sitemap.xml');
+  for (const name of SITEMAP_FILES) {
+    fs.writeFileSync(path.join(ROOT, name), sitemap);
+    console.log(`✓ ${name}`);
+  }
 }
 
 // ================================================================ page
@@ -660,9 +667,11 @@ function runChecks(pagesToCheck, sitemapXml) {
 
   // SEO-06/07: sitemap / robots
   for (const lang of LANGS) if (!sitemapXml.includes(`<loc>${pageUrl(lang)}</loc>`)) fails.push(`sitemap に ${pageUrl(lang)} がない`);
-  const sitemapOnDisk = readIfExists(path.join(ROOT, 'sitemap.xml'));
-  if (sitemapOnDisk == null) fails.push('sitemap.xml が存在しない');
-  else if (normalizeDates(sitemapOnDisk) !== normalizeDates(sitemapXml)) fails.push('sitemap.xml が最新でない（npm run build を実行）');
+  for (const name of SITEMAP_FILES) {
+    const onDisk = readIfExists(path.join(ROOT, name));
+    if (onDisk == null) fails.push(`${name} が存在しない`);
+    else if (normalizeDates(onDisk) !== normalizeDates(sitemapXml)) fails.push(`${name} が最新でない（npm run build を実行）`);
+  }
   const robots = readIfExists(path.join(ROOT, 'robots.txt')) ?? '';
   if (!/^User-agent:\s*\*/m.test(robots) || !/^Allow:\s*\/\s*$/m.test(robots)) fails.push('robots.txt に "User-agent: *" / "Allow: /" がない');
   if (/^Disallow:\s*\/\s*$/m.test(robots)) fails.push('robots.txt がサイト全体を Disallow している');

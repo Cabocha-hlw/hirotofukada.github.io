@@ -48,7 +48,7 @@ Search Console 登録（SEO-08）は Google アカウント操作が必要なた
 2. **EN / JA は別 URL（`/` と `/ja/`）で生成し、`hreflang` で連結する。** localStorage 切替を
    廃止。`深田大登` を JA ページの H1 に、EN ページでも H1 内の副表記として常時 HTML に置く。
    → Google が日本語クエリに対して JA ページを、英語クエリに EN ページを返せる。
-3. **生成物（`index.html` / `ja/index.html` / `sitemap.xml`）はコミットする。**
+3. **生成物（`index.html` / `ja/index.html` / `sitemap.xml` / `sitemap-gsc.xml`）はコミットする。**
    Pages の配信元（`main` 直下）を変えずに済み、Actions デプロイへの移行という
    外向きの設定変更を伴わない。ドリフト防止として `--check` が「生成物 = ビルド結果」を検証し、
    GitHub Actions（`.github/workflows/check.yml`）で同じチェックを回す（デプロイはしない）。
@@ -70,6 +70,7 @@ Search Console 登録（SEO-08）は Google アカウント操作が必要なた
 | `https://cabocha-hlw.github.io/hirotofukada.github.io/` | en | canonical（x-default） |
 | `https://cabocha-hlw.github.io/hirotofukada.github.io/ja/` | ja | 日本語版（`hreflang=ja`） |
 | `…/sitemap.xml` | – | 2 URL + `xhtml:link` alternates |
+| `…/sitemap-gsc.xml` | – | `sitemap.xml` と完全同一（GSC 診断用コピー、§10-7） |
 | `…/robots.txt` | – | 意図の記録（§10 の制約あり） |
 
 ### 見出し階層（SEO-05）
@@ -213,7 +214,7 @@ ProfilePage (@id …/#profilepage, url, name, description, inLanguage, dateModif
 ## 8. ビルドと検証
 
 ```bash
-npm run build      # index.html, ja/index.html, sitemap.xml を再生成
+npm run build      # index.html, ja/index.html, sitemap.xml, sitemap-gsc.xml を再生成
 npm run check      # 受け入れチェック（下記）+ 生成物がソースと一致するか（書き込みなし）
 node resume/build.mjs --check   # 履歴書側との整合（非公開 master.yaml が必要）
 ```
@@ -253,7 +254,9 @@ C="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
      アカウントが GA プロパティの編集権限を持っていれば即時に通る（コード変更不要）
    - **HTML タグ**: 表示されたトークンを `data/profile.json` → `seo.googleSiteVerification` に入れ、
      `npm run build` → コミット → デプロイ後に「確認」
-3. サイトマップ: `https://cabocha-hlw.github.io/hirotofukada.github.io/sitemap.xml` を送信
+3. サイトマップ: `https://cabocha-hlw.github.io/hirotofukada.github.io/sitemap.xml` を送信。
+   ステータスが「取得できませんでした」のまま数日続く場合は `sitemap-gsc.xml` も追加送信し、
+   §10-7 の切り分けを行う
 4. URL 検査: `/` と `/ja/` をそれぞれ検査 →「クロール済みのページを表示」で H1・本文が HTML に
    含まれることを確認 →「インデックス登録をリクエスト」
 5. 設定 → robots.txt レポートで `cabocha-hlw.github.io/robots.txt` が **未検出（404）** = 全許可で
@@ -276,7 +279,7 @@ C="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 1. `data/*.json` を編集（研究成果は `works.json` に追記。§5.2 のフィールド）
 2. `npm run build && npm run check`
 3. 必要なら `node resume/build.mjs --check` で履歴書側とのズレを確認
-4. 生成物（`index.html` / `ja/index.html` / `sitemap.xml`）をソースと**同じコミット**に含める
+4. 生成物（`index.html` / `ja/index.html` / `sitemap.xml` / `sitemap-gsc.xml`）をソースと**同じコミット**に含める
 5. デプロイ後、GSC で URL 検査 → インデックス登録をリクエスト（新規業績のときのみで十分）
 
 ---
@@ -305,6 +308,20 @@ C="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
    （JSON-LD の主 URL が DOI に切り替わる）。
 6. **ZENKIGEN の開始月。** 履歴書側 `master.yaml`（2021-09）とサイト（2021-08）の不一致は
    既存の TODO。本件の範囲外だが、`--check` の警告として残っている。
+7. **sitemap「取得できませんでした」の切り分け（2026-09-17〜）。** GSC に送信した
+   `sitemap.xml` が 5 日以上「取得できませんでした（Couldn't fetch）」のままのため、内容が
+   完全に同一のコピーを `sitemap-gsc.xml` として別 URL に配置し、両方を送信して比較する。
+   両ファイルは `site/build.mjs` の `SITEMAP_FILES` から同一文字列を書き出しており、
+   `npm run check` が両者とも最新であることを検査する（手でコピーしない）。
+   判定:
+   - `sitemap.xml` = 失敗 / `sitemap-gsc.xml` = 成功 → 特定 sitemap URL に対する GSC 側の
+     状態・キャッシュの問題。以後 `sitemap-gsc.xml` を正とし、`sitemap.xml` は残す。
+   - 両方とも失敗 → URL 単位ではなくプロパティ側の sitemap processing の問題。GSC の
+     プロパティ再作成、または robots.txt レポート・URL 検査の Live Test で実際の取得可否を確認する。
+   - 両方とも成功 → 単なる伝播遅延だったと判断し、`sitemap-gsc.xml` は次の変更時に削除してよい
+     （削除時は `SITEMAP_FILES` から外して再ビルド）。
+   なお sitemap の取得状態はランキングとは独立であり、2 ページ・被リンクほぼゼロの新規サイトが
+   上位に出ないこと自体は sitemap の問題ではない（§9.1-7 の 2〜4 週間の計測を継続する）。
 
 ---
 
