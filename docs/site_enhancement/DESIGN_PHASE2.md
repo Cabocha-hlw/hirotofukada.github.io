@@ -1,6 +1,6 @@
 # Phase 2 — コンテンツページ拡張（固有 URL を持つ研究・業績ページ）設計書
 
-- Status: v0.3（2026-09-17）Phase 2a / 2b 実装済み。実装ブランチ `feature/phase2-content-pages`
+- Status: v0.4（2026-09-17）Phase 2a / 2b / 2c 実装済み（12 URL）。実装ブランチ `feature/phase2-content-pages`
 - 対象: `hirotofukada.github.io`（GitHub Pages・公開リポジトリ）
 - 前提: `docs/site_enhancement/DESIGN.md`（Phase 1 = Canonical Personal Hub 化）を読んでいること。
   本書は Phase 1 の §7 トレーサビリティ表で `P2 … 個別ページ ⬜` として積み残した項目を、
@@ -433,13 +433,13 @@ const PAGE_DEFS = [
 | CP-01 | ページレジストリによる複数ページ生成 | `site/build.mjs` §5.1 | ✅ 2a |
 | CP-02 | 相対リンク解決 `relHref()` と `base` 計算 | `site/build.mjs` §5.2 | ✅ 2a |
 | CP-03 | 研究テーマページ（EN/JA） | `data/topics.json` §4.2 | ✅ 2b（`supply-chain-llm`） |
-| CP-04 | 業績個別ページ（EN/JA） | `works[].detail` §4.3 | ⬜ |
-| CP-05 | ハブ `/research/` `/publications/` と `/awards/` | §4.5 | 🟡 `/research/` のみ実装 |
+| CP-04 | 業績個別ページ（EN/JA） | `works[].detail` §4.3 | ✅ 2c（CIFEr 2026） |
+| CP-05 | ハブ `/research/` `/publications/` と `/awards/` | §4.5 | ✅ 2c |
 | CP-05b | 実務案件ページ `/work/<slug>/` とトップの簡易記載化 | §4.4 | ⬜ |
 | CP-06 | BreadcrumbList / WebPage / CollectionPage の JSON-LD | §5.3 | ✅ 2b |
 | CP-07 | `Person.subjectOf` によるプロフィールと成果の接続 | §5.3 | ⬜ |
 | CP-08 | sitemap の全 URL 化・ページ単位 `lastmod` | §5.4 | ✅ 2a（6 URL） |
-| CP-09 | 薄いページ防止の機械検査（11〜13） | §7 | ✅ 2b（テーマページ） |
+| CP-09 | 薄いページ防止の機械検査（11〜13） | §7 | ✅ 2c（テーマ・業績の両方） |
 | CP-10 | 内部リンク・孤立ページ・sitemap 網羅の検査（18〜20） | §7 | ✅ 2b（トップからの到達可能性を BFS で検査） |
 | CP-11 | サブページのスタイル | `style.css` §5.5 | ✅ 2b |
 | CP-12 | 外部プロフィールからの被リンク | §9-4 | ⬜（ユーザー実施） |

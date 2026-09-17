@@ -1062,3 +1062,18 @@ html[lang='ja'] .topic-card h2 { font-family: inherit; font-size: 1.15rem; font-
   .page-block { margin-top: 2.25rem; }
   .topic-card { padding: 1.25rem 1.25rem; }
 }
+
+/* Link from a list item to its own detail page */
+.work-more { margin: 0.75rem 0 0; font-size: 0.85rem; font-weight: 500; }
+
+.award-badge {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  margin-right: 0.35rem;
+  border-radius: 999px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
