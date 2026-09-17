@@ -33,10 +33,11 @@ const SITE_URL = ensureTrailingSlash(profile.url);
 const BUILD_DATE = new Date().toISOString().slice(0, 10);
 const GA_ID = 'G-W12HECKQ45';
 
-// 言語ごとの出力先。base は各ページから見たサイトルートへの相対パス。
+// 言語ごとの出力先。各ページからサイトルートへの相対パス（base）は
+// 出力パスの深さから計算する（DESIGN_PHASE2.md §5.2）。
 const LANGS = [
-  { code: 'en', dir: '', base: '', ogLocale: 'en_US' },
-  { code: 'ja', dir: 'ja', base: '../', ogLocale: 'ja_JP' },
+  { code: 'en', dir: '', ogLocale: 'en_US' },
+  { code: 'ja', dir: 'ja', ogLocale: 'ja_JP' },
 ];
 
 // ---------------------------------------------------------------- UI strings
@@ -107,15 +108,71 @@ const UI = {
 // 診断用コピー（docs/site_enhancement/DESIGN.md 参照）。中身は sitemap.xml と完全同一。
 const SITEMAP_FILES = ['sitemap.xml', 'sitemap-gsc.xml'];
 
+// ---------------------------------------------------------------- page registry
+// 「ページ定義 × 言語」の直積が生成物になる。出力先・URL・相対パス・hreflang・
+// sitemap・受け入れチェックはすべてこのレジストリから導出する。ページを増やすときは
+// PAGE_DEFS に足し、renderMain() に種別の分岐を足す（DESIGN_PHASE2.md §5.1）。
+//
+//   key   : 一意なキー（チェックのエラーメッセージ用）
+//   kind  : renderMain() の分岐先
+//   seg   : サイトルートからのディレクトリ（末尾 '/'。トップは ''）
+//   seo   : 省略時は profile.seo を使う
+const PAGE_DEFS = [
+  { key: 'home', kind: 'profile', seg: '' },
+];
+
+/** ページ定義 × 言語。生成順は PAGE_DEFS の順 → LANGS の順 */
+function pageInstances() {
+  return PAGE_DEFS.flatMap((def) => LANGS.map((lang) => makePage(def, lang)));
+}
+
+function makePage(def, lang) {
+  const dir = `${lang.dir ? `${lang.dir}/` : ''}${def.seg}`;
+  return {
+    def,
+    lang,
+    dir,                                   // サイトルートからの相対ディレクトリ（'' / 'ja/' / 'research/x/'）
+    file: `${dir}index.html`,
+    url: `${SITE_URL}${dir}`,
+    base: '../'.repeat(depth(dir)),        // ページからサイトルートへの相対パス
+    lastmod: def.lastmod ?? BUILD_DATE,
+  };
+}
+
+/** 同一ページの全言語版 */
+function siblings(page) {
+  return LANGS.map((l) => makePage(page.def, l));
+}
+
+function depth(dir) {
+  return dir ? dir.split('/').filter(Boolean).length : 0;
+}
+
+/** ページ間の相対リンク。サブパス配信でも独自ドメインでも壊れない */
+function relHref(fromDir, toDir) {
+  if (fromDir === toDir) return './';
+  return `${'../'.repeat(depth(fromDir))}${toDir}` || './';
+}
+
+/** その言語のトップページのディレクトリ */
+function homeDir(lang) {
+  return lang.dir ? `${lang.dir}/` : '';
+}
+
+/** hreflang="x-default" の宛先 = 同一ページの EN 版 */
+function xDefaultUrl(page) {
+  return siblings(page).find((s) => s.lang.code === 'en').url;
+}
+
+/** <title> / meta description。ページ定義が seo を持てばそれを、無ければプロフィールの既定値 */
+function pageTitle(page) { return t(page.def.seo ?? profile.seo, 'title', page.lang.code); }
+function pageDescription(page) { return t(page.def.seo ?? profile.seo, 'description', page.lang.code); }
+
 // ---------------------------------------------------------------- main
 // （ファイル末尾で main() を呼ぶ。ヘルパーの const 宣言より前に実行しないため）
 function main() {
-  const pages = LANGS.map((lang) => ({
-    lang,
-    file: path.join(lang.dir, 'index.html'),
-    html: renderPage(lang),
-  }));
-  const sitemap = renderSitemap();
+  const pages = pageInstances().map((page) => ({ ...page, html: renderPage(page) }));
+  const sitemap = renderSitemap(pages);
 
   if (checkOnly) {
     const failures = runChecks(pages, sitemap);
@@ -141,17 +198,20 @@ function main() {
 }
 
 // ================================================================ page
-function renderPage(lang) {
+function renderPage(page) {
+  const { lang } = page;
   const L = UI[lang.code];
   const lc = lang.code;
-  const base = lang.base;
-  const url = pageUrl(lang);
-  const title = t(profile.seo, 'title', lc);
-  const description = t(profile.seo, 'description', lc);
+  const base = page.base;
+  const url = page.url;
+  const title = pageTitle(page);
+  const description = pageDescription(page);
   const isJa = lc === 'ja';
+  // トップページ以外では、ナビのアンカーは自言語トップページを指す
+  const navBase = page.def.kind === 'profile' ? '' : relHref(page.dir, homeDir(lang));
 
-  const alternates = LANGS.map(
-    (l) => `<link rel="alternate" hreflang="${l.code}" href="${esc(pageUrl(l))}">`,
+  const alternates = siblings(page).map(
+    (s) => `<link rel="alternate" hreflang="${s.lang.code}" href="${esc(s.url)}">`,
   ).join('\n  ');
 
   const verification = profile.seo.googleSiteVerification
@@ -170,7 +230,7 @@ function renderPage(lang) {
   <meta name="robots" content="index, follow, max-image-preview:large">${verification}
   <link rel="canonical" href="${esc(url)}">
   ${alternates}
-  <link rel="alternate" hreflang="x-default" href="${esc(SITE_URL)}">
+  <link rel="alternate" hreflang="x-default" href="${esc(xDefaultUrl(page))}">
   <meta property="og:type" content="profile">
   <meta property="og:site_name" content="${esc(profile.name)}">
   <meta property="og:title" content="${esc(title)}">
@@ -195,7 +255,7 @@ function renderPage(lang) {
   <link rel="stylesheet" href="${base}style.css">
   <script>document.documentElement.classList.add('js');</script>
   <script type="application/ld+json">
-${JSON.stringify(buildJsonLd(lang, url, title, description), null, 2)}
+${JSON.stringify(buildJsonLd(page, title, description), null, 2)}
   </script>
 
   <!-- Google tag (gtag.js) -->
@@ -217,12 +277,12 @@ ${JSON.stringify(buildJsonLd(lang, url, title, description), null, 2)}
         <a class="header-name" href="${base || './'}">${esc(profile.name)}</a>
         <nav aria-label="${isJa ? 'メインナビゲーション' : 'Primary'}">
           ${['about', 'expertise', 'work', 'research', 'experience', 'education', 'profiles']
-            .map((id) => `<a href="#${id}">${esc(L.nav[id])}</a>`).join('\n          ')}
+            .map((id) => `<a href="${navBase}#${id}">${esc(L.nav[id])}</a>`).join('\n          ')}
         </nav>
         <div class="lang-toggle" role="group" aria-label="${esc(L.langLabel)}">
           ${LANGS.map((l) => {
             const active = l === lang;
-            return `<a class="lang-btn${active ? ' active' : ''}" href="${esc(langHref(lang, l))}" hreflang="${l.code}" lang="${l.code}"${active ? ' aria-current="page"' : ''}>${l.code.toUpperCase()}</a>`;
+            return `<a class="lang-btn${active ? ' active' : ''}" href="${esc(langHref(page, l))}" hreflang="${l.code}" lang="${l.code}"${active ? ' aria-current="page"' : ''}>${l.code.toUpperCase()}</a>`;
           }).join('\n          ')}
         </div>
       </div>
@@ -230,14 +290,7 @@ ${JSON.stringify(buildJsonLd(lang, url, title, description), null, 2)}
   </header>
 
   <main id="main">
-${renderHero(lang)}
-${renderSection(lang, 'about', renderAbout(lang))}
-${renderSection(lang, 'expertise', renderExpertise(lang))}
-${renderSection(lang, 'work', renderWork(lang))}
-${renderSection(lang, 'research', renderResearch(lang))}
-${renderSection(lang, 'experience', renderExperience(lang))}
-${renderSection(lang, 'education', renderEducation(lang))}
-${renderSection(lang, 'profiles', renderProfiles(lang))}
+${renderMain(page)}
   </main>
 
   <footer class="site-footer">
@@ -253,6 +306,29 @@ ${renderSection(lang, 'profiles', renderProfiles(lang))}
 </body>
 </html>
 `;
+}
+
+// ---------------------------------------------------------------- main content
+/** ページ種別ごとの <main> の中身。ページ種別を増やすときはここに分岐を足す */
+function renderMain(page) {
+  switch (page.def.kind) {
+    case 'profile': return renderProfileMain(page);
+    default: throw new Error(`renderMain: 未知のページ種別 "${page.def.kind}"`);
+  }
+}
+
+function renderProfileMain(page) {
+  const { lang } = page;
+  return [
+    renderHero(page),
+    renderSection(lang, 'about', renderAbout(lang)),
+    renderSection(lang, 'expertise', renderExpertise(lang)),
+    renderSection(lang, 'work', renderWork(lang)),
+    renderSection(lang, 'research', renderResearch(lang)),
+    renderSection(lang, 'experience', renderExperience(lang)),
+    renderSection(lang, 'education', renderEducation(lang)),
+    renderSection(lang, 'profiles', renderProfiles(lang)),
+  ].join('\n');
 }
 
 // ---------------------------------------------------------------- sections
@@ -274,11 +350,12 @@ ${content}
 `;
 }
 
-function renderHero(lang) {
+function renderHero(page) {
+  const { lang } = page;
   const L = UI[lang.code];
   const lc = lang.code;
   const isJa = lc === 'ja';
-  const base = lang.base;
+  const base = page.base;
   const primary = isJa ? profile.name_ja : profile.name;
   const secondary = isJa ? profile.name : profile.name_ja;
   const affil = currentAffiliations().map((o) => o.shortName).join(' · ');
@@ -484,7 +561,8 @@ ${pad}</p>`;
 }
 
 // ---------------------------------------------------------------- JSON-LD
-function buildJsonLd(lang, url, title, description) {
+function buildJsonLd(page, title, description) {
+  const { lang, url } = page;
   const lc = lang.code;
   const personId = `${SITE_URL}#person`;
   const actives = currentAffiliations();
@@ -553,14 +631,14 @@ function buildJsonLd(lang, url, title, description) {
 }
 
 // ---------------------------------------------------------------- sitemap
-function renderSitemap() {
-  const urls = LANGS.map((lang) => {
-    const links = LANGS.map((l) => `    <xhtml:link rel="alternate" hreflang="${l.code}" href="${esc(pageUrl(l))}"/>`).join('\n');
+function renderSitemap(pages) {
+  const urls = pages.filter((p) => p.def.sitemap !== false).map((page) => {
+    const links = siblings(page).map((s) => `    <xhtml:link rel="alternate" hreflang="${s.lang.code}" href="${esc(s.url)}"/>`).join('\n');
     return `  <url>
-    <loc>${esc(pageUrl(lang))}</loc>
-    <lastmod>${BUILD_DATE}</lastmod>
+    <loc>${esc(page.url)}</loc>
+    <lastmod>${page.lastmod}</lastmod>
 ${links}
-    <xhtml:link rel="alternate" hreflang="x-default" href="${esc(SITE_URL)}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="${esc(xDefaultUrl(page))}"/>
   </url>`;
   }).join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -577,13 +655,14 @@ function runChecks(pagesToCheck, sitemapXml) {
   const text = (html) => html.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]+>/g, ' ');
 
   for (const p of pagesToCheck) {
-    const { html, file, lang } = p;
+    const { html, file, lang, def } = p;
     const tag = `[${file}]`;
+    const isProfile = def.kind === 'profile';  // トップページ固有の検査
 
     // FR-01: H1 は 1 つ、Hiroto Fukada を含む。深田大登 が本文に存在する
     const h1s = [...html.matchAll(/<h1[^>]*>([\s\S]*?)<\/h1>/g)];
     if (h1s.length !== 1) fails.push(`${tag} h1 が ${h1s.length} 個（1 個であること）`);
-    else if (!h1s[0][1].replace(/<[^>]+>/g, '').includes('Hiroto Fukada')) fails.push(`${tag} h1 に "Hiroto Fukada" がない`);
+    else if (isProfile && !h1s[0][1].replace(/<[^>]+>/g, '').includes('Hiroto Fukada')) fails.push(`${tag} h1 に "Hiroto Fukada" がない`);
     if (!text(html).includes('深田大登')) fails.push(`${tag} 本文に "深田大登" がない`);
 
     // SEO-01/02: title / meta description
@@ -596,14 +675,14 @@ function runChecks(pagesToCheck, sitemapXml) {
     }
 
     // SEO-03: canonical / hreflang
-    if (!html.includes(`<link rel="canonical" href="${pageUrl(lang)}">`)) fails.push(`${tag} canonical が不正`);
+    if (!html.includes(`<link rel="canonical" href="${p.url}">`)) fails.push(`${tag} canonical が不正`);
     for (const l of LANGS) if (!html.includes(`hreflang="${l.code}"`)) fails.push(`${tag} hreflang=${l.code} がない`);
     if (!html.includes('hreflang="x-default"')) fails.push(`${tag} hreflang=x-default がない`);
 
     // FR-03: JSON-LD ProfilePage / Person
     const ld = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => m[1]);
     if (ld.length === 0) fails.push(`${tag} JSON-LD がない`);
-    for (const block of ld) {
+    for (const block of (isProfile ? ld : [])) {
       let data;
       try { data = JSON.parse(block); } catch (e) { fails.push(`${tag} JSON-LD がパースできない: ${e.message}`); continue; }
       const graph = data['@graph'] ?? [data];
@@ -626,21 +705,23 @@ function runChecks(pagesToCheck, sitemapXml) {
       if (!new RegExp(`<${el}[\\s>]`).test(html)) fails.push(`${tag} <${el}> がない`);
     }
     // SEO-05: H2 の順序
-    const h2s = [...html.matchAll(/<h2[^>]*>([^<]*)<\/h2>/g)].map((m) => m[1]);
-    const expected = ['about', 'expertise', 'work', 'research', 'experience', 'education', 'profiles'].map((k) => esc(UI[lang.code].section[k]));
-    if (JSON.stringify(h2s) !== JSON.stringify(expected)) fails.push(`${tag} h2 の並びが想定と異なる: ${h2s.join(' | ')}`);
+    if (isProfile) {
+      const h2s = [...html.matchAll(/<h2[^>]*>([^<]*)<\/h2>/g)].map((m) => m[1]);
+      const expected = ['about', 'expertise', 'work', 'research', 'experience', 'education', 'profiles'].map((k) => esc(UI[lang.code].section[k]));
+      if (JSON.stringify(h2s) !== JSON.stringify(expected)) fails.push(`${tag} h2 の並びが想定と異なる: ${h2s.join(' | ')}`);
 
-    // FR-05: 研究成果のタイトルが HTML テキストとして存在する
-    for (const w of works) {
-      const ttl = t(w, 'title', lang.code);
-      if (!html.includes(esc(ttl))) fails.push(`${tag} works "${ttl.slice(0, 40)}" がテキストとして見つからない`);
+      // FR-05: 研究成果のタイトルが HTML テキストとして存在する
+      for (const w of works) {
+        const ttl = t(w, 'title', lang.code);
+        if (!html.includes(esc(ttl))) fails.push(`${tag} works "${ttl.slice(0, 40)}" がテキストとして見つからない`);
+      }
+      // FR-02: Biography
+      const bioWords = (profile.bio ?? []).join(' ').split(/\s+/).filter(Boolean).length;
+      if (bioWords < 100 || bioWords > 200) fails.push(`profile.bio の語数 ${bioWords}（100〜200 語であること）`);
+      if (!html.includes('id="profile-about"')) fails.push(`${tag} Biography ブロックがない`);
+      // FR-04: 外部プロフィールリンク
+      for (const pr of profile.profiles) if (!html.includes(`href="${esc(pr.url)}"`)) fails.push(`${tag} プロフィールリンク ${pr.network} がない`);
     }
-    // FR-02: Biography
-    const bioWords = (profile.bio ?? []).join(' ').split(/\s+/).filter(Boolean).length;
-    if (bioWords < 100 || bioWords > 200) fails.push(`profile.bio の語数 ${bioWords}（100〜200 語であること）`);
-    if (!html.includes('id="profile-about"')) fails.push(`${tag} Biography ブロックがない`);
-    // FR-04: 外部プロフィールリンク
-    for (const pr of profile.profiles) if (!html.includes(`href="${esc(pr.url)}"`)) fails.push(`${tag} プロフィールリンク ${pr.network} がない`);
 
     // §8 Privacy: メールアドレス・電話番号を出さない
     if (/mailto:/i.test(html)) fails.push(`${tag} mailto: リンクが含まれている（要求書 §8）`);
@@ -655,8 +736,8 @@ function runChecks(pagesToCheck, sitemapXml) {
       if (!/\salt="[^"]+"/.test(img[0])) fails.push(`${tag} <img> に alt がない: ${img[0].slice(0, 60)}`);
     }
     // 参照している静的ファイルの実在
-    for (const rel of [`${lang.base}style.css`, `${lang.base}script.js`, `${lang.base}${profile.photo.src}`, ...(profile.photo.webp ? [`${lang.base}${profile.photo.webp}`] : [])]) {
-      if (!fs.existsSync(path.join(ROOT, lang.dir, rel))) fails.push(`${tag} 参照ファイルが存在しない: ${rel}`);
+    for (const rel of [`${p.base}style.css`, `${p.base}script.js`, `${p.base}${profile.photo.src}`, ...(profile.photo.webp ? [`${p.base}${profile.photo.webp}`] : [])]) {
+      if (!fs.existsSync(path.join(ROOT, p.dir, rel))) fails.push(`${tag} 参照ファイルが存在しない: ${rel}`);
     }
 
     // 生成物が最新か（日付のみ差異を許容）
@@ -666,7 +747,13 @@ function runChecks(pagesToCheck, sitemapXml) {
   }
 
   // SEO-06/07: sitemap / robots
-  for (const lang of LANGS) if (!sitemapXml.includes(`<loc>${pageUrl(lang)}</loc>`)) fails.push(`sitemap に ${pageUrl(lang)} がない`);
+  for (const p of pagesToCheck) {
+    if (p.def.sitemap === false) continue;
+    if (!sitemapXml.includes(`<loc>${p.url}</loc>`)) fails.push(`sitemap に ${p.url} がない`);
+  }
+  const locCount = (sitemapXml.match(/<loc>/g) ?? []).length;
+  const expectedLocs = pagesToCheck.filter((p) => p.def.sitemap !== false).length;
+  if (locCount !== expectedLocs) fails.push(`sitemap の URL 数 ${locCount}（生成ページ数 ${expectedLocs} と一致すること）`);
   for (const name of SITEMAP_FILES) {
     const onDisk = readIfExists(path.join(ROOT, name));
     if (onDisk == null) fails.push(`${name} が存在しない`);
@@ -729,12 +816,11 @@ const sortValue = (w) => (w.year ?? 0) * 100 + (w.month ?? 0);
 function sortDesc(items) { return [...items].sort((a, b) => sortValue(b) - sortValue(a)); }
 function sortAsc(items) { return [...items].sort((a, b) => sortValue(a) - sortValue(b)); }
 
-function pageUrl(lang) { return lang.dir ? `${SITE_URL}${lang.dir}/` : SITE_URL; }
 function abs(rel) { return `${SITE_URL}${rel}`; }
-/** 言語切替リンク（相対パス。サブパス配信でも壊れないよう絶対パスは使わない） */
-function langHref(from, to) {
-  if (to === from) return './';
-  return to.dir ? `${from.base}${to.dir}/` : from.base || './';
+/** 言語切替リンク = 同一ページの他言語版（相対パス。絶対パスは使わない） */
+function langHref(page, to) {
+  if (to === page.lang) return './';
+  return relHref(page.dir, makePage(page.def, to).dir);
 }
 function ensureTrailingSlash(u) { return u.endsWith('/') ? u : `${u}/`; }
 
