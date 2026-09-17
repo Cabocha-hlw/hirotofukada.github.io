@@ -1227,6 +1227,12 @@ function buildProfileJsonLd(page, title, description) {
   };
 
   const articles = sortDesc(works.filter((w) => w.type === 'paper')).map(workNode);
+  // プロフィールと各コンテンツページを接続する（DESIGN_PHASE2.md §5.3 / CP-07）。
+  // トップ以外の全ページを WebPage ノードとして列挙し、Person と同じグラフに置く。
+  const contentPages = PAGE_DEFS
+    .filter((def) => def.kind !== 'profile')
+    .map((def) => makePage(def, lang))
+    .map((sub) => ({ '@type': 'WebPage', '@id': `${sub.url}#webpage`, url: sub.url, name: pageTitle(sub) }));
 
   return {
     '@context': 'https://schema.org',
@@ -1241,7 +1247,7 @@ function buildProfileJsonLd(page, title, description) {
         dateModified: BUILD_DATE,
         mainEntity: person,
         about: { '@id': personId },
-        ...(articles.length ? { hasPart: articles } : {}),
+        hasPart: [...contentPages, ...articles],
       },
     ],
   };

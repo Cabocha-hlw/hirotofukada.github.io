@@ -1,6 +1,6 @@
 # Phase 2 — コンテンツページ拡張（固有 URL を持つ研究・業績ページ）設計書
 
-- Status: v0.5（2026-09-17）Phase 2a / 2b / 2c / 2c' 実装済み（16 URL）。実装ブランチ `feature/phase2-content-pages`
+- Status: v0.6（2026-09-17）Phase 2a / 2b / 2c / 2c' + CP-07 実装済み（16 URL）。実装ブランチ `feature/phase2-content-pages`
 - 対象: `hirotofukada.github.io`（GitHub Pages・公開リポジトリ）
 - 前提: `docs/site_enhancement/DESIGN.md`（Phase 1 = Canonical Personal Hub 化）を読んでいること。
   本書は Phase 1 の §7 トレーサビリティ表で `P2 … 個別ページ ⬜` として積み残した項目を、
@@ -265,7 +265,7 @@ const PAGE_DEFS = [
 
 | ページ | ルートノード |
 |---|---|
-| トップ（既存） | `ProfilePage` + `Person`(full) + `hasPart: ScholarlyArticle[]` に加え、**`Person.subjectOf` にテーマページ・業績ページの `@id` を追加** |
+| トップ（既存） | `ProfilePage` + `Person`(full) + `hasPart`: **全コンテンツページ（WebPage）** + `ScholarlyArticle[]`。`Person.subjectOf` ではなく `ProfilePage.hasPart` を使う（Google の ProfilePage はプロフィールの構成コンテンツを `hasPart` で示す形を想定しており、「人物についての著作」を意味する `subjectOf` より正確） |
 | テーマ | `WebPage`（`@id <url>#webpage`）: `about: DefinedTerm`（テーマ名 + keywords）, `author`/`creator`: `{@id …#person}`, `hasPart`: 関連 `ScholarlyArticle` の `@id` 参照, `isPartOf: WebSite` |
 | 業績詳細 | `WebPage` + `mainEntity: ScholarlyArticle`（フルの著者・venue・publisher・sameAs） |
 | ハブ / 一覧 | `CollectionPage` + `hasPart` の `@id` 参照 |
@@ -440,7 +440,7 @@ const PAGE_DEFS = [
 | CP-05 | ハブ `/research/` `/publications/` と `/awards/` | §4.5 | ✅ 2c |
 | CP-05b | 実務案件ページ `/work/<slug>/` とトップの簡易記載化 | §4.4 | ✅ 2c'（dcr-mmm / xyhai-dml） |
 | CP-06 | BreadcrumbList / WebPage / CollectionPage の JSON-LD | §5.3 | ✅ 2b |
-| CP-07 | `Person.subjectOf` によるプロフィールと成果の接続 | §5.3 | ⬜ |
+| CP-07 | `ProfilePage.hasPart` によるプロフィールと各ページの接続 | §5.3 | ✅ |
 | CP-08 | sitemap の全 URL 化・ページ単位 `lastmod` | §5.4 | ✅ 2a（6 URL） |
 | CP-09 | 薄いページ防止の機械検査（11〜13） | §7 | ✅ 2c（テーマ・業績の両方） |
 | CP-10 | 内部リンク・孤立ページ・sitemap 網羅の検査（18〜20） | §7 | ✅ 2b（トップからの到達可能性を BFS で検査） |
