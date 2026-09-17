@@ -27,10 +27,12 @@ const profile = readJson('profile.json');
 const works = readJson('works.json');
 const experience = readJson('experience.json');
 const education = readJson('education.json');
+const topics = readJson('topics.json');
 const networkSvg = fs.readFileSync(path.join(HERE, 'partials', 'network.svg'), 'utf8').trim();
 
 const SITE_URL = ensureTrailingSlash(profile.url);
 const BUILD_DATE = new Date().toISOString().slice(0, 10);
+const PERSON_ID = `${ensureTrailingSlash(profile.url)}#person`;
 const GA_ID = 'G-W12HECKQ45';
 
 // 言語ごとの出力先。各ページからサイトルートへの相対パス（base）は
@@ -72,6 +74,22 @@ const UI = {
     venuePage: 'Conference page',
     topicsLabel: 'Areas of expertise',
     footerTag: 'Open to collaboration',
+    breadcrumbLabel: 'Breadcrumb',
+    home: 'Home',
+    researchHub: 'Research Topics',
+    researchHubEyebrow: 'Research',
+    researchHubLead: 'Research themes that have a page of their own: what the work is, why it matters, how it is done, and where the results were published.',
+    topicEyebrow: 'Research topic',
+    relatedWorks: 'Related research outputs',
+    sourcesHeading: 'Primary sources',
+    relatedPages: 'Related pages',
+    updated: 'Updated',
+    keywordsLabel: 'Keywords',
+    backToProfile: 'Back to the profile page',
+    moreTopics: 'Read the research topics in depth',
+    allTopics: 'All research topics',
+    expertiseLink: 'Expertise',
+    outputsCount: (n) => `${n} research ${n === 1 ? 'output' : 'outputs'}`,
   },
   ja: {
     skip: '本文へスキップ',
@@ -100,6 +118,22 @@ const UI = {
     venuePage: '学会ページ',
     topicsLabel: '専門領域',
     footerTag: '共同研究・協業歓迎',
+    breadcrumbLabel: 'パンくずリスト',
+    home: 'トップ',
+    researchHub: '研究テーマ',
+    researchHubEyebrow: '研究',
+    researchHubLead: '固有のページを持つ研究テーマの一覧。何に取り組み、なぜ重要で、どう進め、どこで発表したかを記載する。',
+    topicEyebrow: '研究テーマ',
+    relatedWorks: '関連する研究成果',
+    sourcesHeading: '一次ソース',
+    relatedPages: '関連ページ',
+    updated: '更新日',
+    keywordsLabel: 'キーワード',
+    backToProfile: 'プロフィールページに戻る',
+    moreTopics: '研究テーマの詳細を読む',
+    allTopics: '研究テーマ一覧',
+    expertiseLink: '専門領域',
+    outputsCount: (n) => `研究成果 ${n} 件`,
   },
 };
 
@@ -107,6 +141,16 @@ const UI = {
 // 「取得できませんでした」が URL 固有の問題かプロパティ側の問題かを切り分けるための
 // 診断用コピー（docs/site_enhancement/DESIGN.md 参照）。中身は sitemap.xml と完全同一。
 const SITEMAP_FILES = ['sitemap.xml', 'sitemap-gsc.xml'];
+
+// ハブページの <title> / meta description（EN は 120〜160 文字。--check が検査する）
+const HUB_SEO = {
+  research: {
+    title: 'Research Topics | Hiroto Fukada',
+    title_ja: '研究テーマ | 深田大登（Hiroto Fukada）',
+    description: 'Research topics of Hiroto Fukada (深田大登): supply chain visibility with large language models, knowledge graphs, and network science.',
+    description_ja: '深田大登（Hiroto Fukada）の研究テーマ一覧。大規模言語モデル（LLM）によるサプライチェーンの可視化、ナレッジグラフ構築、ネットワーク科学。',
+  },
+};
 
 // ---------------------------------------------------------------- page registry
 // 「ページ定義 × 言語」の直積が生成物になる。出力先・URL・相対パス・hreflang・
@@ -119,7 +163,23 @@ const SITEMAP_FILES = ['sitemap.xml', 'sitemap-gsc.xml'];
 //   seo   : 省略時は profile.seo を使う
 const PAGE_DEFS = [
   { key: 'home', kind: 'profile', seg: '' },
+  { key: 'research', kind: 'research-hub', seg: 'research/', seo: HUB_SEO.research },
+  ...topics.map((topic) => ({
+    key: `topic:${topic.id}`,
+    kind: 'topic',
+    seg: `research/${topic.id}/`,
+    seo: topic.seo,
+    lastmod: topic.updated,
+    data: topic,
+  })),
 ];
+
+/** ページ定義キーから、その言語のページを得る（内部リンク・パンくずの解決に使う） */
+function pageOf(key, lang) {
+  const def = PAGE_DEFS.find((d) => d.key === key);
+  if (!def) throw new Error(`pageOf: 未知のページキー "${key}"`);
+  return makePage(def, lang);
+}
 
 /** ページ定義 × 言語。生成順は PAGE_DEFS の順 → LANGS の順 */
 function pageInstances() {
@@ -151,7 +211,12 @@ function depth(dir) {
 /** ページ間の相対リンク。サブパス配信でも独自ドメインでも壊れない */
 function relHref(fromDir, toDir) {
   if (fromDir === toDir) return './';
-  return `${'../'.repeat(depth(fromDir))}${toDir}` || './';
+  const from = fromDir.split('/').filter(Boolean);
+  const to = toDir.split('/').filter(Boolean);
+  let i = 0;
+  while (i < from.length && i < to.length && from[i] === to[i]) i += 1;
+  const down = to.slice(i).join('/');
+  return `${'../'.repeat(from.length - i)}${down}${down ? '/' : ''}` || './';
 }
 
 /** その言語のトップページのディレクトリ */
@@ -274,7 +339,7 @@ ${JSON.stringify(buildJsonLd(page, title, description), null, 2)}
   <header class="site-header">
     <div class="container">
       <div class="header-inner">
-        <a class="header-name" href="${base || './'}">${esc(profile.name)}</a>
+        <a class="header-name" href="${relHref(page.dir, homeDir(lang))}">${esc(profile.name)}</a>
         <nav aria-label="${isJa ? 'メインナビゲーション' : 'Primary'}">
           ${['about', 'expertise', 'work', 'research', 'experience', 'education', 'profiles']
             .map((id) => `<a href="${navBase}#${id}">${esc(L.nav[id])}</a>`).join('\n          ')}
@@ -313,6 +378,8 @@ ${renderMain(page)}
 function renderMain(page) {
   switch (page.def.kind) {
     case 'profile': return renderProfileMain(page);
+    case 'research-hub': return renderResearchHubMain(page);
+    case 'topic': return renderTopicMain(page);
     default: throw new Error(`renderMain: 未知のページ種別 "${page.def.kind}"`);
   }
 }
@@ -322,13 +389,152 @@ function renderProfileMain(page) {
   return [
     renderHero(page),
     renderSection(lang, 'about', renderAbout(lang)),
-    renderSection(lang, 'expertise', renderExpertise(lang)),
+    renderSection(lang, 'expertise', renderExpertise(page)),
     renderSection(lang, 'work', renderWork(lang)),
     renderSection(lang, 'research', renderResearch(lang)),
     renderSection(lang, 'experience', renderExperience(lang)),
     renderSection(lang, 'education', renderEducation(lang)),
     renderSection(lang, 'profiles', renderProfiles(lang)),
   ].join('\n');
+}
+
+// ---------------------------------------------------------------- sub pages
+/** パンくずの経路。末尾が現在地（page: null）。JSON-LD の BreadcrumbList と共用する */
+function trailOf(page) {
+  const { lang } = page;
+  const L = UI[lang.code];
+  const home = { name: L.home, page: pageOf('home', lang) };
+  switch (page.def.kind) {
+    case 'research-hub':
+      return [home, { name: L.researchHub, page: null }];
+    case 'topic':
+      return [home, { name: L.researchHub, page: pageOf('research', lang) }, { name: t(page.def.data, 'title', lang.code), page: null }];
+    default:
+      return [];
+  }
+}
+
+function renderBreadcrumb(page) {
+  const L = UI[page.lang.code];
+  const items = trailOf(page).map((crumb) => (crumb.page
+    ? `          <li><a href="${relHref(page.dir, crumb.page.dir)}">${esc(crumb.name)}</a></li>`
+    : `          <li aria-current="page">${esc(crumb.name)}</li>`)).join('\n');
+  return `    <nav class="breadcrumb" aria-label="${esc(L.breadcrumbLabel)}">
+      <div class="container">
+        <ol>
+${items}
+        </ol>
+      </div>
+    </nav>`;
+}
+
+/** テーマに紐づく業績。存在しない id はビルドを失敗させる */
+function relatedWorks(topic) {
+  return topic.workIds.map((id) => {
+    const w = works.find((x) => x.id === id);
+    if (!w) throw new Error(`topics.json "${topic.id}": works.json に id "${id}" が無い`);
+    return w;
+  });
+}
+
+function renderResearchHubMain(page) {
+  const { lang } = page;
+  const lc = lang.code;
+  const L = UI[lc];
+  const cards = topics.map((topic) => {
+    const tp = pageOf(`topic:${topic.id}`, lang);
+    const meta = [L.outputsCount(topic.workIds.length), t(topic, 'keywords', lc).slice(0, 4).join(' · ')].join(' · ');
+    return `            <li class="topic-card">
+              <h2><a href="${relHref(page.dir, tp.dir)}">${esc(t(topic, 'title', lc))}</a></h2>
+              <p>${esc(t(topic, 'lead', lc))}</p>
+              <p class="work-meta">${esc(meta)}</p>
+            </li>`;
+  }).join('\n');
+
+  return `${renderBreadcrumb(page)}
+    <article class="page">
+      <div class="container">
+        <div class="page-inner fade-up">
+          <header class="page-header">
+            <span class="section-eyebrow">${esc(L.researchHubEyebrow)}</span>
+            <h1>${esc(L.researchHub)}</h1>
+            <p class="page-lead">${esc(L.researchHubLead)}</p>
+          </header>
+          <section class="topic-section" aria-label="${esc(L.researchHub)}">
+            <ul class="topic-list">
+${cards}
+            </ul>
+          </section>
+          <p class="page-back"><a href="${relHref(page.dir, homeDir(lang))}">${esc(L.backToProfile)}</a></p>
+        </div>
+      </div>
+    </article>
+`;
+}
+
+function renderTopicMain(page) {
+  const { lang } = page;
+  const lc = lang.code;
+  const L = UI[lc];
+  const topic = page.def.data;
+  const hub = pageOf('research', lang);
+  const homeRel = relHref(page.dir, homeDir(lang));
+
+  const body = topic.sections.map((sec) => `            <section class="page-block" id="${esc(sec.id)}">
+              <h2>${esc(t(sec, 'heading', lc))}</h2>
+${t(sec, 'body', lc).map((para) => `              <p>${esc(para)}</p>`).join('\n')}
+            </section>`).join('\n');
+
+  const outputs = relatedWorks(topic).map((w) => renderResearchItem(w, lang, 'h3')).join('\n');
+
+  const sources = topic.sources.map((src) => `                <li><a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(t(src, 'label', lc))}</a></li>`).join('\n');
+
+  const related = [
+    { href: relHref(page.dir, hub.dir), label: L.allTopics },
+    ...topic.expertiseId
+      .map((id) => profile.expertise.find((e) => e.id === id))
+      .filter(Boolean)
+      .map((e) => ({ href: `${homeRel}#expertise-${e.id}`, label: `${L.expertiseLink}: ${t(e, 'name', lc)}` })),
+  ].map((l) => `                <li><a href="${esc(l.href)}">${esc(l.label)}</a></li>`).join('\n');
+
+  const meta = `${L.updated} ${topic.updated} · ${L.keywordsLabel}: ${t(topic, 'keywords', lc).join(', ')}`;
+
+  return `${renderBreadcrumb(page)}
+    <article class="page">
+      <div class="container">
+        <div class="page-inner fade-up">
+          <header class="page-header">
+            <span class="section-eyebrow">${esc(L.topicEyebrow)}</span>
+            <h1>${esc(t(topic, 'title', lc))}</h1>
+            <p class="page-lead">${esc(t(topic, 'lead', lc))}</p>
+            <p class="page-meta">${esc(meta)}</p>
+          </header>
+          <div class="page-body prose">
+${body}
+          </div>
+          <section class="page-block">
+            <h2>${esc(L.relatedWorks)}</h2>
+            <ul class="work-list">
+${outputs}
+            </ul>
+          </section>
+          <section class="page-block">
+            <h2>${esc(L.sourcesHeading)}</h2>
+            <ul class="source-list">
+${sources}
+            </ul>
+          </section>
+          <section class="page-block">
+            <h2>${esc(L.relatedPages)}</h2>
+            <ul class="source-list">
+${related}
+            </ul>
+          </section>
+          <p class="page-back"><a href="${homeRel}">${esc(L.backToProfile)}</a></p>
+        </div>
+      </div>
+    </article>
+`;
 }
 
 // ---------------------------------------------------------------- sections
@@ -400,14 +606,18 @@ ${paras.map((p) => `              <p>${esc(p)}</p>`).join('\n')}
             </div>`;
 }
 
-function renderExpertise(lang) {
+function renderExpertise(page) {
+  const { lang } = page;
   const lc = lang.code;
+  const L = UI[lc];
+  const hub = pageOf('research', lang);
   return `            <ul class="expertise-list">
 ${profile.expertise.map((e) => `              <li class="expertise-item" id="expertise-${esc(e.id)}">
                 <h3>${esc(t(e, 'name', lc))}</h3>
                 <p>${esc(t(e, 'description', lc))}</p>
               </li>`).join('\n')}
-            </ul>`;
+            </ul>
+            <p class="section-more"><a href="${relHref(page.dir, hub.dir)}">${esc(L.moreTopics)}<span aria-hidden="true"> →</span></a></p>`;
 }
 
 function renderWork(lang) {
@@ -441,7 +651,7 @@ ${items.join('\n')}
             </div>`;
 }
 
-function renderResearchItem(item, lang) {
+function renderResearchItem(item, lang, heading = 'h4') {
   const L = UI[lang.code];
   const lc = lang.code;
   const kindLabel = item.kind ? L.kind[item.kind] ?? '' : '';
@@ -454,7 +664,7 @@ function renderResearchItem(item, lang) {
     .filter((s, i, arr) => arr.findIndex((x) => x.toLowerCase() === s.toLowerCase()) === i);
   return `                <li>
                   <article class="work-item research-item"${item.added ? ` data-added="${esc(item.added)}"` : ''}>
-                    <h4 class="work-title">${esc(t(item, 'title', lc))}</h4>
+                    <${heading} class="work-title">${esc(t(item, 'title', lc))}</${heading}>
                     <p class="work-citation">${formatAuthors(item.authors, item.selfAuthors)} (${esc(item.year)}). <em>${esc(t(item, 'venue', lc))}</em>.</p>
                     <p class="work-meta">${metaParts.map(esc).join(' · ')}</p>
 ${renderLinks(links, lc, 20)}
@@ -561,10 +771,50 @@ ${pad}</p>`;
 }
 
 // ---------------------------------------------------------------- JSON-LD
+/** ページ種別ごとの JSON-LD。Person の @id は全ページで共通（DESIGN_PHASE2.md §5.3） */
 function buildJsonLd(page, title, description) {
+  switch (page.def.kind) {
+    case 'profile': return buildProfileJsonLd(page, title, description);
+    case 'research-hub': return buildHubJsonLd(page, title, description);
+    case 'topic': return buildTopicJsonLd(page, title, description);
+    default: throw new Error(`buildJsonLd: 未知のページ種別 "${page.def.kind}"`);
+  }
+}
+
+/** サブページに載せる最小 Person ノード（トップページの完全な Person と同じ @id を指す） */
+function personRefNode() {
+  return {
+    '@type': 'Person',
+    '@id': PERSON_ID,
+    name: profile.name,
+    alternateName: profile.alternateNames,
+    url: SITE_URL,
+    sameAs: profile.profiles.filter((pr) => pr.sameAs).map((pr) => pr.url),
+  };
+}
+
+/** パンくずの JSON-LD。trail は renderBreadcrumb と同じものを使う */
+function breadcrumbNode(page, trail) {
+  return {
+    '@type': 'BreadcrumbList',
+    '@id': `${page.url}#breadcrumb`,
+    itemListElement: trail.map((crumb, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: crumb.name,
+      ...(crumb.page ? { item: crumb.page.url } : {}),
+    })),
+  };
+}
+
+function webSiteNode() {
+  return { '@type': 'WebSite', '@id': `${SITE_URL}#website`, url: SITE_URL, name: profile.name };
+}
+
+function buildProfileJsonLd(page, title, description) {
   const { lang, url } = page;
   const lc = lang.code;
-  const personId = `${SITE_URL}#person`;
+  const personId = PERSON_ID;
   const actives = currentAffiliations();
   const orgLd = (o, type) => ({
     '@type': type,
@@ -595,21 +845,7 @@ function buildJsonLd(page, title, description) {
     knowsLanguage: profile.knowsLanguage,
   };
 
-  const articles = sortDesc(works.filter((w) => w.type === 'paper')).map((w) => {
-    const arxivUrl = w.arxiv ? `https://arxiv.org/abs/${w.arxiv}` : undefined;
-    const primaryUrl = w.doi ? `https://doi.org/${w.doi}` : arxivUrl ?? w.venueUrl;
-    return {
-      '@type': 'ScholarlyArticle',
-      ...(primaryUrl ? { '@id': primaryUrl, url: primaryUrl } : {}),
-      headline: w.title,
-      name: w.title,
-      author: w.authors.map((a) => (w.selfAuthors?.includes(a) ? { '@id': personId } : { '@type': 'Person', name: a })),
-      datePublished: String(w.year),
-      ...(arxivUrl ? { sameAs: [arxivUrl] } : {}),
-      ...(w.publisher ? { publisher: { '@type': 'Organization', name: w.publisher } } : {}),
-      publication: { '@type': 'PublicationEvent', name: w.venue, ...(w.venueUrl ? { url: w.venueUrl } : {}) },
-    };
-  });
+  const articles = sortDesc(works.filter((w) => w.type === 'paper')).map(workNode);
 
   return {
     '@context': 'https://schema.org',
@@ -626,6 +862,88 @@ function buildJsonLd(page, title, description) {
         about: { '@id': personId },
         ...(articles.length ? { hasPart: articles } : {}),
       },
+    ],
+  };
+}
+
+/** 業績 1 件の JSON-LD。@id は DOI > arXiv > 学会ページ の優先順で固定し、全ページで同じ値を使う */
+function workNode(w) {
+  const arxivUrl = w.arxiv ? `https://arxiv.org/abs/${w.arxiv}` : undefined;
+  // 学会ページは「発表そのもの」の URL ではないため、論文以外では @id に昇格させない
+  const primaryUrl = w.doi ? `https://doi.org/${w.doi}` : arxivUrl ?? (w.type === 'paper' ? w.venueUrl : undefined);
+  return {
+    '@type': w.type === 'paper' ? 'ScholarlyArticle' : 'CreativeWork',
+    ...(primaryUrl ? { '@id': primaryUrl, url: primaryUrl } : {}),
+    headline: w.title,
+    name: w.title,
+    author: w.authors.map((a) => (w.selfAuthors?.includes(a) ? { '@id': PERSON_ID } : { '@type': 'Person', name: a })),
+    datePublished: String(w.year),
+    ...(arxivUrl ? { sameAs: [arxivUrl] } : {}),
+    ...(w.publisher ? { publisher: { '@type': 'Organization', name: w.publisher } } : {}),
+    publication: { '@type': 'PublicationEvent', name: w.venue, ...(w.venueUrl ? { url: w.venueUrl } : {}) },
+  };
+}
+
+function buildHubJsonLd(page, title, description) {
+  const { lang, url } = page;
+  const lc = lang.code;
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': `${url}#webpage`,
+        url,
+        name: title,
+        description,
+        inLanguage: lc,
+        dateModified: page.lastmod,
+        isPartOf: webSiteNode(),
+        about: { '@id': PERSON_ID },
+        author: { '@id': PERSON_ID },
+        breadcrumb: { '@id': `${url}#breadcrumb` },
+        hasPart: topics.map((topic) => {
+          const tp = pageOf(`topic:${topic.id}`, lang);
+          return { '@type': 'WebPage', '@id': `${tp.url}#webpage`, url: tp.url, name: t(topic, 'title', lc) };
+        }),
+      },
+      personRefNode(),
+      breadcrumbNode(page, trailOf(page)),
+    ],
+  };
+}
+
+function buildTopicJsonLd(page, title, description) {
+  const { lang, url } = page;
+  const lc = lang.code;
+  const topic = page.def.data;
+  const related = relatedWorks(topic).map(workNode);
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${url}#webpage`,
+        url,
+        name: title,
+        description,
+        inLanguage: lc,
+        dateModified: topic.updated,
+        isPartOf: webSiteNode(),
+        about: {
+          '@type': 'DefinedTerm',
+          name: t(topic, 'title', lc),
+          description: t(topic, 'lead', lc),
+        },
+        keywords: t(topic, 'keywords', lc).join(', '),
+        author: { '@id': PERSON_ID },
+        creator: { '@id': PERSON_ID },
+        mentions: { '@id': PERSON_ID },
+        breadcrumb: { '@id': `${url}#breadcrumb` },
+        ...(related.length ? { hasPart: related } : {}),
+      },
+      personRefNode(),
+      breadcrumbNode(page, trailOf(page)),
     ],
   };
 }
@@ -700,6 +1018,28 @@ function runChecks(pagesToCheck, sitemapXml) {
       if (!Array.isArray(person.alternateName) || !person.alternateName.includes('深田大登')) fails.push(`${tag} Person.alternateName に 深田大登 がない`);
     }
 
+    if (!isProfile) {
+      // サブページ: BreadcrumbList / Person の @id / WebPage.url（検査 21）
+      for (const block of ld) {
+        let data;
+        try { data = JSON.parse(block); } catch (e) { fails.push(`${tag} JSON-LD がパースできない: ${e.message}`); continue; }
+        const graph = data['@graph'] ?? [data];
+        if (!graph.some((n) => n['@type'] === 'BreadcrumbList')) fails.push(`${tag} JSON-LD に BreadcrumbList がない`);
+        const person = graph.find((n) => n['@type'] === 'Person');
+        if (!person) fails.push(`${tag} JSON-LD に Person ノードがない`);
+        else if (person['@id'] !== PERSON_ID) fails.push(`${tag} Person.@id がトップページと一致しない: ${person['@id']}`);
+        const web = graph.find((n) => n['@type'] === 'WebPage' || n['@type'] === 'CollectionPage');
+        if (!web) fails.push(`${tag} JSON-LD に WebPage / CollectionPage がない`);
+        else if (web.url !== p.url) fails.push(`${tag} WebPage.url がページ URL と一致しない: ${web.url}`);
+      }
+      // 検査 15: H1 はページ固有（サイト名・人物名そのものにしない）
+      const h1Text = (h1s[0]?.[1] ?? '').replace(/<[^>]+>/g, '').trim();
+      if (h1Text === profile.name || h1Text === profile.name_ja) fails.push(`${tag} h1 が人物名そのものになっている`);
+      // 検査 23: 人物名が本文に自然な形で現れる
+      const needle = lang.code === 'ja' ? '深田大登' : 'Hiroto Fukada';
+      if (!text(html).includes(needle)) fails.push(`${tag} 本文に "${needle}" がない`);
+    }
+
     // SEO-04: semantic HTML
     for (const el of ['main', 'nav', 'footer', 'section', 'article', 'header']) {
       if (!new RegExp(`<${el}[\\s>]`).test(html)) fails.push(`${tag} <${el}> がない`);
@@ -744,6 +1084,65 @@ function runChecks(pagesToCheck, sitemapXml) {
     const onDisk = readIfExists(path.join(ROOT, file));
     if (onDisk == null) fails.push(`${tag} 生成物が存在しない（npm run build を実行）`);
     else if (normalizeDates(onDisk) !== normalizeDates(html)) fails.push(`${tag} 生成物が data/・site/ と一致しない（npm run build を実行してコミット）`);
+  }
+
+  // 検査 16: <title> は言語ごとにページ固有
+  const seenTitles = new Map();
+  for (const p of pagesToCheck) {
+    const title = p.html.match(/<title>([^<]*)<\/title>/)?.[1] ?? '';
+    const key = `${p.lang.code}::${title}`;
+    if (seenTitles.has(key)) fails.push(`<title> が重複している: ${p.file} と ${seenTitles.get(key)}`);
+    else seenTitles.set(key, p.file);
+  }
+
+  // 検査 18/19: 内部リンクがすべて解決でき、全ページがトップページから到達できる
+  const byFile = new Map(pagesToCheck.map((p) => [p.file, p]));
+  const linkGraph = new Map();
+  for (const p of pagesToCheck) {
+    const targets = new Set();
+    for (const m of p.html.matchAll(/href="([^"]+)"/g)) {
+      const href = m[1];
+      if (/^(https?:|mailto:|data:|#|\/\/)/.test(href)) continue;
+      const target = resolveHref(p.dir, href);
+      if (!target) continue;
+      if (byFile.has(target) || fs.existsSync(path.join(ROOT, target))) targets.add(target);
+      else fails.push(`[${p.file}] 内部リンクの参照先が存在しない: ${href} → ${target}`);
+    }
+    linkGraph.set(p.file, targets);
+  }
+  const reached = new Set();
+  const queue = pagesToCheck.filter((p) => p.def.kind === 'profile').map((p) => p.file);
+  while (queue.length) {
+    const file = queue.shift();
+    if (reached.has(file)) continue;
+    reached.add(file);
+    for (const next of linkGraph.get(file) ?? []) if (byFile.has(next) && !reached.has(next)) queue.push(next);
+  }
+  for (const p of pagesToCheck) {
+    if (!reached.has(p.file)) fails.push(`${p.file} がトップページからリンクで到達できない（孤立ページ）`);
+  }
+
+  // 検査 11〜14 / 22: 研究テーマの中身（薄いページを作らないための機械的な下限）
+  const MIN_TOPIC_WORDS = 400;
+  const MIN_TOPIC_CHARS = 800;
+  const seenTopicIds = new Set();
+  for (const topic of topics) {
+    const id = topic.id;
+    if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(id)) fails.push(`topics "${id}": id が不正（英小文字・数字・ハイフンのみ）`);
+    if (seenTopicIds.has(id)) fails.push(`topics "${id}": id が重複している`);
+    seenTopicIds.add(id);
+    for (const key of ['what', 'why', 'approach', 'results']) {
+      if (!topic.sections.some((sec) => sec.id === key)) fails.push(`topics "${id}": 必須セクション "${key}" が無い`);
+    }
+    for (const sec of topic.sections) {
+      if (!(sec.body ?? []).length || !(sec.body_ja ?? []).length) fails.push(`topics "${id}": セクション "${sec.id}" の EN/JA 本文が揃っていない`);
+    }
+    const enWords = topic.sections.flatMap((sec) => sec.body ?? []).join(' ').split(/\s+/).filter(Boolean).length;
+    const jaChars = topic.sections.flatMap((sec) => sec.body_ja ?? []).join('').replace(/\s+/g, '').length;
+    if (enWords < MIN_TOPIC_WORDS) fails.push(`topics "${id}": EN 本文が ${enWords} 語（${MIN_TOPIC_WORDS} 語以上であること）`);
+    if (jaChars < MIN_TOPIC_CHARS) fails.push(`topics "${id}": JA 本文が ${jaChars} 文字（${MIN_TOPIC_CHARS} 文字以上であること）`);
+    if (!(topic.sources ?? []).some((src) => /^https?:\/\//.test(src.url ?? ''))) fails.push(`topics "${id}": 外部の一次ソースが 1 本も無い`);
+    if (!(topic.workIds ?? []).length) fails.push(`topics "${id}": 関連する研究成果が無い`);
   }
 
   // SEO-06/07: sitemap / robots
@@ -823,6 +1222,18 @@ function langHref(page, to) {
   return relHref(page.dir, makePage(page.def, to).dir);
 }
 function ensureTrailingSlash(u) { return u.endsWith('/') ? u : `${u}/`; }
+
+/** HTML 内の相対リンクを、サイトルートからのファイルパスに解決する（ディレクトリは index.html） */
+function resolveHref(fromDir, href) {
+  const pathPart = href.split('#')[0].split('?')[0];
+  if (!pathPart) return null;
+  let resolved = path.posix.normalize(path.posix.join(fromDir, pathPart));
+  if (resolved === '.' || resolved === './') resolved = '';
+  if (pathPart.endsWith('/') || resolved === '') {
+    resolved = `${resolved && !resolved.endsWith('/') ? `${resolved}/` : resolved}index.html`;
+  }
+  return resolved;
+}
 
 function favicon() {
   const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%236366f1'/><text x='32' y='42' text-anchor='middle' font-family='Georgia,serif' font-size='30' fill='white'>HF</text></svg>`;

@@ -904,3 +904,161 @@ ul { padding-left: 1.2rem; }
   vertical-align: middle;
   animation: dotGlow 3s ease-in-out infinite;
 }
+
+/* ── Sub pages (breadcrumb + article) ─────────────────────────── */
+/* 研究テーマ・業績などの固有 URL を持つページ。トップページと同じトークン・
+   意匠を再利用する（docs/site_enhancement/DESIGN_PHASE2.md §5.5） */
+
+.breadcrumb {
+  padding: 1.75rem 0 0;
+  font-size: 0.82rem;
+  color: var(--text-2);
+}
+
+.breadcrumb ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.55rem;
+}
+
+.breadcrumb li + li::before {
+  content: '›';
+  margin-right: 0.55rem;
+  color: var(--muted);
+}
+
+.breadcrumb a { color: var(--text-2); }
+.breadcrumb a:hover { color: var(--accent); opacity: 1; }
+.breadcrumb [aria-current='page'] { color: var(--muted); }
+
+.page { padding: 2.5rem 0 5.5rem; }
+
+.page-inner { max-width: 720px; }
+
+.page-header { padding-bottom: 2rem; border-bottom: 1px solid var(--line); }
+
+.page-header h1 {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(1.9rem, 4.2vw, 2.7rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+html[lang='ja'] .page-header h1 {
+  font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.page-lead {
+  margin: 1.1rem 0 0;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: var(--text-2);
+}
+
+.page-meta {
+  margin: 1rem 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.page-block { margin-top: 2.75rem; }
+
+.page-block h2 {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin: 0 0 0.9rem;
+}
+
+html[lang='ja'] .page-block h2 { font-family: inherit; font-size: 1.2rem; font-weight: 600; }
+
+.page-body .page-block p { margin: 0 0 1.1rem; }
+.page-body .page-block p:last-child { margin-bottom: 0; }
+
+.source-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.source-list li {
+  padding-left: 1.1rem;
+  position: relative;
+  font-size: 0.95rem;
+}
+
+.source-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.6;
+}
+
+.page-back {
+  margin: 3rem 0 0;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
+}
+
+/* Topic hub cards */
+.topic-list {
+  list-style: none;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.topic-card {
+  padding: 1.5rem 1.625rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.topic-card:hover { border-color: var(--accent); box-shadow: var(--shadow-hover); }
+
+.topic-card h2 {
+  margin: 0 0 0.6rem;
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+html[lang='ja'] .topic-card h2 { font-family: inherit; font-size: 1.15rem; font-weight: 600; }
+
+.topic-card h2 a { color: var(--text); }
+.topic-card h2 a:hover { color: var(--accent); opacity: 1; }
+.topic-card p { margin: 0; color: var(--text-2); font-size: 0.95rem; line-height: 1.75; }
+.topic-card .work-meta { margin-top: 0.75rem; }
+
+/* Link from the profile page into the research topics */
+.section-more { margin: 1.5rem 0 0; font-size: 0.9rem; font-weight: 500; }
+
+@media (max-width: 680px) {
+  .page { padding: 1.75rem 0 4rem; }
+  .page-block { margin-top: 2.25rem; }
+  .topic-card { padding: 1.25rem 1.25rem; }
+}

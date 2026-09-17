@@ -1,6 +1,6 @@
 # Phase 2 — コンテンツページ拡張（固有 URL を持つ研究・業績ページ）設計書
 
-- Status: v0.2（2026-09-17）§10 の判断事項を確定（§0）。実装ブランチ `feature/phase2-content-pages`
+- Status: v0.3（2026-09-17）Phase 2a / 2b 実装済み。実装ブランチ `feature/phase2-content-pages`
 - 対象: `hirotofukada.github.io`（GitHub Pages・公開リポジトリ）
 - 前提: `docs/site_enhancement/DESIGN.md`（Phase 1 = Canonical Personal Hub 化）を読んでいること。
   本書は Phase 1 の §7 トレーサビリティ表で `P2 … 個別ページ ⬜` として積み残した項目を、
@@ -170,6 +170,8 @@ footer（既存）
 - **人物名の露出**: 本文中に `Hiroto Fukada` / `深田大登` を自然な文で最低 1 回含める
   （著者表記・「本研究は〜が NII / SOKENDAI で行ったもの」等）。キーワードの羅列はしない。
 - 言語トグルは**同一内容の他言語ページ**を指す（トップに戻さない）。
+- ヘッダーのサイト名リンクは**自言語のトップページ**を指す。Phase 1 では JA ページのサイト名が
+  EN トップ（サイトルート）を指していたため、Phase 2a で修正した（`ja/index.html` の差分はこれ）。
 - ナビゲーションのアンカーリンク（`#about` 等）は、サブページでは
   `<相対ルート><言語ディレクトリ>#about` に解決する（§5.2）。
 
@@ -267,7 +269,8 @@ const PAGE_DEFS = [
 | 全サブページ共通 | `BreadcrumbList` と、`{'@type':'Person','@id': …#person, name, url, sameAs}` の**最小 Person ノード**（`@id` はトップと同一） |
 
 - **`@id` の一意性ルール**: 業績ノードの `@id` は `DOI > arXiv > 個別ページ URL` の優先順で 1 つに固定し、
-  どのページでも同じ値を使う（現在のトップページの実装と同じ規則をレジストリ側に切り出す）。
+  どのページでも同じ値を使う（`workNode()` に集約）。学会ページ URL は「発表そのもの」の URL では
+  ないため、論文以外では `@id` に昇格させない（DOI も arXiv も無い発表は `@id` 無しの `CreativeWork`）。
 - Person の `@id` は常に `<SITE_URL>#person`。サブページでは最小ノード + `sameAs` のみを出し、
   矛盾する属性を二重定義しない。
 
@@ -427,16 +430,16 @@ const PAGE_DEFS = [
 
 | ID | 要求 | 実装先 | 状態 |
 |----|------|--------|------|
-| CP-01 | ページレジストリによる複数ページ生成 | `site/build.mjs` §5.1 | ⬜ |
-| CP-02 | 相対リンク解決 `rel()` と `base` 計算 | `site/build.mjs` §5.2 | ⬜ |
-| CP-03 | 研究テーマページ（EN/JA） | `data/topics.json` §4.2 | ⬜ |
+| CP-01 | ページレジストリによる複数ページ生成 | `site/build.mjs` §5.1 | ✅ 2a |
+| CP-02 | 相対リンク解決 `relHref()` と `base` 計算 | `site/build.mjs` §5.2 | ✅ 2a |
+| CP-03 | 研究テーマページ（EN/JA） | `data/topics.json` §4.2 | ✅ 2b（`supply-chain-llm`） |
 | CP-04 | 業績個別ページ（EN/JA） | `works[].detail` §4.3 | ⬜ |
-| CP-05 | ハブ `/research/` `/publications/` と `/awards/` | §4.5 | ⬜ |
+| CP-05 | ハブ `/research/` `/publications/` と `/awards/` | §4.5 | 🟡 `/research/` のみ実装 |
 | CP-05b | 実務案件ページ `/work/<slug>/` とトップの簡易記載化 | §4.4 | ⬜ |
-| CP-06 | BreadcrumbList / WebPage / CollectionPage の JSON-LD | §5.3 | ⬜ |
+| CP-06 | BreadcrumbList / WebPage / CollectionPage の JSON-LD | §5.3 | ✅ 2b |
 | CP-07 | `Person.subjectOf` によるプロフィールと成果の接続 | §5.3 | ⬜ |
-| CP-08 | sitemap の全 URL 化・ページ単位 `lastmod` | §5.4 | ⬜ |
-| CP-09 | 薄いページ防止の機械検査（11〜13） | §7 | ⬜ |
-| CP-10 | 内部リンク・孤立ページ・sitemap 網羅の検査（18〜20） | §7 | ⬜ |
-| CP-11 | サブページのスタイル | `style.css` §5.5 | ⬜ |
+| CP-08 | sitemap の全 URL 化・ページ単位 `lastmod` | §5.4 | ✅ 2a（6 URL） |
+| CP-09 | 薄いページ防止の機械検査（11〜13） | §7 | ✅ 2b（テーマページ） |
+| CP-10 | 内部リンク・孤立ページ・sitemap 網羅の検査（18〜20） | §7 | ✅ 2b（トップからの到達可能性を BFS で検査） |
+| CP-11 | サブページのスタイル | `style.css` §5.5 | ✅ 2b |
 | CP-12 | 外部プロフィールからの被リンク | §9-4 | ⬜（ユーザー実施） |

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<!-- GENERATED FILE: do not edit by hand. Source = data/*.json + site/build.mjs (run: npm run build) -->
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>大規模言語モデルによるサプライチェーンの可視化 | 深田大登（Hiroto Fukada）の研究</title>
+  <meta name="description" content="検索スニペットと大規模言語モデル（LLM）で中国企業のサプライチェーン知識グラフを構築する深田大登（Hiroto Fukada）の研究。IEEE CIFEr 2026 採択論文、NetSci 2026、JSAI 2026 の成果と一次ソースを掲載。">
+  <meta name="author" content="Hiroto Fukada">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://cabocha-hlw.github.io/hirotofukada.github.io/ja/research/supply-chain-llm/">
+  <link rel="alternate" hreflang="en" href="https://cabocha-hlw.github.io/hirotofukada.github.io/research/supply-chain-llm/">
+  <link rel="alternate" hreflang="ja" href="https://cabocha-hlw.github.io/hirotofukada.github.io/ja/research/supply-chain-llm/">
+  <link rel="alternate" hreflang="x-default" href="https://cabocha-hlw.github.io/hirotofukada.github.io/research/supply-chain-llm/">
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="Hiroto Fukada">
+  <meta property="og:title" content="大規模言語モデルによるサプライチェーンの可視化 | 深田大登（Hiroto Fukada）の研究">
+  <meta property="og:description" content="検索スニペットと大規模言語モデル（LLM）で中国企業のサプライチェーン知識グラフを構築する深田大登（Hiroto Fukada）の研究。IEEE CIFEr 2026 採択論文、NetSci 2026、JSAI 2026 の成果と一次ソースを掲載。">
+  <meta property="og:url" content="https://cabocha-hlw.github.io/hirotofukada.github.io/ja/research/supply-chain-llm/">
+  <meta property="og:image" content="https://cabocha-hlw.github.io/hirotofukada.github.io/assets/images/hiroto-fukada.jpg">
+  <meta property="og:image:width" content="505">
+  <meta property="og:image:height" content="505">
+  <meta property="og:image:alt" content="深田大登のポートレート">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="profile:first_name" content="Hiroto">
+  <meta property="profile:last_name" content="Fukada">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="大規模言語モデルによるサプライチェーンの可視化 | 深田大登（Hiroto Fukada）の研究">
+  <meta name="twitter:description" content="検索スニペットと大規模言語モデル（LLM）で中国企業のサプライチェーン知識グラフを構築する深田大登（Hiroto Fukada）の研究。IEEE CIFEr 2026 採択論文、NetSci 2026、JSAI 2026 の成果と一次ソースを掲載。">
+  <meta name="twitter:image" content="https://cabocha-hlw.github.io/hirotofukada.github.io/assets/images/hiroto-fukada.jpg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236366f1'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='Georgia,serif' font-size='30' fill='white'%3EHF%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="../../../style.css">
+  <script>document.documentElement.classList.add('js');</script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/research/supply-chain-llm/#webpage",
+      "url": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/research/supply-chain-llm/",
+      "name": "大規模言語モデルによるサプライチェーンの可視化 | 深田大登（Hiroto Fukada）の研究",
+      "description": "検索スニペットと大規模言語モデル（LLM）で中国企業のサプライチェーン知識グラフを構築する深田大登（Hiroto Fukada）の研究。IEEE CIFEr 2026 採択論文、NetSci 2026、JSAI 2026 の成果と一次ソースを掲載。",
+      "inLanguage": "ja",
+      "dateModified": "2026-09-17",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/#website",
+        "url": "https://cabocha-hlw.github.io/hirotofukada.github.io/",
+        "name": "Hiroto Fukada"
+      },
+      "about": {
+        "@type": "DefinedTerm",
+        "name": "大規模言語モデルによるサプライチェーンの可視化",
+        "description": "大規模言語モデル・Web 規模の情報検索・ネットワーク科学を組み合わせ、中国の企業間取引関係を検証可能な形で地図化する研究。"
+      },
+      "keywords": "サプライチェーン, 大規模言語モデル, ナレッジグラフ, OSINT, ネットワーク科学, 中国",
+      "author": {
+        "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/#person"
+      },
+      "creator": {
+        "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/#person"
+      },
+      "mentions": {
+        "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/#person"
+      },
+      "breadcrumb": {
+        "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/research/supply-chain-llm/#breadcrumb"
+      },
+      "hasPart": [
+        {
+          "@type": "ScholarlyArticle",
+          "@id": "https://arxiv.org/abs/2605.27845",
+          "url": "https://arxiv.org/abs/2605.27845",
+          "headline": "Snippet-Driven Supply Chain Discovery with LLMs: Scaling Visibility in China",
+          "name": "Snippet-Driven Supply Chain Discovery with LLMs: Scaling Visibility in China",
+          "author": [
+            {
+              "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/#person"
+            },
+            {
+              "@type": "Person",
+              "name": "Mizuno, T."
+            }
+          ],
+          "datePublished": "2026",
+          "sameAs": [
+            "https://arxiv.org/abs/2605.27845"
+          ],
+          "publisher": {
+            "@type": "Organization",
+            "name": "IEEE"
+          },
+          "publication": {
+            "@type": "PublicationEvent",
+            "name": "Proceedings of 2026 IEEE Computational Intelligence in Financial Engineering and Economics (CIFEr)",
+            "url": "https://cifer2026.mhirano.jp/"
+          }
+        },
+        {
+          "@type": "CreativeWork",
+          "headline": "Resilience of China's Domestic Inter-Firm Transaction Network via Bow-Tie Architecture and LLM-Optimized OSINT",
+          "name": "Resilience of China's Domestic Inter-Firm Transaction Network via Bow-Tie Architecture and LLM-Optimized OSINT",
+          "author": [
+            {
+              "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/#person"
+            },
+            {
+              "@type": "Person",
+              "name": "Mizuno, T."
+            }
+          ],
+          "datePublished": "2026",
+          "publication": {
+            "@type": "PublicationEvent",
+            "name": "The International School and Conference on Network Science (NetSci) 2026",
+            "url": "https://www.netsci2026.com/"
+          }
+        },
+        {
+          "@type": "CreativeWork",
+          "headline": "Supply Chain OSINT Agent: LLMとプロンプト最適化によるサプライチェーン知識抽出パイプライン",
+          "name": "Supply Chain OSINT Agent: LLMとプロンプト最適化によるサプライチェーン知識抽出パイプライン",
+          "author": [
+            {
+              "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/#person"
+            },
+            {
+              "@type": "Person",
+              "name": "水野貴之"
+            }
+          ],
+          "datePublished": "2026",
+          "publication": {
+            "@type": "PublicationEvent",
+            "name": "The Japanese Society for Artificial Intelligence (JSAI) 2026",
+            "url": "https://conf.ai-gakkai.or.jp/jsai2026/"
+          }
+        },
+        {
+          "@type": "CreativeWork",
+          "headline": "Supply Chain OSINT Agentによる公的統計の死角を補完する中台産業ネットワークと相互依存性分析",
+          "name": "Supply Chain OSINT Agentによる公的統計の死角を補完する中台産業ネットワークと相互依存性分析",
+          "author": [
+            {
+              "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/#person"
+            },
+            {
+              "@type": "Person",
+              "name": "水野貴之"
+            }
+          ],
+          "datePublished": "2026",
+          "publication": {
+            "@type": "PublicationEvent",
+            "name": "NetEco 2026",
+            "url": "https://www.neteco.jp/sympo21"
+          }
+        },
+        {
+          "@type": "CreativeWork",
+          "headline": "Supply Chain OSINT Agentによる公的統計の死角を補完する中台産業の相互依存性分析",
+          "name": "Supply Chain OSINT Agentによる公的統計の死角を補完する中台産業の相互依存性分析",
+          "author": [
+            {
+              "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/#person"
+            },
+            {
+              "@type": "Person",
+              "name": "水野貴之"
+            }
+          ],
+          "datePublished": "2026",
+          "publication": {
+            "@type": "PublicationEvent",
+            "name": "CSSJ 2026",
+            "url": "https://css-japan.com/2025/11/27/cssj2026/"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/#person",
+      "name": "Hiroto Fukada",
+      "alternateName": [
+        "深田大登",
+        "深田 大登",
+        "Hiroto FUKADA",
+        "Fukada Hiroto",
+        "H. Fukada"
+      ],
+      "url": "https://cabocha-hlw.github.io/hirotofukada.github.io/",
+      "sameAs": [
+        "https://www.linkedin.com/in/hiroto-fukada-0b8854261",
+        "https://orcid.org/0009-0009-2126-4842",
+        "https://github.com/Cabocha-hlw"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/research/supply-chain-llm/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "トップ",
+          "item": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "研究テーマ",
+          "item": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/research/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "大規模言語モデルによるサプライチェーンの可視化"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W12HECKQ45"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-W12HECKQ45');
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <div class="progress-bar" id="progress-bar" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a class="header-name" href="../../">Hiroto Fukada</a>
+        <nav aria-label="メインナビゲーション">
+          <a href="../../#about">プロフィール</a>
+          <a href="../../#expertise">専門領域</a>
+          <a href="../../#work">実績</a>
+          <a href="../../#research">研究業績</a>
+          <a href="../../#experience">経歴</a>
+          <a href="../../#education">学歴</a>
+          <a href="../../#profiles">リンク</a>
+        </nav>
+        <div class="lang-toggle" role="group" aria-label="言語">
+          <a class="lang-btn" href="../../../research/supply-chain-llm/" hreflang="en" lang="en">EN</a>
+          <a class="lang-btn active" href="./" hreflang="ja" lang="ja" aria-current="page">JA</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <nav class="breadcrumb" aria-label="パンくずリスト">
+      <div class="container">
+        <ol>
+          <li><a href="../../">トップ</a></li>
+          <li><a href="../">研究テーマ</a></li>
+          <li aria-current="page">大規模言語モデルによるサプライチェーンの可視化</li>
+        </ol>
+      </div>
+    </nav>
+    <article class="page">
+      <div class="container">
+        <div class="page-inner fade-up">
+          <header class="page-header">
+            <span class="section-eyebrow">研究テーマ</span>
+            <h1>大規模言語モデルによるサプライチェーンの可視化</h1>
+            <p class="page-lead">大規模言語モデル・Web 規模の情報検索・ネットワーク科学を組み合わせ、中国の企業間取引関係を検証可能な形で地図化する研究。</p>
+            <p class="page-meta">更新日 2026-09-17 · キーワード: サプライチェーン, 大規模言語モデル, ナレッジグラフ, OSINT, ネットワーク科学, 中国</p>
+          </header>
+          <div class="page-body prose">
+            <section class="page-block" id="what">
+              <h2>取り組み</h2>
+              <p>公開情報から企業間の取引関係（サプライヤー・顧客関係）を抽出し、企業をノード・取引をエッジとするサプライチェーン知識グラフ（SCKG）を構築するパイプライン「Supply Chain OSINT Agent」を開発している。総合研究大学院大学（SOKENDAI）情報学コース博士課程に在籍し、国立情報学研究所（NII）のリサーチアシスタントを務める深田大登が、水野貴之と共同で進める研究である。</p>
+              <p>特徴は「どの粒度の証拠を読ませるか」にある。Web ページ全文を取得・処理するのではなく、検索スニペット（検索結果に付随するクエリ依存の短い要約）を一次証拠層として LLM に読ませる。抽出したエッジには出典メタデータを保持し、どの文から得られた関係かを後から検証できるようにしている。</p>
+            </section>
+            <section class="page-block" id="why">
+              <h2>なぜ重要か</h2>
+              <p>中国では、サプライヤー・顧客関係の開示が上場企業の主要取引先に限られる。非上場企業やロングテールの取引関係は構造化データに乗らず、公的統計も商用データベースも同じ死角を共有している。経済安全保障・輸出管理・中台の産業相互依存を論じるとき、参照している地図はそもそも欠けている。</p>
+              <p>原理的には Web 全文のマイニングで埋められるが、規模を出すとコストが見合わなくなる。ページは取得できないことが多く、LLM に全文を処理させるとトークン消費が得られる情報量に対して過大になる。問うべきは「LLM が Web を読めるか」ではなく、「どの粒度の証拠であれば Web 規模の抽出が現実的な費用で、かつ監査可能になるか」である。</p>
+            </section>
+            <section class="page-block" id="approach">
+              <h2>アプローチ</h2>
+              <p>スニペット駆動の抽出。検索スニペットを一次証拠層として扱い、確認が必要な候補にだけ全文処理を回す。これにより、トークン費用を実際に使った証拠の量に比例させられる。</p>
+              <p>プロンプト最適化。抽出プロンプトを手で調整するのではなく最適化する。文脈の乏しい短いスニペットから企業名の曖昧性を解消し、関係の向き（どちらが供給側か）を判定するうえで効く部分である。この要素は JSAI 2026 で発表した。</p>
+              <p>ネットワーク科学による分析。構築した SCKG を、企業間取引ネットワークのボウタイ構造分解・次数分布・産業／地域間の相互依存指標で分析する。知識グラフが単なるエッジの一覧から頑健性についての主張に変わるのはこの段階であり、NetSci 2026 と NetEco 2026 の発表の中心にあたる。</p>
+            </section>
+            <section class="page-block" id="results">
+              <h2>結果</h2>
+              <p>IEEE CIFEr 2026 採択論文では、2024 年時点の上海・深圳上場企業と大規模非上場企業を含む 130,685 社を検索シードとして評価した。上場企業サブセットにおいて、構築したサプライチェーン知識グラフは開示情報ベースのベンチマークである CSMAR と比べ 7.2 倍の企業と 9.3 倍の関係を捕捉し、開示データだけでは見えないヘビーテールな次数分布を明らかにした。</p>
+              <p>コストのトレードオフも隠さず示している。全文チャンキングを網羅的に行えばスニペットの 19.8 倍のユニークな関係が見つかるが、入力トークンは 251.2 倍に増え、冗長性も高くなる。スニペットは全文読解の代替ではなく、スケールする一次スクリーニングであり、開示ベースのデータベースを監査可能な形で補完する層として位置づけている。</p>
+              <p>成果は IEEE CIFEr 2026（論文採択）、NetSci 2026、人工知能学会全国大会（JSAI 2026）、ネットワーク生態学シンポジウムで発表し、NetEco 2026 では優秀ポスター賞を受賞した。</p>
+            </section>
+          </div>
+          <section class="page-block">
+            <h2>関連する研究成果</h2>
+            <ul class="work-list">
+                <li>
+                  <article class="work-item research-item" data-added="2026-09-11">
+                    <h3 class="work-title">Snippet-Driven Supply Chain Discovery with LLMs: Scaling Visibility in China</h3>
+                    <p class="work-citation"><strong>Fukada, H.</strong>, Mizuno, T. (2026). <em>Proceedings of 2026 IEEE Computational Intelligence in Financial Engineering and Economics (CIFEr)</em>.</p>
+                    <p class="work-meta">国際会議論文 · 採択</p>
+                    <p class="work-links">
+                      <a href="https://arxiv.org/abs/2605.27845" target="_blank" rel="noopener noreferrer">arXiv</a>
+                      <a href="https://cifer2026.mhirano.jp/" target="_blank" rel="noopener noreferrer">学会ページ</a>
+                    </p>
+                  </article>
+                </li>
+                <li>
+                  <article class="work-item research-item" data-added="2026-06-09">
+                    <h3 class="work-title">Resilience of China&#39;s Domestic Inter-Firm Transaction Network via Bow-Tie Architecture and LLM-Optimized OSINT</h3>
+                    <p class="work-citation"><strong>Fukada, H.</strong>, Mizuno, T. (2026). <em>NetSci 2026（International School and Conference on Network Science）</em>.</p>
+                    <p class="work-meta">ポスター発表</p>
+                    <p class="work-links">
+                      <a href="https://www.netsci2026.com/" target="_blank" rel="noopener noreferrer">学会ページ</a>
+                    </p>
+                  </article>
+                </li>
+                <li>
+                  <article class="work-item research-item" data-added="2026-06-09">
+                    <h3 class="work-title">Supply Chain OSINT Agent: LLMとプロンプト最適化によるサプライチェーン知識抽出パイプライン</h3>
+                    <p class="work-citation"><strong>深田大登</strong>, 水野貴之 (2026). <em>2026年度人工知能学会全国大会（第40回・JSAI 2026）</em>.</p>
+                    <p class="work-meta">口頭発表</p>
+                    <p class="work-links">
+                      <a href="https://conf.ai-gakkai.or.jp/jsai2026/" target="_blank" rel="noopener noreferrer">学会ページ</a>
+                    </p>
+                  </article>
+                </li>
+                <li>
+                  <article class="work-item research-item">
+                    <h3 class="work-title">Supply Chain OSINT Agentによる公的統計の死角を補完する中台産業ネットワークと相互依存性分析</h3>
+                    <p class="work-citation"><strong>深田大登</strong>, 水野貴之 (2026). <em>第21回ネットワーク生態学シンポジウム（NetEco 2026）</em>.</p>
+                    <p class="work-meta">ポスター発表 · 優秀ポスター賞</p>
+                    <p class="work-links">
+                      <a href="https://www.neteco.jp/sympo21" target="_blank" rel="noopener noreferrer">学会ページ</a>
+                    </p>
+                  </article>
+                </li>
+                <li>
+                  <article class="work-item research-item">
+                    <h3 class="work-title">Supply Chain OSINT Agentによる公的統計の死角を補完する中台産業の相互依存性分析</h3>
+                    <p class="work-citation"><strong>深田大登</strong>, 水野貴之 (2026). <em>第5回計算社会科学会大会（CSSJ 2026）</em>.</p>
+                    <p class="work-meta">ポスター発表</p>
+                    <p class="work-links">
+                      <a href="https://css-japan.com/2025/11/27/cssj2026/" target="_blank" rel="noopener noreferrer">学会ページ</a>
+                    </p>
+                  </article>
+                </li>
+            </ul>
+          </section>
+          <section class="page-block">
+            <h2>一次ソース</h2>
+            <ul class="source-list">
+                <li><a href="https://arxiv.org/abs/2605.27845" target="_blank" rel="noopener noreferrer">arXiv:2605.27845 — Snippet-Driven Supply Chain Discovery with LLMs</a></li>
+                <li><a href="https://cifer2026.mhirano.jp/" target="_blank" rel="noopener noreferrer">IEEE CIFEr 2026 公式サイト</a></li>
+            </ul>
+          </section>
+          <section class="page-block">
+            <h2>関連ページ</h2>
+            <ul class="source-list">
+                <li><a href="../">研究テーマ一覧</a></li>
+                <li><a href="../../#expertise-llm">専門領域: 大規模言語モデル（LLM）</a></li>
+                <li><a href="../../#expertise-supply-chain">専門領域: サプライチェーン分析</a></li>
+                <li><a href="../../#expertise-network-science">専門領域: ネットワーク科学</a></li>
+            </ul>
+          </section>
+          <p class="page-back"><a href="../../">プロフィールページに戻る</a></p>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <p class="footer-copy">© Hiroto Fukada（深田大登）</p>
+        <span class="footer-tag"><span aria-hidden="true"></span>共同研究・協業歓迎</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../../script.js" defer></script>
+</body>
+</html>
