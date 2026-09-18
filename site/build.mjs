@@ -275,6 +275,30 @@ const PAGE_DEFS = [
   { key: 'awards', kind: 'awards', seg: 'awards/', seo: HUB_SEO.awards },
 ];
 
+/** 所属組織の正本（experience / education）から Organization ノードを引く。
+ *  works[].organizations に shortName を並べると、その受賞が組織に紐づく（例: NII / SOKENDAI）*/
+function orgNodeByKey(key) {
+  const edu = education.find((e) => e.shortName === key || e.institution === key);
+  if (edu) {
+    return {
+      '@type': 'EducationalOrganization',
+      name: edu.formalName ?? edu.institution,
+      ...(edu.shortName && edu.shortName !== edu.formalName ? { alternateName: edu.shortName } : {}),
+      ...(edu.url ? { url: edu.url } : {}),
+    };
+  }
+  const exp = experience.find((e) => e.shortName === key || e.organization === key);
+  if (exp) {
+    return {
+      '@type': 'Organization',
+      name: exp.formalName ?? exp.organization,
+      ...(exp.shortName && exp.shortName !== exp.formalName ? { alternateName: exp.shortName } : {}),
+      ...(exp.url ? { url: exp.url } : {}),
+    };
+  }
+  return null;
+}
+
 /** 個別ページの H1・パンくずに使う見出し（detail.heading があればそれ、無ければ題目） */
 function detailHeading(w, lc) {
   return (w.detail && t(w.detail, 'heading', lc)) || t(w, 'title', lc);
@@ -854,10 +878,12 @@ function renderAwardsMain(page) {
   const L = UI[lc];
   const items = awardWorks().map((w) => {
     const award = t(w, 'status', lc) || L.awardLabel;
-    // 「… 2021 · 2021」のような重複を避ける（venue に年が入っている場合は年を省く）
-    const where = t(w, 'organization', lc) || t(w, 'venue', lc);
-    const when = where.includes(String(w.year)) ? '' : formatYearMonth(w, lc);
-    const meta = [where, when].filter(Boolean).join(' · ');
+    // 授与組織と式典名の両方を出す（同一なら 1 つだけ）。「… 2021 · 2021」のような重複も避ける
+    const org = t(w, 'organization', lc);
+    const venue = t(w, 'venue', lc);
+    const where = [org, venue === org ? '' : venue].filter(Boolean);
+    const when = where.some((x) => x.includes(String(w.year))) ? '' : formatYearMonth(w, lc);
+    const meta = [...where, when].filter(Boolean).join(' · ');
     const description = t(w, 'description', lc);
     const authors = (w.authors ?? []).length ? `<p class="work-citation">${formatAuthors(w.authors, w.selfAuthors)}</p>` : '';
     return `                <li>
@@ -1224,6 +1250,11 @@ function buildProfileJsonLd(page, title, description) {
     alumniOf: education.filter((e) => !isPresent(e)).map((e) => orgLd(e, 'CollegeOrUniversity')),
     knowsAbout: profile.expertise.map((e) => e.name),
     knowsLanguage: profile.knowsLanguage,
+    award: awardWorks().map((w) => {
+      const name = t(w, 'status', lc) || t(w, 'title', lc);
+      const from = t(w, 'organization', lc) || t(w, 'venue', lc);
+      return [name, from].filter(Boolean).join(', ') + ` (${w.year})`;
+    }),
   };
 
   const articles = sortDesc(works.filter((w) => w.type === 'paper')).map(workNode);
@@ -1263,6 +1294,8 @@ function workNode(w) {
     ...(primaryUrl ? { '@id': primaryUrl, url: primaryUrl } : {}),
     headline: w.title,
     name: w.title,
+    // 日本語名がある業績（受賞など）は両方の名前を記録する
+    ...(w.title_ja && w.title_ja !== w.title ? { alternateName: w.title_ja } : {}),
     author: (w.authors ?? []).length
       ? w.authors.map((a) => (w.selfAuthors?.includes(a) ? { '@id': PERSON_ID } : { '@type': 'Person', name: a }))
       : { '@id': PERSON_ID },
@@ -1270,8 +1303,16 @@ function workNode(w) {
     ...(arxivUrl ? { sameAs: [arxivUrl] } : {}),
     ...(w.publisher ? { publisher: { '@type': 'Organization', name: w.publisher } } : {}),
     ...(w.venue ? { publication: { '@type': 'PublicationEvent', name: w.venue, ...(w.venueUrl ? { url: w.venueUrl } : {}) } } : {}),
-    ...(w.organization ? { sourceOrganization: { '@type': 'Organization', name: w.organization } } : {}),
+    ...sourceOrganizationOf(w),
   };
+}
+
+/** 業績に紐づく組織。works[].organizations があれば正本の Organization ノードへ解決する */
+function sourceOrganizationOf(w) {
+  const resolved = (w.organizations ?? []).map(orgNodeByKey).filter(Boolean);
+  if (resolved.length) return { sourceOrganization: resolved.length === 1 ? resolved[0] : resolved };
+  if (w.organization) return { sourceOrganization: { '@type': 'Organization', name: w.organization } };
+  return {};
 }
 
 function buildHubJsonLd(page, title, description) {

@@ -1,5 +1,30 @@
 [
   {
+    "type": "award",
+    "id": "nii-inose-2026",
+    "kind": "award",
+    "year": 2026,
+    "month": 9,
+    "title": "Inose Student Encouragement Award, National Institute of Informatics",
+    "title_ja": "国立情報学研究所 猪瀬学生奨励賞",
+    "organization": "National Institute of Informatics (NII)",
+    "organization_ja": "国立情報学研究所（NII）",
+    "organizations": [
+      "NII",
+      "SOKENDAI"
+    ],
+    "role": "PhD student, SOKENDAI / Research Assistant, NII",
+    "role_ja": "総合研究大学院大学 博士後期課程 / NII リサーチアシスタント",
+    "venue": "Degree Conferral Medal Ceremony and NII Inose Student Award Ceremony",
+    "venue_ja": "学位授与記念メダル贈呈式・国立情報学研究所猪瀬学生賞表彰式",
+    "status": "Student Encouragement Award",
+    "status_ja": "猪瀬学生奨励賞",
+    "description": "Awarded in September 2026 at the Degree Conferral Medal Ceremony and Inose Student Award Ceremony held at the National Institute of Informatics (NII). Two recipients are selected each year from among the students of The Graduate University for Advanced Studies (SOKENDAI) who are affiliated with NII, where Hiroto Fukada is a PhD student in Informatics and a Research Assistant.",
+    "description_ja": "2026年9月、国立情報学研究所（NII）で開催された学位授与記念メダル贈呈式・国立情報学研究所猪瀬学生賞表彰式にて受賞。国立情報学研究所に所属する総合研究大学院大学（SOKENDAI）の学生全体から2名が選出される賞である。深田大登はSOKENDAI情報学コース博士後期課程に在籍し、NIIのリサーチアシスタントを務めている。",
+    "added": "2026-09-18",
+    "links": []
+  },
+  {
     "type": "research",
     "id": "cssj2026",
     "kind": "poster",
