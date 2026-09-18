@@ -46,7 +46,7 @@
       "name": "Hiroto Fukada | Data Scientist, Product Manager & Researcher",
       "description": "Hiroto Fukada (深田大登) is a Data Scientist, Product Manager, and researcher working on causal inference, LLMs, network science, and supply-chain analysis.",
       "inLanguage": "en",
-      "dateModified": "2026-09-17",
+      "dateModified": "2026-09-18",
       "mainEntity": {
         "@type": "Person",
         "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/#person",
@@ -133,12 +133,61 @@
         "knowsLanguage": [
           "ja",
           "en"
+        ],
+        "award": [
+          "Student Encouragement Award, National Institute of Informatics (NII) (2026)",
+          "Best Poster Award, NetEco 2026 (2026)",
+          "Company-wide Solution & Technology Prize (2025 H1), Septeni Japan (2025)",
+          "Special Prize, NRI Marketing Analysis Contest 2021 (2021)",
+          "Excellence Award, 令和2年度データ解析コンペティション関西予選 (2021)"
         ]
       },
       "about": {
         "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/#person"
       },
       "hasPart": [
+        {
+          "@type": "WebPage",
+          "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/research/#webpage",
+          "url": "https://cabocha-hlw.github.io/hirotofukada.github.io/research/",
+          "name": "Research Topics | Hiroto Fukada"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/research/supply-chain-llm/#webpage",
+          "url": "https://cabocha-hlw.github.io/hirotofukada.github.io/research/supply-chain-llm/",
+          "name": "Supply Chain Visibility with LLMs | Research by Hiroto Fukada"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/publications/#webpage",
+          "url": "https://cabocha-hlw.github.io/hirotofukada.github.io/publications/",
+          "name": "Publications | Hiroto Fukada"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/publications/snippet-driven-supply-chain/#webpage",
+          "url": "https://cabocha-hlw.github.io/hirotofukada.github.io/publications/snippet-driven-supply-chain/",
+          "name": "Snippet-Driven Supply Chain Discovery with LLMs (IEEE CIFEr 2026) | Hiroto Fukada"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/work/dcr-mmm/#webpage",
+          "url": "https://cabocha-hlw.github.io/hirotofukada.github.io/work/dcr-mmm/",
+          "name": "Data Clean Rooms and Marketing Mix Modeling | Hiroto Fukada"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/work/xyhai-dml/#webpage",
+          "url": "https://cabocha-hlw.github.io/hirotofukada.github.io/work/xyhai-dml/",
+          "name": "XYhai: Double Machine Learning for marketing decisions | Hiroto Fukada"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/awards/#webpage",
+          "url": "https://cabocha-hlw.github.io/hirotofukada.github.io/awards/",
+          "name": "Awards & Recognition | Hiroto Fukada"
+        },
         {
           "@type": "ScholarlyArticle",
           "@id": "https://arxiv.org/abs/2605.27845",
@@ -380,6 +429,7 @@
                 <p>Planning and development of statistical analysis and machine-learning products, from requirements definition to stakeholder management.</p>
               </li>
             </ul>
+            <p class="section-more"><a href="research/">Read the research topics in depth<span aria-hidden="true"> →</span></a></p>
           </div>
         </div>
       </div>
@@ -400,32 +450,16 @@
                   <article class="work-item project-item">
                     <h4 class="work-title">Next-generation media marketing with Data Clean Rooms (DCR) and Marketing Mix Modeling (MMM)</h4>
                     <p class="work-meta">Septeni Japan · May 2025</p>
-                    <dl class="project-facts">
-                      <div class="fact"><dt>Problem</dt><dd>Third-party cookie restrictions undermined user-level tracking, and advertisers needed to reconcile effective cross-channel marketing measurement with privacy protection.</dd></div>
-                      <div class="fact"><dt>Role</dt><dd>Data Analyst</dd></div>
-                      <div class="fact"><dt>Domain</dt><dd>Marketing Science / Privacy-preserving measurement</dd></div>
-                      <div class="fact"><dt>Methods</dt><dd>Data Clean Room (DCR), Marketing Mix Modeling (MMM), Media budget optimization</dd></div>
-                      <div class="fact"><dt>Outcome</dt><dd>Designed and implemented an integrated DCR + MMM (XYhai) architecture that analyzes initiatives across online and offline channels in a privacy-protected environment and supports data-driven budget allocation. Published as a solution article in May 2025.</dd></div>
-                    </dl>
-                    <p class="work-links">
-                      <a href="https://focus.septeni.co.jp/interview-column/250521" target="_blank" rel="noopener noreferrer">Article (Septeni FOCUS)</a>
-                    </p>
+                    <p class="work-description">Developed and implemented a next-generation media marketing solution that integrates Data Clean Room (DCR) and Marketing Mix Modeling (MMM) to achieve both privacy protection and budget optimization.</p>
+                    <p class="work-more"><a href="work/dcr-mmm/">Details<span aria-hidden="true"> →</span></a></p>
                   </article>
                 </li>
                 <li>
                   <article class="work-item project-item">
                     <h4 class="work-title">XYhai: causal inference with Double Machine Learning (DML) for cross-funnel marketing decision support</h4>
                     <p class="work-meta">Septeni Japan · Dec 2024</p>
-                    <dl class="project-facts">
-                      <div class="fact"><dt>Problem</dt><dd>Marketers needed to evaluate the incremental effect of individual tactics (TV, social, and search advertising) and reflect the results in budget allocation, but conventional measurement could not capture the causal structure among tactics.</dd></div>
-                      <div class="fact"><dt>Role</dt><dd>Data Analyst</dd></div>
-                      <div class="fact"><dt>Domain</dt><dd>Marketing Science / Causal Inference</dd></div>
-                      <div class="fact"><dt>Methods</dt><dd>Double Machine Learning (DML), Heterogeneous treatment effect (HTE) estimation, Causal graph modeling, Marketing Mix Modeling (MMM)</dd></div>
-                      <div class="fact"><dt>Outcome</dt><dd>Introduced a DML-based causal inference scheme into XYhai, Septeni&#39;s marketing decision-support solution, enabling situation-specific ROI and incremental-KPI analysis. Announced in a press release in December 2024.</dd></div>
-                    </dl>
-                    <p class="work-links">
-                      <a href="https://www.septeni-holdings.co.jp/news/release/2024/12013886.html" target="_blank" rel="noopener noreferrer">Press Release</a>
-                    </p>
+                    <p class="work-description">Implemented XYhai, a solution that incorporates a causal inference scheme using Double Machine Learning (DML) to support cross-cutting decision-making in marketing strategies.</p>
+                    <p class="work-more"><a href="work/xyhai-dml/">Details<span aria-hidden="true"> →</span></a></p>
                   </article>
                 </li>
               </ul>
@@ -433,6 +467,14 @@
             <div class="work-category">
               <h3>Recognition</h3>
               <ul class="work-list">
+                <li>
+                  <article class="work-item award-item">
+                    <h4 class="work-title">Inose Student Encouragement Award, National Institute of Informatics</h4>
+                    <p class="work-meta">National Institute of Informatics (NII) · PhD student, SOKENDAI / Research Assistant, NII · 2026</p>
+                    <p class="work-description">Awarded in September 2026 at the Degree Conferral Medal Ceremony and Inose Student Award Ceremony held at the National Institute of Informatics (NII). Two recipients are selected each year from among the students of The Graduate University for Advanced Studies (SOKENDAI) who are affiliated with NII, where Hiroto Fukada is a PhD student in Informatics and a Research Assistant.</p>
+
+                  </article>
+                </li>
                 <li>
                   <article class="work-item award-item">
                     <h4 class="work-title">Company-wide Solution &amp; Technology Prize (2025 H1)</h4>
@@ -443,6 +485,7 @@
                 </li>
               </ul>
             </div>
+            <p class="section-more"><a href="awards/">Awards &amp; recognition<span aria-hidden="true"> →</span></a></p>
           </div>
         </div>
       </div>
@@ -468,6 +511,7 @@
                       <a href="https://arxiv.org/abs/2605.27845" target="_blank" rel="noopener noreferrer">arXiv</a>
                       <a href="https://cifer2026.mhirano.jp/" target="_blank" rel="noopener noreferrer">Conference page</a>
                     </p>
+                    <p class="work-more"><a href="publications/snippet-driven-supply-chain/">Details<span aria-hidden="true"> →</span></a></p>
                   </article>
                 </li>
               </ul>
@@ -548,6 +592,7 @@
                 </li>
               </ul>
             </div>
+            <p class="section-more"><a href="publications/">All publications<span aria-hidden="true"> →</span></a></p>
           </div>
         </div>
       </div>
@@ -568,6 +613,12 @@
                 <div class="role-item">
                   <h4>Research Assistant</h4>
                   <p>Researching the visualization and risk assessment of global supply chains, applying LLMs, network science, and information retrieval to problems in real-world economic and industrial systems.</p>
+                </div>
+                <div class="experience-highlights">
+                  <h4>Selected Highlights</h4>
+                  <ul>
+                    <li>Inose Student Encouragement Award (2026)</li>
+                  </ul>
                 </div>
               </article>
               <article class="experience-group is-active">

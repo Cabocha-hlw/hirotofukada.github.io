@@ -1,5 +1,30 @@
 [
   {
+    "type": "award",
+    "id": "nii-inose-2026",
+    "kind": "award",
+    "year": 2026,
+    "month": 9,
+    "title": "Inose Student Encouragement Award, National Institute of Informatics",
+    "title_ja": "国立情報学研究所 猪瀬学生奨励賞",
+    "organization": "National Institute of Informatics (NII)",
+    "organization_ja": "国立情報学研究所（NII）",
+    "organizations": [
+      "NII",
+      "SOKENDAI"
+    ],
+    "role": "PhD student, SOKENDAI / Research Assistant, NII",
+    "role_ja": "総合研究大学院大学 博士後期課程 / NII リサーチアシスタント",
+    "venue": "Degree Conferral Medal Ceremony and NII Inose Student Award Ceremony",
+    "venue_ja": "学位授与記念メダル贈呈式・国立情報学研究所猪瀬学生賞表彰式",
+    "status": "Student Encouragement Award",
+    "status_ja": "猪瀬学生奨励賞",
+    "description": "Awarded in September 2026 at the Degree Conferral Medal Ceremony and Inose Student Award Ceremony held at the National Institute of Informatics (NII). Two recipients are selected each year from among the students of The Graduate University for Advanced Studies (SOKENDAI) who are affiliated with NII, where Hiroto Fukada is a PhD student in Informatics and a Research Assistant.",
+    "description_ja": "2026年9月、国立情報学研究所（NII）で開催された学位授与記念メダル贈呈式・国立情報学研究所猪瀬学生賞表彰式にて受賞。国立情報学研究所に所属する総合研究大学院大学（SOKENDAI）の学生全体から2名が選出される賞である。深田大登はSOKENDAI情報学コース博士後期課程に在籍し、NIIのリサーチアシスタントを務めている。",
+    "added": "2026-09-18",
+    "links": []
+  },
+  {
     "type": "research",
     "id": "cssj2026",
     "kind": "poster",
@@ -99,7 +124,57 @@
         "label": "arXiv",
         "url": "https://arxiv.org/abs/2605.27845"
       }
-    ]
+    ],
+    "slug": "snippet-driven-supply-chain",
+    "topics": ["supply-chain-llm"],
+    "detail": {
+      "seo": {
+        "title": "Snippet-Driven Supply Chain Discovery with LLMs (IEEE CIFEr 2026) | Hiroto Fukada",
+        "title_ja": "Snippet-Driven Supply Chain Discovery with LLMs（IEEE CIFEr 2026）| 深田大登（Hiroto Fukada）",
+        "description": "IEEE CIFEr 2026 paper by Hiroto Fukada and Takayuki Mizuno: a snippet-driven LLM method for building an auditable supply chain knowledge graph in China.",
+        "description_ja": "深田大登・水野貴之による IEEE CIFEr 2026 採択論文。検索スニペットと LLM で中国のサプライチェーン知識グラフを構築し、開示データを監査可能な形で補完する手法。"
+      },
+      "summary": [
+        "Snippet-Driven Supply Chain Discovery with LLMs: Scaling Visibility in China is a conference paper by Hiroto Fukada and Takayuki Mizuno, accepted at the 2026 IEEE Symposium on Computational Intelligence in Financial Engineering and Economics (CIFEr). It asks a deliberately narrow question: what is the cheapest unit of web evidence that still supports reliable extraction of inter-firm supplier-customer relationships at national scale?",
+        "The paper proposes a snippet-driven method for constructing a supply chain knowledge graph (SCKG) in which firms are nodes and inter-firm relationships are edges. Web search snippets - the query-biased summaries returned alongside search results - are used as a first-pass evidence layer for LLM-based relationship extraction, and the provenance of every edge is retained so that the graph can be checked against the text it came from."
+      ],
+      "summary_ja": [
+        "「Snippet-Driven Supply Chain Discovery with LLMs: Scaling Visibility in China」は、深田大登・水野貴之による国際会議論文であり、2026 IEEE Symposium on Computational Intelligence in Financial Engineering and Economics（CIFEr）に採択された。問いは意図的に狭く設定している。全国規模で企業間のサプライヤー・顧客関係を信頼できる形で抽出するとき、最も安価に済む証拠の単位は何か、である。",
+        "提案するのは、企業をノード・企業間関係をエッジとするサプライチェーン知識グラフ（SCKG）を、検索スニペット駆動で構築する手法である。検索結果に付随するクエリ依存の短い要約であるスニペットを、LLM による関係抽出の一次証拠層として用いる。各エッジには出典を保持し、グラフを元の文と突き合わせて検証できるようにしている。"
+      ],
+      "why": [
+        "Financial and economic research on supply chains usually starts from structured disclosures and commercial databases. In China, supplier-customer disclosure is typically limited to the major partners of listed firms, so unlisted firms and long-tail inter-firm links are poorly captured. Any risk assessment built on that foundation inherits its blind spots.",
+        "Public web evidence - corporate announcements, government releases, trade media - can partly close the gap, but mining full text at scale is expensive, and many pages are inaccessible or costly for large language models to process. The contribution of this paper is to make that cost explicit and to show which part of it can be avoided without giving up coverage."
+      ],
+      "why_ja": [
+        "サプライチェーンに関する金融・経済研究は、通常は構造化された開示情報と商用データベースから出発する。中国ではサプライヤー・顧客の開示が上場企業の主要取引先に限られるため、非上場企業やロングテールの取引関係はほとんど捕捉されない。その土台の上に構築されたリスク評価は、同じ死角をそのまま引き継ぐ。",
+        "企業の公表資料・政府発表・業界メディアといった公開情報は、この隙間をある程度は埋められる。しかし全文を大規模にマイニングするのは高価であり、取得できないページや LLM での処理費用が見合わないページも多い。本論文の貢献は、そのコストを明示したうえで、カバレッジを落とさずにどの部分を省けるかを示した点にある。"
+      ],
+      "results": [
+        "Extraction efficiency: exhaustive full-text chunking discovers 19.8 times more unique relationships than snippets, but requires 251.2 times more input tokens and yields higher redundancy.",
+        "Coverage: using 130,685 Chinese firms as search seeds - covering Shanghai- and Shenzhen-listed firms and large unlisted firms as of 2024 - the resulting SCKG covers 7.2 times more firms and 9.3 times more relationships than the CSMAR disclosure-based benchmark on the listed-firm subset, while revealing heavy-tailed degree patterns.",
+        "Because provenance metadata is retained for every extracted relationship, the graph works as an auditable complement to disclosure-based databases rather than an opaque substitute for them."
+      ],
+      "results_ja": [
+        "抽出効率について。全文チャンキングを網羅的に行うと、スニペットの 19.8 倍のユニークな関係が見つかる一方で、入力トークンは 251.2 倍を要し、冗長性も高くなる。",
+        "カバレッジについて。2024 年時点の上海・深圳上場企業と大規模非上場企業を含む 130,685 社を検索シードとして用いたところ、構築した SCKG は上場企業サブセットにおいて、開示情報ベースのベンチマークである CSMAR と比べて 7.2 倍の企業と 9.3 倍の関係を捕捉し、ヘビーテールな次数分布を明らかにした。",
+        "抽出した各関係に出典メタデータを保持しているため、このグラフは開示ベースのデータベースを不透明に置き換えるものではなく、監査可能な形で補完する層として機能する。"
+      ],
+      "sources": [
+        {
+          "label": "arXiv:2605.27845 (preprint, full text)",
+          "label_ja": "arXiv:2605.27845（プレプリント全文）",
+          "url": "https://arxiv.org/abs/2605.27845",
+          "primary": true
+        },
+        {
+          "label": "IEEE CIFEr 2026 conference site",
+          "label_ja": "IEEE CIFEr 2026 公式サイト",
+          "url": "https://cifer2026.mhirano.jp/",
+          "primary": false
+        }
+      ]
+    }
   },
   {
     "type": "research",
@@ -176,7 +251,50 @@
         "label_ja": "記事（Septeni FOCUS）",
         "url": "https://focus.septeni.co.jp/interview-column/250521"
       }
-    ]
+    ],
+    "slug": "dcr-mmm",
+    "detail": {
+      "heading": "Data Clean Rooms and Marketing Mix Modeling",
+      "heading_ja": "データクリーンルーム（DCR）と MMM による次世代メディアマーケティング",
+      "seo": {
+        "title": "Data Clean Rooms and Marketing Mix Modeling | Hiroto Fukada",
+        "title_ja": "データクリーンルームと MMM による次世代メディアマーケティング | 深田大登（Hiroto Fukada）",
+        "description": "How Hiroto Fukada combined Data Clean Rooms with Marketing Mix Modeling to measure cross-channel marketing while preserving user privacy.",
+        "description_ja": "深田大登が設計・実装した、データクリーンルーム（DCR）とマーケティングミックスモデリング（MMM）の統合によるプライバシー保護型の効果計測と予算最適化。"
+      },
+      "summary": [
+        "This work combines a Data Clean Room (DCR) - a cloud environment provided by platforms in which data can be analysed together without exposing individual records - with Marketing Mix Modeling (MMM) and causal inference, delivered through Septeni's XYhai solution. Hiroto Fukada designed and implemented the integrated architecture as a Data Analyst at Septeni Japan, and it was published as a solution article in May 2025.",
+        "The two halves answer different questions. MMM gives the strategic overview across online and offline media; the DCR supports detailed evaluation of individual tactics. Running them as one architecture means the same budget decision can be examined at both altitudes."
+      ],
+      "summary_ja": [
+        "プラットフォーマーが提供する安全なクラウド環境であり、個票を露出させずにデータを統合分析できるデータクリーンルーム（DCR）と、マーケティングミックスモデリング（MMM）・因果推論を組み合わせ、セプテーニのソリューション「XYhai」として提供する取り組みである。深田大登は Septeni Japan のデータアナリストとして統合アーキテクチャを設計・実装し、2025年5月にソリューション記事として公開された。",
+        "両者が答える問いは異なる。MMM はオンライン・オフラインを横断した戦略の俯瞰を与え、DCR は個別施策の詳細な評価を支える。ひとつのアーキテクチャとして動かすことで、同じ予算判断を二つの解像度から検証できる。"
+      ],
+      "why": [
+        "Third-party cookie restrictions have made user-level tracking progressively less reliable, while advertisers still need to know which media actually moved the outcome. The requirement is usually stated as a trade-off: effective marketing measurement on one side, privacy protection on the other.",
+        "Treating it as a trade-off is the mistake. Measurement that depends on identifying individuals is not only a privacy liability, it is also fragile - it degrades with every platform policy change. Aggregate, model-based measurement that never needs the individual record is the more durable answer, and it is the one that survives the next restriction."
+      ],
+      "why_ja": [
+        "サードパーティ Cookie の規制により、ユーザー単位のトラッキングは年々信頼できなくなっている。一方で広告主は、どのメディアが実際に成果を動かしたのかを知る必要がある。この要件はしばしば「効果的なマーケティング活動」と「プライバシーの保護」の二者択一として語られる。",
+        "しかし二者択一と捉えること自体が誤りである。個人の識別に依存した計測はプライバシー上の負債であるだけでなく、プラットフォームのポリシー変更のたびに劣化する脆い仕組みでもある。個票を必要としない集計・モデルベースの計測のほうが持続的であり、次の規制にも耐える。"
+      ],
+      "results": [
+        "The integrated DCR + MMM architecture analyses initiatives across online and offline channels inside a privacy-protected environment, and supports data-driven budget allocation from those results. Cross-media ROI can be evaluated without identifying individual users, and budget optimisation is unified across online and offline media.",
+        "The approach was published as a solution article in May 2025, which describes how clarifying the causal relationships between marketing initiatives is what makes integrated optimisation possible."
+      ],
+      "results_ja": [
+        "DCR と MMM を統合したアーキテクチャは、プライバシー保護環境の中でオンライン・オフライン横断の施策を分析し、その結果にもとづくデータドリブンな予算配分を支援する。個人を特定せずにメディア横断の ROI を評価でき、オンライン・オフラインを通じた予算最適化を一本化できる。",
+        "本取り組みは2025年5月にソリューション記事として公開した。マーケティング施策の因果関係を明らかにすることが、統合マーケティングの最適化を可能にするという構図を示している。"
+      ],
+      "sources": [
+        {
+          "label": "Solution article: next-generation media marketing with DCR and MMM (Septeni FOCUS, May 2025)",
+          "label_ja": "ソリューション記事：DCR と MMM で実現する次世代メディアマーケティング（Septeni FOCUS・2025年5月）",
+          "url": "https://focus.septeni.co.jp/interview-column/250521",
+          "primary": true
+        }
+      ]
+    }
   },
   {
     "type": "professional",
@@ -205,6 +323,49 @@
         "label_ja": "プレスリリース",
         "url": "https://www.septeni-holdings.co.jp/news/release/2024/12013886.html"
       }
-    ]
+    ],
+    "slug": "xyhai-dml",
+    "detail": {
+      "heading": "XYhai: Double Machine Learning for marketing decisions",
+      "heading_ja": "「XYhai」への DML 因果推論スキームの導入",
+      "seo": {
+        "title": "XYhai: Double Machine Learning for marketing decisions | Hiroto Fukada",
+        "title_ja": "XYhai：DML による因果推論をマーケティング意思決定へ | 深田大登（Hiroto Fukada）",
+        "description": "How Hiroto Fukada introduced a Double Machine Learning causal inference scheme into XYhai, Septeni's cross-channel marketing decision-support solution.",
+        "description_ja": "深田大登がデータアナリストとして携わった、二重機械学習（DML）による因果推論スキームのマーケティング意思決定支援ソリューション「XYhai」への導入。"
+      },
+      "summary": [
+        "XYhai is Septeni's solution for supporting advertisers' marketing decisions across touchpoints. In December 2024, Septeni announced that a causal inference scheme based on Double Machine Learning (DML), developed through joint research with Google, had been introduced into it. Hiroto Fukada worked on this as a Data Analyst at Septeni Japan.",
+        "The scheme reflects the causal structure between marketing interventions and maps user behaviour from ad exposure through to conversion. That makes it possible to estimate the incremental effect of individual tactics - television commercials, social advertising, and search advertising - instead of reading correlation as if it were effect."
+      ],
+      "summary_ja": [
+        "「XYhai」は、広告主のマーケティングにおける意思決定を横断的に支援するセプテーニのソリューションである。2024年12月、Google との共同研究から生まれた二重機械学習（DML）による因果推論スキームの導入が発表された。深田大登は Septeni Japan のデータアナリストとして本件に携わった。",
+        "このスキームは、マーケティング施策間の因果構造を反映し、広告接触からコンバージョンに至るユーザー行動を対応づける。これにより、テレビCM・SNS広告・検索広告といった個別施策の増分効果を、相関を効果と読み替えることなく推定できる。"
+      ],
+      "why": [
+        "Advertisers allocate budget across channels that interact with each other: a television campaign changes how many people search, and search advertising then collects the conversion. Conventional measurement gives credit to whichever touchpoint appears last, so it cannot separate the incremental contribution of one tactic from the effect of the others.",
+        "The cost of getting this wrong is concrete. Budget moves toward the channel that is best at claiming credit rather than the one that actually changes behaviour, and the error compounds every planning cycle. A causal framing is what makes the difference between attributing outcomes and explaining them."
+      ],
+      "why_ja": [
+        "広告主は、相互に影響し合うチャネルへ予算を配分している。テレビCMが検索行動を増やし、その検索広告がコンバージョンを回収する、といった構造である。従来の計測は最後に接触した接点に成果を寄せるため、ある施策の増分貢献を他施策の効果から切り分けられない。",
+        "誤ったまま運用するコストは具体的だ。実際に行動を変えたチャネルではなく、成果を主張するのが得意なチャネルへ予算が流れ、その誤差は計画のたびに累積する。成果を「割り当てる」のか「説明する」のかを分けるのが、因果の枠組みである。"
+      ],
+      "results": [
+        "The DML-based scheme was implemented in XYhai and announced publicly in December 2024. It supports situation-specific analysis of intervention effects across television, social, and search advertising, and turns the estimates into practical outputs: budget optimisation proposals and effect predictions aligned with observed user behaviour.",
+        "The limits are stated as part of the method rather than hidden. Spot campaigns with less than roughly one month of broadcast data are difficult to evaluate with this scheme, and area testing is used to improve data quality in those cases."
+      ],
+      "results_ja": [
+        "DML ベースのスキームは XYhai に実装され、2024年12月にプレスリリースとして公開された。テレビ・SNS・検索の各広告について状況別の施策効果を分析し、その推定値を予算最適化の提案や効果予測という実務的なアウトプットへ落とし込む。",
+        "適用限界も手法の一部として明示している。放映データが概ね1か月に満たないスポット出稿はこのスキームでの評価が難しく、その場合はエリアテストを併用してデータの質を高める。"
+      ],
+      "sources": [
+        {
+          "label": "Press release: Septeni introduces a DML-based causal inference scheme into XYhai (December 2024)",
+          "label_ja": "プレスリリース：セプテーニ、DML を用いた因果推論のスキームを XYhai に導入（2024年12月）",
+          "url": "https://www.septeni-holdings.co.jp/news/release/2024/12013886.html",
+          "primary": true
+        }
+      ]
+    }
   }
 ]

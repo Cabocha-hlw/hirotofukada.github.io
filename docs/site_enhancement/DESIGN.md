@@ -1,6 +1,7 @@
 # ポートフォリオ SEO / Entity 強化 — 実装要件設計書
 
 - Status: v1.0（2026-09-11）Phase 1 実装完了
+- 続編: Phase 2（固有 URL を持つ研究・業績ページの追加）は `DESIGN_PHASE2.md`（設計のみ・未実装）
 - 対象: `hirotofukada.github.io`（GitHub Pages・公開リポジトリ）
 - 入力: 「GitHub Portfolio Enhancement Requirements」（要求書。以下 §番号・ID は要求書のもの）
 - 本書は要求書を実装可能な要件に落とし、採用したアーキテクチャ・データモデル・検証方法・
@@ -207,7 +208,7 @@ ProfilePage (@id …/#profilepage, url, name, description, inLanguage, dateModif
 | §7 Perf | JS 削減 / 画像 / フォント | 描画 JS 撤廃（装飾のみ）、`<picture>` WebP 25KB + width/height + `fetchpriority`、Noto Sans JP 廃止、`@import`→`<link>` | ファイルサイズ・目視 | ✅ |
 | §8 Privacy | 個人情報非掲載 | Email 削除、連絡は LinkedIn 経由 | `--check`: `mailto:`・メール様文字列を禁止 | ✅ |
 | §9 Analytics | GSC 主・GA4 補助 | GA4 継続、KPI 定義は §9 | ユーザー運用 | 🟡 |
-| P2 | 独自ドメイン / Scholar / 個別ページ / RSS 等 | — | — | ⬜ |
+| P2 | 独自ドメイン / Scholar / 個別ページ / RSS 等 | 個別ページは `DESIGN_PHASE2.md` で設計済み（未実装） | — | ⬜ |
 
 ---
 

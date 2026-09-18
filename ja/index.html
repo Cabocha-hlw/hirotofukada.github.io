@@ -46,7 +46,7 @@
       "name": "深田大登（Hiroto Fukada）| データサイエンティスト・プロダクトマネージャー・研究者",
       "description": "深田大登（Hiroto Fukada）のプロフィール。因果推論・LLM・ネットワーク科学・サプライチェーン分析を専門とするデータサイエンティスト／プロダクトマネージャー、総合研究大学院大学 博士後期課程・国立情報学研究所リサーチアシスタント。研究業績・職歴・外部プロフィールを掲載。",
       "inLanguage": "ja",
-      "dateModified": "2026-09-17",
+      "dateModified": "2026-09-18",
       "mainEntity": {
         "@type": "Person",
         "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/#person",
@@ -133,12 +133,61 @@
         "knowsLanguage": [
           "ja",
           "en"
+        ],
+        "award": [
+          "猪瀬学生奨励賞, 国立情報学研究所（NII） (2026)",
+          "優秀ポスター賞, 第21回ネットワーク生態学シンポジウム（NetEco 2026） (2026)",
+          "全社ソリューション＆テクノロジー賞（2025年上半期）, Septeni Japan株式会社 (2025)",
+          "特別賞, 株式会社野村総合研究所マーケティング分析コンテスト 2021 (2021)",
+          "優秀賞, 令和2年度データ解析コンペティション関西予選 (2021)"
         ]
       },
       "about": {
         "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/#person"
       },
       "hasPart": [
+        {
+          "@type": "WebPage",
+          "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/research/#webpage",
+          "url": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/research/",
+          "name": "研究テーマ | 深田大登（Hiroto Fukada）"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/research/supply-chain-llm/#webpage",
+          "url": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/research/supply-chain-llm/",
+          "name": "大規模言語モデルによるサプライチェーンの可視化 | 深田大登（Hiroto Fukada）の研究"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/publications/#webpage",
+          "url": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/publications/",
+          "name": "研究業績 | 深田大登（Hiroto Fukada）"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/publications/snippet-driven-supply-chain/#webpage",
+          "url": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/publications/snippet-driven-supply-chain/",
+          "name": "Snippet-Driven Supply Chain Discovery with LLMs（IEEE CIFEr 2026）| 深田大登（Hiroto Fukada）"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/work/dcr-mmm/#webpage",
+          "url": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/work/dcr-mmm/",
+          "name": "データクリーンルームと MMM による次世代メディアマーケティング | 深田大登（Hiroto Fukada）"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/work/xyhai-dml/#webpage",
+          "url": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/work/xyhai-dml/",
+          "name": "XYhai：DML による因果推論をマーケティング意思決定へ | 深田大登（Hiroto Fukada）"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/awards/#webpage",
+          "url": "https://cabocha-hlw.github.io/hirotofukada.github.io/ja/awards/",
+          "name": "受賞 | 深田大登（Hiroto Fukada）"
+        },
         {
           "@type": "ScholarlyArticle",
           "@id": "https://arxiv.org/abs/2605.27845",
@@ -190,7 +239,7 @@
   <header class="site-header">
     <div class="container">
       <div class="header-inner">
-        <a class="header-name" href="../">Hiroto Fukada</a>
+        <a class="header-name" href="./">Hiroto Fukada</a>
         <nav aria-label="メインナビゲーション">
           <a href="#about">プロフィール</a>
           <a href="#expertise">専門領域</a>
@@ -379,6 +428,7 @@
                 <p>統計解析・機械学習プロダクトの企画・開発。要件定義からステークホルダーマネジメントまでを担う。</p>
               </li>
             </ul>
+            <p class="section-more"><a href="research/">研究テーマの詳細を読む<span aria-hidden="true"> →</span></a></p>
           </div>
         </div>
       </div>
@@ -399,32 +449,16 @@
                   <article class="work-item project-item">
                     <h4 class="work-title">データクリーンルーム（DCR）とマーケティングミックスモデリング（MMM）で実現する次世代メディアマーケティング ～プライバシー保護と予算最適化の両立～</h4>
                     <p class="work-meta">Septeni Japan株式会社 · 2025年5月</p>
-                    <dl class="project-facts">
-                      <div class="fact"><dt>課題</dt><dd>サードパーティCookie規制によりユーザー単位のトラッキング精度が低下し、オンライン・オフラインにまたがる施策の効果計測とプライバシー保護の両立が求められていた。</dd></div>
-                      <div class="fact"><dt>役割</dt><dd>データアナリスト</dd></div>
-                      <div class="fact"><dt>領域</dt><dd>マーケティングサイエンス / プライバシー保護型計測</dd></div>
-                      <div class="fact"><dt>手法・技術</dt><dd>データクリーンルーム（DCR）, マーケティングミックスモデリング（MMM）, メディア予算最適化</dd></div>
-                      <div class="fact"><dt>成果</dt><dd>DCRとMMM（XYhai）を統合し、プライバシー保護環境の中でオンライン・オフライン横断の施策を分析してデータドリブンな予算配分を支援するアーキテクチャを設計・実装。2025年5月にソリューション記事として公開。</dd></div>
-                    </dl>
-                    <p class="work-links">
-                      <a href="https://focus.septeni.co.jp/interview-column/250521" target="_blank" rel="noopener noreferrer">記事（Septeni FOCUS）</a>
-                    </p>
+                    <p class="work-description">データクリーンルーム（DCR）とマーケティングミックスモデリング（MMM）を統合し、プライバシー保護と予算最適化を両立する次世代メディアマーケティングソリューションを開発・実装。</p>
+                    <p class="work-more"><a href="work/dcr-mmm/">詳細<span aria-hidden="true"> →</span></a></p>
                   </article>
                 </li>
                 <li>
                   <article class="work-item project-item">
                     <h4 class="work-title">セプテーニ、DMLを用いた新たな因果推論のスキームを、広告主のマーケティングにおける意思決定を横断的に支援するソリューション「XYhai」に導入、提供開始</h4>
                     <p class="work-meta">Septeni Japan株式会社 · 2024年12月</p>
-                    <dl class="project-facts">
-                      <div class="fact"><dt>課題</dt><dd>テレビCM・SNS広告・検索広告など個別施策の増分効果を評価し予算配分に反映する必要があったが、従来の計測では施策間の因果構造を捉えられなかった。</dd></div>
-                      <div class="fact"><dt>役割</dt><dd>データアナリスト</dd></div>
-                      <div class="fact"><dt>領域</dt><dd>マーケティングサイエンス / 因果推論</dd></div>
-                      <div class="fact"><dt>手法・技術</dt><dd>二重機械学習（DML）, 異質処置効果（HTE）推定, 因果グラフのモデリング, マーケティングミックスモデリング（MMM）</dd></div>
-                      <div class="fact"><dt>成果</dt><dd>セプテーニのマーケティング意思決定支援ソリューション「XYhai」にDMLベースの因果推論スキームを導入し、状況別のROI・増分KPI分析を可能にした。2024年12月にプレスリリースを公開。</dd></div>
-                    </dl>
-                    <p class="work-links">
-                      <a href="https://www.septeni-holdings.co.jp/news/release/2024/12013886.html" target="_blank" rel="noopener noreferrer">プレスリリース</a>
-                    </p>
+                    <p class="work-description">二重機械学習（DML）を用いた因果推論スキームを組み込み、マーケティング戦略における横断的な意思決定を支援するソリューション「XYhai」を導入・提供開始。</p>
+                    <p class="work-more"><a href="work/xyhai-dml/">詳細<span aria-hidden="true"> →</span></a></p>
                   </article>
                 </li>
               </ul>
@@ -432,6 +466,14 @@
             <div class="work-category">
               <h3>表彰</h3>
               <ul class="work-list">
+                <li>
+                  <article class="work-item award-item">
+                    <h4 class="work-title">国立情報学研究所 猪瀬学生奨励賞</h4>
+                    <p class="work-meta">国立情報学研究所（NII） · 総合研究大学院大学 博士後期課程 / NII リサーチアシスタント · 2026</p>
+                    <p class="work-description">2026年9月、国立情報学研究所（NII）で開催された学位授与記念メダル贈呈式・国立情報学研究所猪瀬学生賞表彰式にて受賞。国立情報学研究所に所属する総合研究大学院大学（SOKENDAI）の学生全体から2名が選出される賞である。深田大登はSOKENDAI情報学コース博士後期課程に在籍し、NIIのリサーチアシスタントを務めている。</p>
+
+                  </article>
+                </li>
                 <li>
                   <article class="work-item award-item">
                     <h4 class="work-title">全社ソリューション＆テクノロジー賞（2025年上半期）</h4>
@@ -442,6 +484,7 @@
                 </li>
               </ul>
             </div>
+            <p class="section-more"><a href="awards/">受賞一覧<span aria-hidden="true"> →</span></a></p>
           </div>
         </div>
       </div>
@@ -467,6 +510,7 @@
                       <a href="https://arxiv.org/abs/2605.27845" target="_blank" rel="noopener noreferrer">arXiv</a>
                       <a href="https://cifer2026.mhirano.jp/" target="_blank" rel="noopener noreferrer">学会ページ</a>
                     </p>
+                    <p class="work-more"><a href="publications/snippet-driven-supply-chain/">詳細<span aria-hidden="true"> →</span></a></p>
                   </article>
                 </li>
               </ul>
@@ -547,6 +591,7 @@
                 </li>
               </ul>
             </div>
+            <p class="section-more"><a href="publications/">研究業績一覧<span aria-hidden="true"> →</span></a></p>
           </div>
         </div>
       </div>
@@ -567,6 +612,12 @@
                 <div class="role-item">
                   <h4>リサーチアシスタント</h4>
                   <p>グローバルサプライチェーンの可視化とリスク評価に関する研究に従事。LLM、ネットワーク科学、情報検索技術などを用いて、経済・産業システムの課題解決に取り組む。</p>
+                </div>
+                <div class="experience-highlights">
+                  <h4>主な実績</h4>
+                  <ul>
+                    <li>猪瀬学生奨励賞（2026年）</li>
+                  </ul>
                 </div>
               </article>
               <article class="experience-group is-active">

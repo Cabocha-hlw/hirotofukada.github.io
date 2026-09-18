@@ -1,0 +1,116 @@
+[
+  {
+    "id": "supply-chain-llm",
+    "expertiseId": [
+      "llm",
+      "supply-chain",
+      "network-science"
+    ],
+    "title": "Supply Chain Visibility with Large Language Models",
+    "title_ja": "大規模言語モデルによるサプライチェーンの可視化",
+    "seo": {
+      "title": "Supply Chain Visibility with LLMs | Research by Hiroto Fukada",
+      "title_ja": "大規模言語モデルによるサプライチェーンの可視化 | 深田大登（Hiroto Fukada）の研究",
+      "description": "How Hiroto Fukada uses large language models and web search snippets to build an auditable supply chain knowledge graph of Chinese firms at scale.",
+      "description_ja": "検索スニペットと大規模言語モデル（LLM）で中国企業のサプライチェーン知識グラフを構築する深田大登（Hiroto Fukada）の研究。IEEE CIFEr 2026 採択論文、NetSci 2026、JSAI 2026 の成果と一次ソースを掲載。"
+    },
+    "lead": "Building an auditable map of inter-firm supplier-customer relationships in China by combining large language models, web-scale information retrieval, and network science.",
+    "lead_ja": "大規模言語モデル・Web 規模の情報検索・ネットワーク科学を組み合わせ、中国の企業間取引関係を検証可能な形で地図化する研究。",
+    "sections": [
+      {
+        "id": "what",
+        "heading": "What I did",
+        "heading_ja": "取り組み",
+        "body": [
+          "I develop Supply Chain OSINT Agent, a research pipeline that discovers supplier-customer relationships between firms from public web evidence and assembles them into a supply chain knowledge graph (SCKG), where firms are nodes and inter-firm transactions are edges. The work is carried out by Hiroto Fukada as a PhD student in Informatics at SOKENDAI (The Graduate University for Advanced Studies) and a Research Assistant at the National Institute of Informatics (NII), together with Takayuki Mizuno.",
+          "The distinguishing choice is the unit of evidence. Instead of crawling and processing full web pages, the pipeline treats web search snippets - the short, query-biased summaries returned alongside search results - as a first-pass evidence layer for LLM-based relationship extraction. Every extracted edge retains its provenance metadata, so each relationship can be traced back to the text that produced it and audited later."
+        ],
+        "body_ja": [
+          "公開情報から企業間の取引関係（サプライヤー・顧客関係）を抽出し、企業をノード・取引をエッジとするサプライチェーン知識グラフ（SCKG）を構築するパイプライン「Supply Chain OSINT Agent」を開発している。総合研究大学院大学（SOKENDAI）情報学コース博士課程に在籍し、国立情報学研究所（NII）のリサーチアシスタントを務める深田大登が、水野貴之と共同で進める研究である。",
+          "特徴は「どの粒度の証拠を読ませるか」にある。Web ページ全文を取得・処理するのではなく、検索スニペット（検索結果に付随するクエリ依存の短い要約）を一次証拠層として LLM に読ませる。抽出したエッジには出典メタデータを保持し、どの文から得られた関係かを後から検証できるようにしている。"
+        ]
+      },
+      {
+        "id": "why",
+        "heading": "Why it matters",
+        "heading_ja": "なぜ重要か",
+        "body": [
+          "In China, supplier-customer disclosure is typically limited to the major partners of listed firms. Unlisted firms and long-tail inter-firm links are poorly captured in structured data, which means official statistics and commercial databases share the same blind spots. Anyone reasoning about economic security, export controls, or the industrial interdependence between China and Taiwan is reasoning from a partial map.",
+          "Full-text web mining could fill that gap in principle, but not at scale: pages are often inaccessible or expensive to process, and feeding them to large language models consumes orders of magnitude more tokens than the additional information justifies. The practical question is therefore not whether LLMs can read the web, but which unit of evidence makes web-scale extraction affordable and auditable at the same time."
+        ],
+        "body_ja": [
+          "中国では、サプライヤー・顧客関係の開示が上場企業の主要取引先に限られる。非上場企業やロングテールの取引関係は構造化データに乗らず、公的統計も商用データベースも同じ死角を共有している。経済安全保障・輸出管理・中台の産業相互依存を論じるとき、参照している地図はそもそも欠けている。",
+          "原理的には Web 全文のマイニングで埋められるが、規模を出すとコストが見合わなくなる。ページは取得できないことが多く、LLM に全文を処理させるとトークン消費が得られる情報量に対して過大になる。問うべきは「LLM が Web を読めるか」ではなく、「どの粒度の証拠であれば Web 規模の抽出が現実的な費用で、かつ監査可能になるか」である。"
+        ]
+      },
+      {
+        "id": "approach",
+        "heading": "Approach",
+        "heading_ja": "アプローチ",
+        "body": [
+          "Snippet-driven extraction. Search snippets are used as a scalable first pass for LLM-based relationship extraction, with full-text processing reserved for the candidates that need confirmation. This keeps token cost proportional to the evidence actually used.",
+          "Prompt optimization. The extraction prompts are optimized rather than hand-tuned, which matters for disambiguating firm names and for deciding the direction of a relationship - which side supplies which - from a short, context-poor snippet. This part of the pipeline was presented at JSAI 2026.",
+          "Network science. Once the graph exists, its structure is analysed with tools from network science: bow-tie decomposition of the inter-firm transaction network, degree distributions, and interdependence measures between industries and regions. This is where a knowledge graph becomes a statement about resilience rather than a list of edges, and it is the focus of the NetSci 2026 and NetEco 2026 presentations."
+        ],
+        "body_ja": [
+          "スニペット駆動の抽出。検索スニペットを一次証拠層として扱い、確認が必要な候補にだけ全文処理を回す。これにより、トークン費用を実際に使った証拠の量に比例させられる。",
+          "プロンプト最適化。抽出プロンプトを手で調整するのではなく最適化する。文脈の乏しい短いスニペットから企業名の曖昧性を解消し、関係の向き（どちらが供給側か）を判定するうえで効く部分である。この要素は JSAI 2026 で発表した。",
+          "ネットワーク科学による分析。構築した SCKG を、企業間取引ネットワークのボウタイ構造分解・次数分布・産業／地域間の相互依存指標で分析する。知識グラフが単なるエッジの一覧から頑健性についての主張に変わるのはこの段階であり、NetSci 2026 と NetEco 2026 の発表の中心にあたる。"
+        ]
+      },
+      {
+        "id": "results",
+        "heading": "Results",
+        "heading_ja": "結果",
+        "body": [
+          "The IEEE CIFEr 2026 paper evaluates the pipeline on 130,685 Chinese firms used as search seeds, covering Shanghai- and Shenzhen-listed firms and large unlisted firms as of 2024. On the listed-firm subset, the resulting supply chain knowledge graph covers 7.2 times more firms and 9.3 times more relationships than the CSMAR disclosure-based benchmark, and reveals heavy-tailed degree patterns that disclosure data alone does not show.",
+          "The cost trade-off is stated explicitly rather than hidden. Exhaustive full-text chunking discovers 19.8 times more unique relationships than snippets, but requires 251.2 times more input tokens and yields higher redundancy. Snippets are therefore positioned as a scalable first-pass evidence layer and an auditable complement to disclosure-based databases, not as a replacement for full-text reading.",
+          "Results have been presented at IEEE CIFEr 2026 (accepted paper), NetSci 2026, JSAI 2026, and the Network Ecology Symposium, where the study received a Best Poster Award at NetEco 2026."
+        ],
+        "body_ja": [
+          "IEEE CIFEr 2026 採択論文では、2024 年時点の上海・深圳上場企業と大規模非上場企業を含む 130,685 社を検索シードとして評価した。上場企業サブセットにおいて、構築したサプライチェーン知識グラフは開示情報ベースのベンチマークである CSMAR と比べ 7.2 倍の企業と 9.3 倍の関係を捕捉し、開示データだけでは見えないヘビーテールな次数分布を明らかにした。",
+          "コストのトレードオフも隠さず示している。全文チャンキングを網羅的に行えばスニペットの 19.8 倍のユニークな関係が見つかるが、入力トークンは 251.2 倍に増え、冗長性も高くなる。スニペットは全文読解の代替ではなく、スケールする一次スクリーニングであり、開示ベースのデータベースを監査可能な形で補完する層として位置づけている。",
+          "成果は IEEE CIFEr 2026（論文採択）、NetSci 2026、人工知能学会全国大会（JSAI 2026）、ネットワーク生態学シンポジウムで発表し、NetEco 2026 では優秀ポスター賞を受賞した。"
+        ]
+      }
+    ],
+    "workIds": [
+      "cifer2026",
+      "netsci2026",
+      "jsai2026",
+      "neteco2026",
+      "cssj2026"
+    ],
+    "sources": [
+      {
+        "label": "arXiv:2605.27845 — Snippet-Driven Supply Chain Discovery with LLMs",
+        "label_ja": "arXiv:2605.27845 — Snippet-Driven Supply Chain Discovery with LLMs",
+        "url": "https://arxiv.org/abs/2605.27845",
+        "primary": true
+      },
+      {
+        "label": "IEEE CIFEr 2026 conference site",
+        "label_ja": "IEEE CIFEr 2026 公式サイト",
+        "url": "https://cifer2026.mhirano.jp/",
+        "primary": false
+      }
+    ],
+    "keywords": [
+      "supply chain",
+      "large language models",
+      "knowledge graph",
+      "OSINT",
+      "network science",
+      "China"
+    ],
+    "keywords_ja": [
+      "サプライチェーン",
+      "大規模言語モデル",
+      "ナレッジグラフ",
+      "OSINT",
+      "ネットワーク科学",
+      "中国"
+    ],
+    "updated": "2026-09-17"
+  }
+]
