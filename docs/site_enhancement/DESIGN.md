@@ -304,9 +304,10 @@ C="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 4. **メールアドレスの削除。** 要求書 §8 に従い Contact から Gmail を外し、連絡導線を LinkedIn に
    一本化した。専用の公開用アドレスを設ける場合は `profile.profiles` にではなく `contactNote` の
    文言に含める（`--check` の `mailto:` 禁止は維持し、必要なら検査を緩める判断をユーザーが行う）。
-5. **CIFEr 2026 のステータス。** 会期（2026-09-10〜11）が到来しているため、掲載後に
-   `works.json` の `status` を `Published` 等へ、DOI が付与されたら `doi` に登録する
-   （JSON-LD の主 URL が DOI に切り替わる）。
+5. **CIFEr 2026 のステータス（2026-09-23 対応済み）。** IEEE Xplore に掲載されたため、
+   `works.json` の `status` を `Published` / `掲載`、`doi` を
+   `10.1109/CIFEr67845.2026.11692384`、`pages` を `345-352` に更新した。JSON-LD の主 URL
+   （`@id` / `url`）は arXiv から DOI に切り替わっている。
 6. **ZENKIGEN の開始月。** 履歴書側 `master.yaml`（2021-09）とサイト（2021-08）の不一致は
    既存の TODO。本件の範囲外だが、`--check` の警告として残っている。
 7. **sitemap「取得できませんでした」の切り分け（2026-09-17〜）。** GSC に送信した

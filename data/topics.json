@@ -12,7 +12,7 @@
       "title": "Supply Chain Visibility with LLMs | Research by Hiroto Fukada",
       "title_ja": "大規模言語モデルによるサプライチェーンの可視化 | 深田大登（Hiroto Fukada）の研究",
       "description": "How Hiroto Fukada uses large language models and web search snippets to build an auditable supply chain knowledge graph of Chinese firms at scale.",
-      "description_ja": "検索スニペットと大規模言語モデル（LLM）で中国企業のサプライチェーン知識グラフを構築する深田大登（Hiroto Fukada）の研究。IEEE CIFEr 2026 採択論文、NetSci 2026、JSAI 2026 の成果と一次ソースを掲載。"
+      "description_ja": "検索スニペットと大規模言語モデル（LLM）で中国企業のサプライチェーン知識グラフを構築する深田大登（Hiroto Fukada）の研究。IEEE CIFEr 2026 掲載論文、NetSci 2026、JSAI 2026 の成果と一次ソースを掲載。"
     },
     "lead": "Building an auditable map of inter-firm supplier-customer relationships in China by combining large language models, web-scale information retrieval, and network science.",
     "lead_ja": "大規模言語モデル・Web 規模の情報検索・ネットワーク科学を組み合わせ、中国の企業間取引関係を検証可能な形で地図化する研究。",
@@ -65,12 +65,12 @@
         "body": [
           "The IEEE CIFEr 2026 paper evaluates the pipeline on 130,685 Chinese firms used as search seeds, covering Shanghai- and Shenzhen-listed firms and large unlisted firms as of 2024. On the listed-firm subset, the resulting supply chain knowledge graph covers 7.2 times more firms and 9.3 times more relationships than the CSMAR disclosure-based benchmark, and reveals heavy-tailed degree patterns that disclosure data alone does not show.",
           "The cost trade-off is stated explicitly rather than hidden. Exhaustive full-text chunking discovers 19.8 times more unique relationships than snippets, but requires 251.2 times more input tokens and yields higher redundancy. Snippets are therefore positioned as a scalable first-pass evidence layer and an auditable complement to disclosure-based databases, not as a replacement for full-text reading.",
-          "Results have been presented at IEEE CIFEr 2026 (accepted paper), NetSci 2026, JSAI 2026, and the Network Ecology Symposium, where the study received a Best Poster Award at NetEco 2026."
+          "Results have been presented at IEEE CIFEr 2026 (paper published in the proceedings), NetSci 2026, JSAI 2026, and the Network Ecology Symposium, where the study received a Best Poster Award at NetEco 2026."
         ],
         "body_ja": [
-          "IEEE CIFEr 2026 採択論文では、2024 年時点の上海・深圳上場企業と大規模非上場企業を含む 130,685 社を検索シードとして評価した。上場企業サブセットにおいて、構築したサプライチェーン知識グラフは開示情報ベースのベンチマークである CSMAR と比べ 7.2 倍の企業と 9.3 倍の関係を捕捉し、開示データだけでは見えないヘビーテールな次数分布を明らかにした。",
+          "IEEE CIFEr 2026 掲載論文では、2024 年時点の上海・深圳上場企業と大規模非上場企業を含む 130,685 社を検索シードとして評価した。上場企業サブセットにおいて、構築したサプライチェーン知識グラフは開示情報ベースのベンチマークである CSMAR と比べ 7.2 倍の企業と 9.3 倍の関係を捕捉し、開示データだけでは見えないヘビーテールな次数分布を明らかにした。",
           "コストのトレードオフも隠さず示している。全文チャンキングを網羅的に行えばスニペットの 19.8 倍のユニークな関係が見つかるが、入力トークンは 251.2 倍に増え、冗長性も高くなる。スニペットは全文読解の代替ではなく、スケールする一次スクリーニングであり、開示ベースのデータベースを監査可能な形で補完する層として位置づけている。",
-          "成果は IEEE CIFEr 2026（論文採択）、NetSci 2026、人工知能学会全国大会（JSAI 2026）、ネットワーク生態学シンポジウムで発表し、NetEco 2026 では優秀ポスター賞を受賞した。"
+          "成果は IEEE CIFEr 2026（予稿集に論文掲載）、NetSci 2026、人工知能学会全国大会（JSAI 2026）、ネットワーク生態学シンポジウムで発表し、NetEco 2026 では優秀ポスター賞を受賞した。"
         ]
       }
     ],

@@ -110,16 +110,21 @@
     "year": 2026,
     "month": 9,
     "title": "Snippet-Driven Supply Chain Discovery with LLMs: Scaling Visibility in China",
-    "venue": "Proceedings of 2026 IEEE Computational Intelligence in Financial Engineering and Economics (CIFEr)",
-    "venue_ja": "Proceedings of 2026 IEEE Computational Intelligence in Financial Engineering and Economics (CIFEr)",
+    "venue": "Proceedings of the 2026 IEEE Symposium on Computational Intelligence for Financial Engineering and Economics (CIFEr)",
+    "venue_ja": "Proceedings of the 2026 IEEE Symposium on Computational Intelligence for Financial Engineering and Economics (CIFEr)",
     "venueUrl": "https://cifer2026.mhirano.jp/",
     "publisher": "IEEE",
     "arxiv": "2605.27845",
-    "doi": "",
-    "status": "Accepted",
-    "status_ja": "採択",
-    "added": "2026-09-11",
+    "doi": "10.1109/CIFEr67845.2026.11692384",
+    "pages": "345-352",
+    "status": "Published",
+    "status_ja": "掲載",
+    "added": "2026-09-23",
     "links": [
+      {
+        "label": "IEEE Xplore",
+        "url": "https://doi.org/10.1109/CIFEr67845.2026.11692384"
+      },
       {
         "label": "arXiv",
         "url": "https://arxiv.org/abs/2605.27845"
@@ -132,14 +137,14 @@
         "title": "Snippet-Driven Supply Chain Discovery with LLMs (IEEE CIFEr 2026) | Hiroto Fukada",
         "title_ja": "Snippet-Driven Supply Chain Discovery with LLMs（IEEE CIFEr 2026）| 深田大登（Hiroto Fukada）",
         "description": "IEEE CIFEr 2026 paper by Hiroto Fukada and Takayuki Mizuno: a snippet-driven LLM method for building an auditable supply chain knowledge graph in China.",
-        "description_ja": "深田大登・水野貴之による IEEE CIFEr 2026 採択論文。検索スニペットと LLM で中国のサプライチェーン知識グラフを構築し、開示データを監査可能な形で補完する手法。"
+        "description_ja": "深田大登・水野貴之による IEEE CIFEr 2026 掲載論文。検索スニペットと LLM で中国のサプライチェーン知識グラフを構築し、開示データを監査可能な形で補完する手法。"
       },
       "summary": [
-        "Snippet-Driven Supply Chain Discovery with LLMs: Scaling Visibility in China is a conference paper by Hiroto Fukada and Takayuki Mizuno, accepted at the 2026 IEEE Symposium on Computational Intelligence in Financial Engineering and Economics (CIFEr). It asks a deliberately narrow question: what is the cheapest unit of web evidence that still supports reliable extraction of inter-firm supplier-customer relationships at national scale?",
+        "Snippet-Driven Supply Chain Discovery with LLMs: Scaling Visibility in China is a conference paper by Hiroto Fukada and Takayuki Mizuno, published in the proceedings of the 2026 IEEE Symposium on Computational Intelligence for Financial Engineering and Economics (CIFEr) and available on IEEE Xplore. It asks a deliberately narrow question: what is the cheapest unit of web evidence that still supports reliable extraction of inter-firm supplier-customer relationships at national scale?",
         "The paper proposes a snippet-driven method for constructing a supply chain knowledge graph (SCKG) in which firms are nodes and inter-firm relationships are edges. Web search snippets - the query-biased summaries returned alongside search results - are used as a first-pass evidence layer for LLM-based relationship extraction, and the provenance of every edge is retained so that the graph can be checked against the text it came from."
       ],
       "summary_ja": [
-        "「Snippet-Driven Supply Chain Discovery with LLMs: Scaling Visibility in China」は、深田大登・水野貴之による国際会議論文であり、2026 IEEE Symposium on Computational Intelligence in Financial Engineering and Economics（CIFEr）に採択された。問いは意図的に狭く設定している。全国規模で企業間のサプライヤー・顧客関係を信頼できる形で抽出するとき、最も安価に済む証拠の単位は何か、である。",
+        "「Snippet-Driven Supply Chain Discovery with LLMs: Scaling Visibility in China」は、深田大登・水野貴之による国際会議論文であり、2026 IEEE Symposium on Computational Intelligence for Financial Engineering and Economics（CIFEr）の予稿集に掲載され、IEEE Xplore で公開されている。問いは意図的に狭く設定している。全国規模で企業間のサプライヤー・顧客関係を信頼できる形で抽出するとき、最も安価に済む証拠の単位は何か、である。",
         "提案するのは、企業をノード・企業間関係をエッジとするサプライチェーン知識グラフ（SCKG）を、検索スニペット駆動で構築する手法である。検索結果に付随するクエリ依存の短い要約であるスニペットを、LLM による関係抽出の一次証拠層として用いる。各エッジには出典を保持し、グラフを元の文と突き合わせて検証できるようにしている。"
       ],
       "why": [
@@ -162,15 +167,15 @@
       ],
       "sources": [
         {
-          "label": "arXiv:2605.27845 (preprint, full text)",
-          "label_ja": "arXiv:2605.27845（プレプリント全文）",
-          "url": "https://arxiv.org/abs/2605.27845",
+          "label": "IEEE Xplore: version of record (DOI 10.1109/CIFEr67845.2026.11692384)",
+          "label_ja": "IEEE Xplore 掲載版（DOI 10.1109/CIFEr67845.2026.11692384）",
+          "url": "https://doi.org/10.1109/CIFEr67845.2026.11692384",
           "primary": true
         },
         {
-          "label": "IEEE CIFEr 2026 conference site",
-          "label_ja": "IEEE CIFEr 2026 公式サイト",
-          "url": "https://cifer2026.mhirano.jp/",
+          "label": "arXiv:2605.27845 (preprint, full text)",
+          "label_ja": "arXiv:2605.27845（プレプリント全文）",
+          "url": "https://arxiv.org/abs/2605.27845",
           "primary": false
         }
       ]
