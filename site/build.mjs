@@ -114,6 +114,7 @@ const UI = {
     yearLabel: 'Year',
     typeLabel: 'Type',
     publisherLabel: 'Publisher',
+    pagesLabel: 'Pages',
     statusLabel: 'Status',
   },
   ja: {
@@ -183,6 +184,7 @@ const UI = {
     yearLabel: '年',
     typeLabel: '種別',
     publisherLabel: '出版社',
+    pagesLabel: '掲載ページ',
     statusLabel: 'ステータス',
   },
 };
@@ -740,6 +742,7 @@ ${paras.map((para) => `              <p>${esc(para)}</p>`).join('\n')}
     [L.typeLabel, w.kind ? L.kind[w.kind] ?? '' : ''],
     [L.yearLabel, formatYearMonth(w, lc)],
     [L.publisherLabel, w.publisher ?? ''],
+    [L.pagesLabel, w.pages ? `pp. ${w.pages.replace('-', '–')}` : ''],
     [L.statusLabel, t(w, 'status', lc)],
   ].filter(([, v]) => v);
 
@@ -764,7 +767,7 @@ ${paras.map((para) => `              <p>${esc(para)}</p>`).join('\n')}
           <header class="page-header">
             <span class="section-eyebrow">${esc(L.publicationEyebrow)}</span>
             <h1>${esc(detailHeading(w, lc))}</h1>
-            <p class="page-lead work-citation">${formatAuthors(w.authors, w.selfAuthors)} (${esc(w.year)}). <em>${esc(t(w, 'venue', lc))}</em>.</p>
+            <p class="page-lead work-citation">${formatAuthors(w.authors, w.selfAuthors)} (${esc(w.year)}). <em>${esc(t(w, 'venue', lc))}</em>${formatPages(w)}.</p>
           </header>
           <div class="page-body prose">
 ${blocks}
@@ -1053,7 +1056,7 @@ function renderResearchItem(item, page, heading = 'h4') {
   return `                <li>
                   <article class="work-item research-item"${item.added ? ` data-added="${esc(item.added)}"` : ''}>
                     <${heading} class="work-title">${esc(t(item, 'title', lc))}</${heading}>
-                    <p class="work-citation">${formatAuthors(item.authors, item.selfAuthors)} (${esc(item.year)}). <em>${esc(t(item, 'venue', lc))}</em>.</p>
+                    <p class="work-citation">${formatAuthors(item.authors, item.selfAuthors)} (${esc(item.year)}). <em>${esc(t(item, 'venue', lc))}</em>${formatPages(item)}.</p>
                     <p class="work-meta">${metaParts.map(esc).join(' · ')}</p>
 ${renderLinks(links, lc, 20)}${detail ? `\n                    <p class="work-more"><a href="${relHref(page.dir, detail.dir)}">${esc(L.details)}<span aria-hidden="true"> →</span></a></p>` : ''}
                   </article>
@@ -1284,6 +1287,11 @@ function buildProfileJsonLd(page, title, description) {
   };
 }
 
+/** 掲載ページ（例: "345-352" → ", pp. 345–352"）。未掲載の業績では空文字 */
+function formatPages(w) {
+  return w.pages ? `, pp. ${esc(w.pages.replace('-', '–'))}` : '';
+}
+
 /** 業績 1 件の JSON-LD。@id は DOI > arXiv > 学会ページ の優先順で固定し、全ページで同じ値を使う */
 function workNode(w) {
   const arxivUrl = w.arxiv ? `https://arxiv.org/abs/${w.arxiv}` : undefined;
@@ -1302,6 +1310,7 @@ function workNode(w) {
     datePublished: String(w.year),
     ...(arxivUrl ? { sameAs: [arxivUrl] } : {}),
     ...(w.publisher ? { publisher: { '@type': 'Organization', name: w.publisher } } : {}),
+    ...(w.pages ? { pagination: w.pages.replace('-', '–') } : {}),
     ...(w.venue ? { publication: { '@type': 'PublicationEvent', name: w.venue, ...(w.venueUrl ? { url: w.venueUrl } : {}) } } : {}),
     ...sourceOrganizationOf(w),
   };
